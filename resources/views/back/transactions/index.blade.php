@@ -251,8 +251,6 @@
             alert('Lỗi thay đổi trạng thái');
           });
 
-          console.log('update', token, statusSelect, dataChoise);
-
           return false;
         });
 
