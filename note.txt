@@ -1,0 +1,120 @@
+https://github.com/bestmomo/laravel5-example / source
+admin: admin@gmail.com/admin
+php artisan view:clear
+
+1. migrate table
+php artisan make:migration create_group_drugs_table
+group_drugs(id, code, short_name, full_name, note, status, created_at, updated_at)
+php artisan migrate
+
+2. drugs table add fields
+ALTER TABLE `drugs` ADD `group_drug_id` INT NULL AFTER `status`, ADD `donvibuon` VARCHAR(255) NOT NULL AFTER `group_drug_id`, ADD `donvile` VARCHAR(255) NOT NULL AFTER `donvibuon`, ADD `hesoquydoi` VARCHAR(255) NOT NULL AFTER `donvile`;
+ALTER TABLE `drugs` ADD `created_at` TIMESTAMP NULL AFTER `hesoquydoi`, ADD `updated_at` TIMESTAMP NULL AFTER `created_at`;
+
+CREATE TABLE `drug_image` ( `id` INT NOT NULL AUTO_INCREMENT , `drug_id` INT NOT NULL , `url` VARCHAR(255) NOT NULL , `created_at` TIMESTAMP NULL , `updated_at` TIMESTAMP NULL , PRIMARY KEY (`id`)) ENGINE = InnoDB;
+
+3. order process new module
+- model
+- controller
+- repositories
+- route
+- request
+- view
+
+4. create mind and assign drugs
+mind_drug(id, mind_id, drug_id, drug_price, drug_special_price, max_discount_qty, max_qty, note, created_at, updated_at)
+
+5. alter pharmacies
+ALTER TABLE `pharmacies` ADD `created_at` TIMESTAMP NULL , ADD `updated_at` TIMESTAMP NULL AFTER `created_at`;
+ALTER TABLE `pharmacies` ADD `pharmacieType` VARCHAR(255) NULL ;
+
+// khách hàng => chính là nhà thuốc , còn người dùng chính là customer
+
+6. search - required or not
+\app\Http\Requests\SearchRequest.php
+
+7. người dùng:  customer
+ALTER TABLE `customers` ADD `pharmacieId` INT(255) NULL ;
+ALTER TABLE `customers` ADD `created_at` TIMESTAMP NULL , ADD `updated_at` TIMESTAMP NULL AFTER `created_at`;
+
+8. Đổi users  về customer
+ALTER TABLE `customers` ADD `remember_token` VARCHAR(110) NULL AFTER `updated_at`;
+ALTER TABLE `customers` ADD `isRole` VARCHAR(110) NULL;
+
+9. phân tích phiên
+- phiên trước => chỉ list => k mua bán được
+- vào home thì hiển thị phiên trong thời gian hiện tại: có mua bán
+
+10. xử lý với phiên giao dịch
+php artisan make:migration create_transactions_table
+php artisan make:migration create_transaction_drug_table
+php artisan make:migration create_transaction_send_table
+
+transactions
+id
+mind_id
+user_id
+created_date
+address
+phone
+shipping_method
+note
+status (enum - or interger ) => contstant
+created_at
+updated_at
+
+==> will update
+sub_total
+shipping_cost
+shipping_discount
+before_total
+before_pay
+end_toal
+
+
+transaction_drug
+id
+transaction_id
+drug_id
+qty
+qty_discount
+price
+price_discount
+created_at
+updated_at
+
+===============
+transaction_send
+id,
+transaction_id,
+shipping_method
+code_send
+qty_box
+date_send
+note
+created_at
+updated_at
+
+ALTER TABLE `transactions` ADD `owner` VARCHAR(110) NULL;
+
+ALTER TABLE `transactions` CHANGE `shipping_discount` `cost_discount` DECIMAL(8,2) NOT NULL;
+ALTER TABLE `transactions` ADD `buyer_cost` DECIMAL NULL AFTER `owner`;
+
+ALTER TABLE `transactions` CHANGE `end_toal` `end_total` DECIMAL(8,2) NOT NULL;
+ALTER TABLE `transactions` CHANGE `status` `status` VARCHAR(200) NULL DEFAULT NULL;
+
+ALTER TABLE `transaction_drug` DROP `price_discount`;
+ALTER TABLE `transaction_drug` DROP `qty_discount`;
+ALTER TABLE `transaction_drug` ADD `type` VARCHAR(30) NOT NULL AFTER `price`;
+
+ALTER TABLE `transactions` CHANGE `sub_total` `sub_total` DECIMAL(20,2) NOT NULL; + some field price
+ALTER TABLE `transaction_drug` CHANGE `price` `price` DECIMAL(20,2) NOT NULL;
+
+
+11. user log information
+php artisan make:migration create_user_logs_table
+
+ALTER TABLE `transactions` ADD `countQty` INTEGER;
+
+12. giao hang va chi tiet giao hang
+
