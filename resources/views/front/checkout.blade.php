@@ -119,7 +119,7 @@ if ( !Auth::check() ) {
             <?php } ?>
             </tbody>
         </table>
-        <?php else: echo 'Giỏ hàng rỗng.'; endif; ?>
+        <?php else: echo '<p class="empty-cart">Giỏ hàng rỗng.</p>'; endif; ?>
     </div>
 
     <?php if (isset($qtyTotal) && ($qtyTotal > 0)) :?>

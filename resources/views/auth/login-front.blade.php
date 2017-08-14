@@ -1,4 +1,11 @@
 @extends('front.template')
+<?php
+if ( Auth::check() ) {
+    $url = url('/');
+    header( "Location: $url" );
+    die();
+}
+?>
 
 @section('main')
 	<div class="row">

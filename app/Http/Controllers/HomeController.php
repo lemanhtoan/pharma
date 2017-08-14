@@ -20,6 +20,21 @@ use DateTime;
 class HomeController extends Controller
 {
 
+    public function getQuydinh(){
+        $content = 'Noi dung quy dinh';
+        return view( 'front.static', compact('content') );
+    }
+
+    public function getHotro(){
+        $content = 'Noi dung ho tro';
+        return view( 'front.static', compact('content') );
+    }
+
+    public function getProfile() {
+        $content = 'Noi dung profile';
+        return view( 'front.profile', compact('content') );
+    }
+
     /**
      * Display the home page.
      *
@@ -242,7 +257,9 @@ class HomeController extends Controller
 
         $drugs = Drug::orderBy('name', 'asc')->get();
 
-        return view( 'front.after-buy', compact('dataTransaction', 'dataTranDrugs', 'drugs') );
+        $message = 'Đơn hàng của bạn đã được tạo, xin cảm ơn quý khách!';
+
+        return view( 'front.after-buy', compact('dataTransaction', 'dataTranDrugs', 'drugs', 'message') );
     }
 
     public function getProcessBuy(Request $request) {

@@ -44,11 +44,11 @@ if ( !Auth::check() ) {
                 </div>
                 <div class="row-even">
                     <div class="row-label">Vận chuyển</div>
-                    <div class="row-value">40.000đ</div>
+                    <div class="row-value">40.000</div>
                 </div>
                 <div class="row-old">
                     <div class="row-label">Khuyến mãi</div>
-                    <div class="row-value">55.000đ</div>
+                    <div class="row-value">55.000</div>
                 </div>
                 <div class="row-even">
                     <div class="row-label"><b class="capt">Tổng</b></div>
@@ -75,19 +75,21 @@ if ( !Auth::check() ) {
                             <div class="modal-content">
                                 <button type="button" class="close closeInfo" data-dismiss="modal"><img src="{!!url('/images/close.png')!!}" alt=""></button>
                                 <div class="modal-body">
-
                                     <h3>Thông tin nhận hàng</h3>
                                     <div class="row">
+                                        <p class="error-message">Vui lòng điền đủ thông tin người nhận.</p>
+                                    </div>
+                                    <div class="row">
                                         Người nhận: <br>
-                                        <input type="text" class="post_name" value="<?php echo $dataUser['name']?>" name="customer_name" placeholder="Tên người nhận">
+                                        <input type="text"  class="post_name" value="<?php echo $dataUser['name']?>" name="customer_name" placeholder="Tên người nhận">
                                     </div>
                                     <div class="row">
                                         Địa chỉ: <br>
-                                        <input type="text" class="post_address" value="<?php echo $dataUser['address']?>" name="customer_address" placeholder="Địa chỉ người nhận">
+                                        <input type="text"  class="post_address" value="<?php echo $dataUser['address']?>" name="customer_address" placeholder="Địa chỉ người nhận">
                                     </div>
                                     <div class="row">
                                         Điện thoại: <br>
-                                        <input type="text" class="post_phone"  value="<?php echo $dataUser['phone']?>" name="customer_phone" placeholder="Điện thoại người nhận">
+                                        <input type="text"  class="post_phone"  value="<?php echo $dataUser['phone']?>" name="customer_phone" placeholder="Điện thoại người nhận">
                                     </div>
 
                                     <div class="row"><p class="update-message" style="display: none">Thông tin đã cập nhật</p></div>
@@ -116,6 +118,7 @@ if ( !Auth::check() ) {
 
             $('#btnEditInfo').click(function(){
                 $('.update-message').hide();
+                $('.error-message').hide();
                 $('#btnEditInfo').modal('show');
             });
 
@@ -129,10 +132,15 @@ if ( !Auth::check() ) {
                 var  post_name = $('.post_name').val();
                 var  post_address = $('.post_address').val();
                 var  post_phone = $('.post_phone').val();
+                if (post_name =='' || post_address =='' || post_phone == '') {
+                    $('.error-message').show();
+                    return false;
+                }
                 $('.value_name').text(post_name);
                 $('.value_address').text(post_address);
                 $('.value_phone').text(post_phone);
                 $('.update-message').show();
+                $('.error-message').hide();
             });
         });
     </script>

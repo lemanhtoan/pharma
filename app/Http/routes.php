@@ -14,6 +14,9 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('before-buy', 'HomeController@getBeforeBuy');
     Route::get('process-buy', 'HomeController@getProcessBuy');
     Route::post('process-buy', 'HomeController@postProcessBuy');
+    Route::get('quy-dinh', 'HomeController@getQuydinh');
+    Route::get('ho-tro', 'HomeController@getHotro');
+    Route::get('profile', 'HomeController@getProfile');
 
 	Route::get('history', 'HomeController@getHistory');
 

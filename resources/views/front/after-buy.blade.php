@@ -12,8 +12,17 @@ if ( !Auth::check() ) {
 
     <div class="row">
         <div class="col-md-8"><h2 class="title-main gray-color"><img src="{!!url('/images/bill_1_07.png')!!}" alt=""> Chi tiết đơn hàng </h2></div>
-        <div class="col-md-4"><a class="btn-buy pull-right" href="">< Trở lại</a></div>
+        <div class="col-md-4"><a class="btn-buy pull-right" href="{!!url('/')!!}">< Trở lại</a></div>
     </div>
+    
+    <?php if (isset($message)) : ?>
+    <div class="row">
+        <div class="alert alert-success alert-dismissable">
+          <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+          <strong>{!! $message !!}</strong>
+        </div>
+    </div>
+    <?php endif;?>
 
     <div class="row">
         <p class="status-text"><b>Trạng thái: </b> <?php echo $dataTransaction->status ?></p>

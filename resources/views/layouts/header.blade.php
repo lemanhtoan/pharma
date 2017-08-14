@@ -33,7 +33,7 @@
             if ( !Auth::check() ) { ?>
               <a href="{!! url('auth/login') !!}">Đăng nhập</a>
           <?php } else { ?>
-            <a href="">Tài khoản</a>
+            <a href="{!! url('profile') !!}">Tài khoản</a>
             <span>|</span>
             <a href="{!! url('auth/logout') !!}">Đăng xuất</a>
           <?php } ?>
@@ -52,10 +52,10 @@
 
     <div class="row">
       <ul class="main-menu">
-        <li  class="activate"><a href="">Đặt hàng</a></li>
-        <li><a href="{!! url('history') !!}">Lịch sử</a></li>
-        <li><a href="">Quy định</a></li>
-        <li><a href="">Hỗ trợ</a></li>
+        <li {!! classActivePath('/') !!}><a href="{!! url('/') !!}">Đặt hàng</a></li>
+        <li {!! classActivePath('history') !!}><a href="{!! url('history') !!}">Lịch sử</a></li>
+        <li {!! classActivePath('quy-dinh') !!}><a href="{!! url('quy-dinh') !!}">Quy định</a></li>
+        <li {!! classActivePath('ho-tro') !!}><a href="{!! url('ho-tro') !!}">Hỗ trợ</a></li>
       </ul>
     </div>
   </div>

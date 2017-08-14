@@ -1,3 +1,12 @@
+.error-message {
+	color: red;
+}
+.empty-cart {
+padding: 20px;
+}
+.tsearch input.form-control:focus {
+border-color: #ccc !important;
+}
 @media (min-width: 768px){
     .box-shiper .modal-dialog {max-width: 400px}
 }
@@ -232,7 +241,7 @@ ul.main-menu a {
     border-radius: 17px;
 }
 
-ul.main-menu li.activate a,
+ul.main-menu li.active a,
 ul.main-menu li:hover a {
     background: #109176;
 }
@@ -250,7 +259,7 @@ section.main-content {
 .box-wd h4 {
     color: #fff;
     font-weight: bold;
-    font-size: 14px;
+    font-size: 13px;
     background: #17be9b;
     padding: 16px;
     margin-top: 0;
@@ -424,6 +433,7 @@ span.limit-product {
     border: 1px solid #eaeaeb;
     border-radius: 10px;
     padding: 30px;
+	min-height: 500px;
 }
 
 .box-login {
@@ -635,7 +645,7 @@ span.top-span.top-sp-1 {
 
 .box-second {
     float: left;
-    width: 95px;
+    width: 100px;
 }
 
 span.top-sp-1 {
@@ -672,7 +682,7 @@ span.span.no-bg {
 }
 
 #mindModal .modal-dialog {
-    width: 470px;
+    width: 477px;
 }
 
 #mindModal .modal-content,
@@ -749,7 +759,7 @@ span.span.no-bg {
 }
 
 .box-wd .box-count {
-    width: 40px;
+    width: 38px;
 }
 .box-wd span.top-span{
     font-size: 16px;
@@ -762,7 +772,7 @@ span.span.no-bg {
     font-size: 14px;
 }
 .box-wd .box-second {
-    width: 55px;
+    width: 60px;
 }
 .box-wd span.top-sp-1 {
     font-size: 16px;
