@@ -7,9 +7,14 @@ padding: 20px;
 .tsearch input.form-control:focus {
 border-color: #ccc !important;
 }
-@media (min-width: 768px){
+@media (min-width: 767px){
     .box-shiper .modal-dialog {max-width: 400px}
 }
+
+@media only screen and (min-width: 768) {
+    
+}
+
 div#btnEditInfo {
     background: rgba(0,0,0,0.4);
 }
@@ -154,6 +159,39 @@ table.table-cart .qty-box {
 }
 /*----------------------------------*/
 
+@media only screen and (max-width: 1023px) {
+    .box-1-column {
+        padding: 0 15px;
+    }
+    footer,
+    section.main-content {
+        background: #f1f5f7;
+    }
+
+     div.box-wrap-border {
+        padding: 10px 15px;
+        box-shadow: 0 0 3px #edf1f3;
+        background: #fff;
+    }
+    div img.icon-clear {
+        height: 25px;
+    }
+    .box-login .item-row input {
+        width: 65%;
+    }
+
+    div.copy-right {
+        background: #fff;
+        color: #717070;
+        margin-left: 15px;
+        margin-right: 15px;
+        border-radius: 0;
+    }
+
+    div .copy-right a{
+        color: #717070;
+    }
+}
 .tsearch .input-group-addon{
     background: white !important;
 }
@@ -246,9 +284,7 @@ ul.main-menu li:hover a {
     background: #109176;
 }
 
-section.main-content {
-    margin: 15px 0;
-}
+
 
 .box-wd {
     border: 1px solid #ececec;
@@ -427,17 +463,28 @@ span.limit-product {
     img.logo {
         width: 125px;
     }
-}
+    .box-1-column {
+        border: 1px solid #eaeaeb;
+        border-radius: 10px;
+        padding: 30px;
+        min-height: 500px;
+    }
+    .box-login {
+        width: 40%;
+    }
+    section.main-content {
+        margin: 15px 0;
+    }
 
-.box-1-column {
-    border: 1px solid #eaeaeb;
-    border-radius: 10px;
-    padding: 30px;
-	min-height: 500px;
+    .box-wrap {
+        border: 15px solid #f1f4f8;
+        /*padding: 15px;*/
+        /*box-shadow: 0 0 15px #cae1ff inset, 0 -1px 1px #ffffff, 0 1px 1px rgba(190, 216, 228, 0.5);*/
+    }
+
 }
 
 .box-login {
-    width: 40%;
     margin: 0 auto;
 }
 
@@ -453,7 +500,6 @@ h2.intro-text span {
 
 .box-wrap {
     margin: 15px 0;
-    border: 15px solid #f1f4f8;
     /*padding: 15px;*/
     /*box-shadow: 0 0 15px #cae1ff inset, 0 -1px 1px #ffffff, 0 1px 1px rgba(190, 216, 228, 0.5);*/
 }
