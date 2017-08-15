@@ -17,6 +17,9 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('quy-dinh', 'HomeController@getQuydinh');
     Route::get('ho-tro', 'HomeController@getHotro');
     Route::get('profile', 'HomeController@getProfile');
+    
+    Route::post('updateProfile', 'HomeController@updateProfile');
+    
 
 	Route::get('history', 'HomeController@getHistory');
 

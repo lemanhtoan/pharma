@@ -196,7 +196,7 @@ function getQty($productId, $type) {
 		<div class="list-products">
 			<ul class="products list-data-products">
 				<?php foreach($drugs as $drug) {  ?>
-				<li>
+				<li class="current-list">
 					<input type="hidden" name="_token" value="{{ csrf_token() }}">
 					<input type="hidden" name="mind_id" value="<?php echo $mind[0]->id ?>">
 					<input type="hidden" name="user_id" value="<?php echo $userId ?>">
@@ -228,19 +228,22 @@ function getQty($productId, $type) {
 
                     <?php if ($drug['max_discount_qty'] > 0) {$typePrice = 'type_discount';} else {$typePrice = 'type_root';}?>
 
-					<button data-drug="<?php echo $drug['drug_id'];?>" data-type="<?php echo $typePrice ?>" class="btn-buy btn-cart btn-cart-<?php echo $drug['drug_id'];?>">Đặt hàng</button>
+					<button data-drug="<?php echo $drug['drug_id'];?>" data-type="<?php echo $typePrice ?>" class="<?php echo $typePrice ?> btn-buy btn-cart btn-cart-<?php echo $drug['drug_id'];?>">Đặt hàng</button>
+
+
+					<?php if ( (getQty($drug['drug_id'], 'discount') > 0) && (getQty($drug['drug_id'], 'root') > 0) ) {$isLoad = 'isLoad';}?>
 
 					<?php if ($drug['max_discount_qty'] > 0) :?>
 						<div class="qty-box qty-<?php echo $drug['drug_id'];?> type_discount" data-type="type_discount">
 							<span data-drug="<?php echo $drug['drug_id'];?>" data-type="type_discount" class="qty_discount qty-minus qty-minus-<?php echo $drug['drug_id'];?>">-</span>
-							<input value="<?php echo getQty($drug['drug_id'], 'discount');?>" name="qty_discount" type="number" min="0" data-drug="<?php echo $drug['drug_id'];?>" data-type="type_discount" class="no-spinners qty_discount qty-count qty-count-<?php echo $drug['drug_id'];?>"/>
+							<input value="<?php echo getQty($drug['drug_id'], 'discount');?>" name="qty_discount" type="number" min="0" max="<?php echo $drug['max_discount_qty']; ?>" data-drug="<?php echo $drug['drug_id'];?>" data-type="type_discount" class="no-spinners qty_discount qty-count qty-count-<?php echo $drug['drug_id'];?>" data-isload="<?php echo $isLoad?>"/>
 							<span data-drug="<?php echo $drug['drug_id'];?>" data-type="type_discount" class="qty_discount qty-add qty-add-<?php echo $drug['drug_id'];?>">+</span>
 						</div>
 					<?php endif;?>
 
 					<div class="qty-box qty-<?php echo $drug['drug_id'];?> type_root" data-type="type_root">
 						<span data-drug="<?php echo $drug['drug_id'];?>" data-type="type_root" class="qty_root qty-minus qty-minus-<?php echo $drug['drug_id'];?>">-</span>
-						<input value="<?php echo getQty($drug['drug_id'], 'root');?>" name="qty_root" type="number" min="0" data-drug="<?php echo $drug['drug_id'];?>" data-type="type_root" class="no-spinners qty_root qty-count qty-count-<?php echo $drug['drug_id'];?>"/>
+						<input value="<?php echo getQty($drug['drug_id'], 'root');?>" name="qty_root" type="number" min="0" data-drug="<?php echo $drug['drug_id'];?>" data-type="type_root" class="no-spinners qty_root qty-count qty-count-<?php echo $drug['drug_id'];?>"  data-isload="<?php echo $isLoad?>"/>
 						<span data-drug="<?php echo $drug['drug_id'];?>" data-type="type_root" class="qty_root qty-add qty-add-<?php echo $drug['drug_id'];?>">+</span>
 					</div>
 

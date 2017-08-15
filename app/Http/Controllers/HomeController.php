@@ -32,8 +32,45 @@ class HomeController extends Controller
 
     public function getProfile() {
         $content = 'Noi dung profile';
+        if (Auth::check()) {
+            $user = Auth::user()->id;
+            $content =  Customer::where('id', $user)->first();
+            return view( 'front.profile', compact('content') );
+        }
+        
         return view( 'front.profile', compact('content') );
     }
+
+    public function updateProfile(Request $request) {
+        if (Auth::check()) {
+            $user = Auth::user()->id;
+            $content =  Customer::where('id', $user)->first();
+            $phone = $request->input('phone');
+            $email = $request->input('email');
+            $password= $request->input('password');
+            
+            $userId = $request->input('user_id');
+            
+            if ($userId  == $user) {
+                if ($password !="") {
+                    Customer::where('id', $user)
+                    ->update(['password' => bcrypt($password), 'email' =>  $email,
+                    'phone' => $phone]);
+                } else {
+                    Customer::where('id', $user)
+                    ->update(['email' =>  $email, 'phone' => $phone]);
+                }
+                
+            }
+
+            $message =  'Cập nhật thành công';
+            return redirect('/profile')->with('content', 'message');
+        }   
+        $content = 'Không được phép truy cập';
+        
+        return view( 'front.profile', compact('content') );
+    }
+    
 
     /**
      * Display the home page.
@@ -284,113 +321,248 @@ class HomeController extends Controller
     }
 
     public function postProductCart(Request $request) {
-        $result = array();
-        $productId = (int)$request->input('product_id');
+        
+        if ($request->input('data_add') == 'delete') {
+             
+            $productId = (int)$request->input('product_id');
+            $mindId = (int)$request->input('mind_id');
+            $userId = (int)$request->input('user_id');
+            $dataType = $request->input('type_add');
 
-        $mindId = (int)$request->input('mind_id');
-        $userId = (int)$request->input('user_id');
-        $specialPrice = $request->input('special_price');
-        $price = $request->input('price');
-        $dataType = $request->input('type_add');
+            // root price ===============================
+            if ($dataType == 'type_root') {
+                $cartCurrentRoot = $request->session()->get('pharma.cartData.productRoot');
+                $currentProductIdsRoot = array();
 
-        // check max qty discount
-        $qtyGetDb = $this->checkDrugQty($productId, $mindId);
-        $qtyMaxDiscount = (int)$qtyGetDb->max_discount_qty;
-        $qtyMaxAllow = (int)$qtyGetDb->max_qty;
-        if ($qtyMaxAllow == 0) {
-            $qtyMaxAllow = 1000000000; // no limit
-        }
-        $isRootPrice = 0;
-        $isAddRoot = 0;
+                if (count($cartCurrentRoot)>0) {
+                    foreach ($cartCurrentRoot as $productCurrent) {
+                        array_push($currentProductIdsRoot, $productCurrent['product_id']);
+                    }
+                }
 
-        // type_discount_price
-        $qtyDiscount = 0;
-        if ($dataType == 'type_discount') {
-            $qtyDiscount = (int)$request->input('qty');
-            $isAddRoot = 0;
-            $isRootPrice = 0;
+                // check product exist in current list
+                if (in_array($productId, $currentProductIdsRoot)) {
 
-            if ($qtyDiscount > $qtyMaxDiscount) { // discount apply
-                $isRootPrice = 1;
-                $qtyDiscount = $qtyMaxDiscount;
+                    // remove from data
+                    foreach ($cartCurrentRoot as $key => $productCurrent){
+                        if ($productCurrent['product_id'] == $productId) {
+                            unset($cartCurrentRoot[$key]);
+                        }
+                    }
+                }
+
+                // update - set again value session
+                $request->session()->put('pharma.cartData.productRoot', $cartCurrentRoot);
+
+            } else {
+                // discount price ========================================
+                $cartCurrentDiscount = $request->session()->get('pharma.cartData.productDiscount');
+                $currentProductIdsDiscount = array();
+
+                if (count($cartCurrentDiscount) > 0) {
+                    foreach ($cartCurrentDiscount as $productCurrent) {
+                        array_push($currentProductIdsDiscount, $productCurrent['product_id']);
+                    }
+                }
+
+                // check product exist in current list
+                if (in_array($productId, $currentProductIdsDiscount)) {
+
+                    // remove from data
+                    foreach ($cartCurrentDiscount as $key => $productCurrent){
+                        if ($productCurrent['product_id'] == $productId) {
+                            unset($cartCurrentDiscount[$key]);
+                        }
+                    }
+                }
+
+                // update - set again value session
+                $request->session()->put('pharma.cartData.productDiscount', $cartCurrentDiscount);
             }
 
-            $arrayProductDiscount = array(
-                'product_id' =>   $productId,
-                'qty' =>   $qtyDiscount,
-                'mind_id' =>   $mindId,
-                'user_id' =>  $userId,
-                'price' =>   0,
-                'special_price' =>  $qtyDiscount * $specialPrice,
-                'discount' => ($qtyDiscount * $price) - ($qtyDiscount * $specialPrice)
+            $cartGetSession = $request->session()->get('pharma.cartData');
+
+            $dataRoot = array();
+            if (array_key_exists('productRoot', $cartGetSession)) {
+                $dataRoot = $cartGetSession['productRoot'];
+            }
+
+            $dataDiscount = array();
+            if (array_key_exists('productDiscount', $cartGetSession)) {
+                $dataDiscount = $cartGetSession['productDiscount'];
+            }
+
+            $countRootQty = 0;
+            $countRootTotalPrice = 0;
+
+            if (count($dataRoot) > 0) {
+                foreach ($dataRoot as $dataCart) {
+                    $countRootQty += $dataCart['qty'];
+                    $countRootTotalPrice += $dataCart['price'];
+                }
+            }
+
+
+            $countDiscountQty = 0;
+            $countDiscount = 0;
+
+            if (count($dataDiscount) > 0) {
+                foreach ($dataDiscount as $dataCart) {
+                    $countDiscountQty += $dataCart['qty'];
+                    $countRootTotalPrice += $dataCart['special_price'];
+                    $countDiscount += $dataCart['discount'];
+                }
+            }
+
+            $dataReturn = array(
+                'dataPrint' => $cartGetSession,
+                'mind_id' => $mindId,
+                'user_id' => $userId,
+                'countQty' => $countRootQty + $countDiscountQty,
+                'countRootQty' => $countRootQty,
+                'countRootTotalPrice' => $countRootTotalPrice,
+                'countDiscount' => $countDiscount,
+                'countDiscountQty' => $countDiscountQty,
             );
 
 
-            // discount price ========================================
-            $cartCurrentDiscount = $request->session()->get('pharma.cartData.productDiscount');
-            $currentProductIdsDiscount = array();
-
-            if (count($cartCurrentDiscount) > 0) {
-                foreach ($cartCurrentDiscount as $productCurrent) {
-                    array_push($currentProductIdsDiscount, $productCurrent['product_id']);
-                }
-            }
-
-            // check product exist in current list
-            if (in_array($productId, $currentProductIdsDiscount)) {
-
-                // remove from data
-                foreach ($cartCurrentDiscount as $key => $productCurrent){
-                    if ($productCurrent['product_id'] == $productId) {
-                        unset($cartCurrentDiscount[$key]);
-                    }
-                }
-            }
-
-            // update - set again value session
-            $request->session()->put('pharma.cartData.productDiscount', $cartCurrentDiscount);
-
-            // add new value to it
-            $request->session()->push('pharma.cartData.productDiscount', $arrayProductDiscount);
+            // session of datajson
+            $request->session()->get('pharma.cartDataJson');
+            $request->session()->put('pharma.cartDataJson', $dataReturn);
             $request->session()->save();
 
-        }
+            // session of mindId
+            $request->session()->get('pharma.cartData.mindId');
+            $request->session()->put('pharma.cartData.mindId', $mindId);
+            $request->session()->save();
 
-        // type_root_price
-        $qtyRoot = 0;
-        if ($dataType == 'type_root') {
+            return response()->json([
+                'cartData' => $dataReturn,
+                'message' => 'Xóa sản phẩm thành công'
+            ]);
+            
+        } else { 
+            $result = array();
+            $productId = (int)$request->input('product_id');
 
-            //dd($request->all());
+            $mindId = (int)$request->input('mind_id');
+            $userId = (int)$request->input('user_id');
+            $specialPrice = $request->input('special_price');
+            $price = $request->input('price');
+            $dataType = $request->input('type_add');
 
-            $qtyRoot = (int)$request->input('qty');
+            // check max qty discount
+            $qtyGetDb = $this->checkDrugQty($productId, $mindId);
+            $qtyMaxDiscount = (int)$qtyGetDb->max_discount_qty;
+            $qtyMaxAllow = (int)$qtyGetDb->max_qty;
+            if ($qtyMaxAllow == 0) {
+                $qtyMaxAllow = 1000000000; // no limit
+            }
+            $isRootPrice = 0;
+            $isAddRoot = 0;
 
-            if( $qtyRoot <= $qtyMaxAllow ) { // in stock
-                $isRootPrice = 1;
-                // nếu có sản phẩm khuyến mãi
-                if ($qtyMaxDiscount > 0) {
-                    // lấy ra số lượng đã mua khuyến mãi hiện tại và cộng thêm số qty để biết nó vượt hay k
-                    $cartCurrentDiscount = $request->session()->get('pharma.cartData.productDiscount');
-                    if ($cartCurrentDiscount) {
-                        foreach ($cartCurrentDiscount as $key => $productCurrent){
-                            if ($productCurrent['product_id'] == $productId) {
-                                $discountQty = $productCurrent['qty'];
-                            }
+            // type_discount_price
+            $qtyDiscount = 0;
+            if ($dataType == 'type_discount') {
+                $qtyDiscount = (int)$request->input('qty');
+                $isAddRoot = 0;
+                $isRootPrice = 0;
+
+                if ($qtyDiscount > $qtyMaxDiscount) { // discount apply
+                    $isRootPrice = 1;
+                    $qtyDiscount = $qtyMaxDiscount;
+                }
+
+                $arrayProductDiscount = array(
+                    'product_id' =>   $productId,
+                    'qty' =>   $qtyDiscount,
+                    'mind_id' =>   $mindId,
+                    'user_id' =>  $userId,
+                    'price' =>   0,
+                    'special_price' =>  $qtyDiscount * $specialPrice,
+                    'discount' => ($qtyDiscount * $price) - ($qtyDiscount * $specialPrice)
+                );
+
+
+                // discount price ========================================
+                $cartCurrentDiscount = $request->session()->get('pharma.cartData.productDiscount');
+                $currentProductIdsDiscount = array();
+
+                if (count($cartCurrentDiscount) > 0) {
+                    foreach ($cartCurrentDiscount as $productCurrent) {
+                        array_push($currentProductIdsDiscount, $productCurrent['product_id']);
+                    }
+                }
+
+                // check product exist in current list
+                if (in_array($productId, $currentProductIdsDiscount)) {
+
+                    // remove from data
+                    foreach ($cartCurrentDiscount as $key => $productCurrent){
+                        if ($productCurrent['product_id'] == $productId) {
+                            unset($cartCurrentDiscount[$key]);
                         }
                     }
-                    if ( ($discountQty + $qtyRoot) > $qtyMaxAllow) {
-                        // apply root price for discount
-                        $arrayProductRoot = array(
-                            'product_id' =>   $productId,
-                            'qty' =>   ($qtyRoot-1),
-                            'mind_id' =>   $mindId,
-                            'user_id' =>   $userId,
-                            'price' => ($qtyRoot-1) * $price,
-                            'special_price' =>   0,
-                            'discount' => 0
-                        );
-                        $isRootPrice = 2;
-                        $result['errors'] = 'Vượt quá giới hạn sản phẩm được mua trong phiên (giới hạn: ' . $qtyMaxAllow. ' sản phẩm)';
+                }
+
+                // update - set again value session
+                $request->session()->put('pharma.cartData.productDiscount', $cartCurrentDiscount);
+
+                // add new value to it
+                $request->session()->push('pharma.cartData.productDiscount', $arrayProductDiscount);
+                $request->session()->save();
+
+            }
+
+            // type_root_price
+            $qtyRoot = 0;
+            if ($dataType == 'type_root') {
+
+                //dd($request->all());
+
+                $qtyRoot = (int)$request->input('qty');
+
+                if( $qtyRoot <= $qtyMaxAllow ) { // in stock
+                    $isRootPrice = 1;
+                    // nếu có sản phẩm khuyến mãi
+                    if ($qtyMaxDiscount > 0) {
+                        // lấy ra số lượng đã mua khuyến mãi hiện tại và cộng thêm số qty để biết nó vượt hay k
+                        $cartCurrentDiscount = $request->session()->get('pharma.cartData.productDiscount');
+                        if ($cartCurrentDiscount) {
+                            foreach ($cartCurrentDiscount as $key => $productCurrent){
+                                if ($productCurrent['product_id'] == $productId) {
+                                    $discountQty = $productCurrent['qty'];
+                                }
+                            }
+                        }
+                        if ( ($discountQty + $qtyRoot) > $qtyMaxAllow) {
+                            // apply root price for discount
+                            $arrayProductRoot = array(
+                                'product_id' =>   $productId,
+                                'qty' =>   ($qtyRoot-1),
+                                'mind_id' =>   $mindId,
+                                'user_id' =>   $userId,
+                                'price' => ($qtyRoot-1) * $price,
+                                'special_price' =>   0,
+                                'discount' => 0
+                            );
+                            $isRootPrice = 2;
+                            $result['errors'] = 'Vượt quá giới hạn sản phẩm được mua trong phiên (giới hạn: ' . $qtyMaxAllow. ' sản phẩm)';
+                        } else {
+                            // apply root price for discount
+                            $arrayProductRoot = array(
+                                'product_id' =>   $productId,
+                                'qty' =>   $qtyRoot,
+                                'mind_id' =>   $mindId,
+                                'user_id' =>   $userId,
+                                'price' => $qtyRoot * $price,
+                                'special_price' =>   0,
+                                'discount' => 0
+                            );
+                        }
                     } else {
+
+                        // khong co gia khuyen mai
                         // apply root price for discount
                         $arrayProductRoot = array(
                             'product_id' =>   $productId,
@@ -403,114 +575,101 @@ class HomeController extends Controller
                         );
                     }
                 } else {
-
-                    // khong co gia khuyen mai
-                    // apply root price for discount
-                    $arrayProductRoot = array(
-                        'product_id' =>   $productId,
-                        'qty' =>   $qtyRoot,
-                        'mind_id' =>   $mindId,
-                        'user_id' =>   $userId,
-                        'price' => $qtyRoot * $price,
-                        'special_price' =>   0,
-                        'discount' => 0
-                    );
+                    $isRootPrice = 2;
+                    $result['errors'] = 'Vượt quá giới hạn sản phẩm được mua trong phiên (giới hạn: ' . $qtyMaxAllow. ' sản phẩm)';
                 }
-            } else {
-                $isRootPrice = 2;
-                $result['errors'] = 'Vượt quá giới hạn sản phẩm được mua trong phiên (giới hạn: ' . $qtyMaxAllow. ' sản phẩm)';
-            }
 
-            // root price ===============================
-            $cartCurrentRoot = $request->session()->get('pharma.cartData.productRoot');
-            $currentProductIdsRoot = array();
+                // root price ===============================
+                $cartCurrentRoot = $request->session()->get('pharma.cartData.productRoot');
+                $currentProductIdsRoot = array();
 
-            if (count($cartCurrentRoot)>0) {
-                foreach ($cartCurrentRoot as $productCurrent) {
-                    array_push($currentProductIdsRoot, $productCurrent['product_id']);
-                }
-            }
-
-            // check product exist in current list
-            if (in_array($productId, $currentProductIdsRoot)) {
-
-                // remove from data
-                foreach ($cartCurrentRoot as $key => $productCurrent){
-                    if ($productCurrent['product_id'] == $productId) {
-                        unset($cartCurrentRoot[$key]);
+                if (count($cartCurrentRoot)>0) {
+                    foreach ($cartCurrentRoot as $productCurrent) {
+                        array_push($currentProductIdsRoot, $productCurrent['product_id']);
                     }
                 }
+
+                // check product exist in current list
+                if (in_array($productId, $currentProductIdsRoot)) {
+
+                    // remove from data
+                    foreach ($cartCurrentRoot as $key => $productCurrent){
+                        if ($productCurrent['product_id'] == $productId) {
+                            unset($cartCurrentRoot[$key]);
+                        }
+                    }
+                }
+
+                // update - set again value session
+                $request->session()->put('pharma.cartData.productRoot', $cartCurrentRoot);
+
+                // add new value to it
+                $request->session()->push('pharma.cartData.productRoot', $arrayProductRoot);
+                $request->session()->save();
             }
 
-            // update - set again value session
-            $request->session()->put('pharma.cartData.productRoot', $cartCurrentRoot);
+            $cartGetSession = $request->session()->get('pharma.cartData');
 
-            // add new value to it
-            $request->session()->push('pharma.cartData.productRoot', $arrayProductRoot);
+            $dataRoot = array();
+            if (array_key_exists('productRoot', $cartGetSession)) {
+                $dataRoot = $cartGetSession['productRoot'];
+            }
+
+            $dataDiscount = array();
+            if (array_key_exists('productDiscount', $cartGetSession)) {
+                $dataDiscount = $cartGetSession['productDiscount'];
+            }
+
+            $countRootQty = 0;
+            $countRootTotalPrice = 0;
+
+            if (count($dataRoot) > 0) {
+                foreach ($dataRoot as $dataCart) {
+                    $countRootQty += $dataCart['qty'];
+                    $countRootTotalPrice += $dataCart['price'];
+                }
+            }
+
+
+            $countDiscountQty = 0;
+            $countDiscount = 0;
+
+            if (count($dataDiscount) > 0) {
+                foreach ($dataDiscount as $dataCart) {
+                    $countDiscountQty += $dataCart['qty'];
+                    $countRootTotalPrice += $dataCart['special_price'];
+                    $countDiscount += $dataCart['discount'];
+                }
+            }
+
+            $dataReturn = array(
+                'dataPrint' => $cartGetSession,
+                'mind_id' => $mindId,
+                'user_id' => $userId,
+                'countQty' => $countRootQty + $countDiscountQty,
+                'countRootQty' => $countRootQty,
+                'countRootTotalPrice' => $countRootTotalPrice,
+                'countDiscount' => $countDiscount,
+                'countDiscountQty' => $countDiscountQty,
+            );
+
+            // session of datajson
+            $request->session()->get('pharma.cartDataJson');
+            $request->session()->put('pharma.cartDataJson', $dataReturn);
             $request->session()->save();
+
+            // session of mindId
+            $request->session()->get('pharma.cartData.mindId');
+            $request->session()->put('pharma.cartData.mindId', $mindId);
+            $request->session()->save();
+
+            return response()->json([
+                'isRootPrice' => $isRootPrice,
+                'isAddRoot' => $isAddRoot,
+                'cartData' => $dataReturn,
+                'message' => $result
+            ]);
         }
-
-        $cartGetSession = $request->session()->get('pharma.cartData');
-
-        $dataRoot = array();
-        if (array_key_exists('productRoot', $cartGetSession)) {
-            $dataRoot = $cartGetSession['productRoot'];
-        }
-
-        $dataDiscount = array();
-        if (array_key_exists('productDiscount', $cartGetSession)) {
-            $dataDiscount = $cartGetSession['productDiscount'];
-        }
-
-        $countRootQty = 0;
-        $countRootTotalPrice = 0;
-
-        if (count($dataRoot) > 0) {
-            foreach ($dataRoot as $dataCart) {
-                $countRootQty += $dataCart['qty'];
-                $countRootTotalPrice += $dataCart['price'];
-            }
-        }
-
-
-        $countDiscountQty = 0;
-        $countDiscount = 0;
-
-        if (count($dataDiscount) > 0) {
-            foreach ($dataDiscount as $dataCart) {
-                $countDiscountQty += $dataCart['qty'];
-                $countRootTotalPrice += $dataCart['special_price'];
-                $countDiscount += $dataCart['discount'];
-            }
-        }
-
-        $dataReturn = array(
-            'dataPrint' => $cartGetSession,
-            'mind_id' => $mindId,
-            'user_id' => $userId,
-            'countQty' => $countRootQty + $countDiscountQty,
-            'countRootQty' => $countRootQty,
-            'countRootTotalPrice' => $countRootTotalPrice,
-            'countDiscount' => $countDiscount,
-            'countDiscountQty' => $countDiscountQty,
-        );
-
-        // session of datajson
-        $request->session()->get('pharma.cartDataJson');
-        $request->session()->put('pharma.cartDataJson', $dataReturn);
-        $request->session()->save();
-
-        // session of mindId
-        $request->session()->get('pharma.cartData.mindId');
-        $request->session()->put('pharma.cartData.mindId', $mindId);
-        $request->session()->save();
-
-        return response()->json([
-            'isRootPrice' => $isRootPrice,
-            'isAddRoot' => $isAddRoot,
-            'cartData' => $dataReturn,
-            'message' => $result
-        ]);
 
     }
 
