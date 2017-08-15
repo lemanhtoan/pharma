@@ -64,14 +64,25 @@
 			'Vận chuyển tới khách hàng' => 'Vận chuyển tới khách hàng'
 		],
         'transaction_status' => [
-            'Đợi xác nhận' => 'Vận chuyển tới khách hàng',
+            'Đợi xác nhận' => 'Đợi xác nhận',
 			'Đợi gom' => 'Đợi gom',
 			'Đợi chia' => 'Đợi chia',
 			'Đợi giao hàng' => 'Đợi giao hàng',
 			'Đang giao' => 'Đang giao',
 			'Hủy' => 'Hủy',
 			'Hoàn thành' => 'Hoàn thành'
-        ]
+        ],
+		'shipping_owners' => [
+			'Nhà vận chuyển số 1' => 'Nhà vận chuyển số 1',
+            'Nhà vận chuyển số 2' => 'Nhà vận chuyển số 2',
+            'Nhà vận chuyển số 3' => 'Nhà vận chuyển số 3',
+            'Nhà vận chuyển số 4' => 'Nhà vận chuyển số 4',
+            'Nhà vận chuyển số 5' => 'Nhà vận chuyển số 5'
+		],
+		'customerType' => [
+            'KH 1' => 'KH 1',
+			'KH 2' => 'KH 2'
+		]
     ]
 
 

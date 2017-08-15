@@ -20,6 +20,7 @@ Route::group(['middleware' => ['web']], function () {
 
 	Route::get('history', 'HomeController@getHistory');
 
+
 	// Authentication routes...
 	Route::get('auth/login', 'Auth\AuthController@getLoginFront');
 	Route::post('auth/login', 'Auth\AuthController@postLoginFront');
@@ -81,6 +82,9 @@ Route::group(['middleware' => ['web']], function () {
     Route::resource('customer', 'CustomerController');
 
 	// Transaction
+
+    Route::post('postTransactionSend', 'TransactionController@postTransactionSend');
+
 	Route::get('transactions/order', ['uses' => 'TransactionController@indexOrder', 'as' => 'transactions.order']);
 	Route::get('transactions', 'TransactionController@indexFront');
 	Route::put('postActtransactions', 'TransactionController@postActtransactions');
@@ -89,6 +93,7 @@ Route::group(['middleware' => ['web']], function () {
 	Route::post('postChangeProvince', 'TransactionController@postChangeProvince');
 
 	Route::resource('transactions', 'TransactionController');
+
 
 	// Blog
 	Route::get('blog/order', ['uses' => 'BlogController@indexOrder', 'as' => 'blog.order']);

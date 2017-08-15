@@ -118,3 +118,6 @@ ALTER TABLE `transactions` ADD `countQty` INTEGER;
 
 12. giao hang va chi tiet giao hang
 
+
+ // fix phí  tìm kiếm từ khóa   $phiMuaho =
+

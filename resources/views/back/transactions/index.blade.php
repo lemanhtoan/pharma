@@ -23,25 +23,28 @@
       <input type="hidden" name="_token" value="{{ csrf_token() }}">
       <div class="fox-filter">
         <div class="row">
-          <select class="form-control" name="s_pharmacieType">
+          <select class="form-control" name="s_mind_id">
             <option value="">Phiên giao dịch</option>
             <?php foreach($minds as $gd) { ?>
-            <option <?php if(isset($_GET['s_pharmacieType']) && $_GET['s_pharmacieType'] == $gd){echo 'selected';}else{echo '';} ?> value="<?php echo $gd['id']?>"><?php echo $gd['name']?></option>
+            <option <?php if(isset($_GET['s_mind_id']) && $_GET['s_mind_id'] == $gd){echo 'selected';}else{echo '';} ?> value="<?php echo $gd['id']?>"><?php echo $gd['name']?></option>
             <?php   }  ?>
           </select>
 
           <select class="form-control" name="s_status">
             <option value="">Trạng thái</option>
-            <option <?php if(isset($_GET['s_status']) && $_GET['s_status'] == '1'){echo 'selected';}else{echo '';} ?> value="1">Hoạt động</option>
-            <option <?php if(isset($_GET['s_status']) && $_GET['s_status'] == '0'){echo 'selected';}else{echo '';} ?> value="0">Khóa</option>
+              <?php $status = Config::get('constants.transaction_status'); ?>
+              <?php foreach ($status as $item) :?>
+            <option <?php if(isset($_GET['s_customerGroup']) && $_GET['s_customerGroup'] == $item) {echo 'selected';} else {echo '';}?> value="<?php echo $item ?>"><?php echo $item ?></option>
+              <?php endforeach; ?>
           </select>
         </div>
 
         <div class="row">
-          <select class="form-control" name="s_pharmacieType">
+          <select class="form-control" name="s_customerGroup">
             <option value="">Nhóm khách hàng</option>
-            <?php foreach($pharmacieType as $gd) { ?>
-            <option <?php if(isset($_GET['s_pharmacieType']) && $_GET['s_pharmacieType'] == $gd){echo 'selected';}else{echo '';} ?> value="<?php echo $gd?>"><?php echo $gd?></option>
+            <?php $customerType= Config::get('constants.customerType');?>
+            <?php foreach($customerType as $gd) { ?>
+            <option <?php if(isset($_GET['s_status']) && $_GET['s_status'] == $gd){echo 'selected';}else{echo '';} ?> value="<?php echo $gd?>"><?php echo $gd?></option>
             <?php   }  ?>
           </select>
 
@@ -124,14 +127,14 @@
             </th>
             <th>
               Mã giao dịch
-              <a href="#" name="transactions.code" class="order">
-                <span class="fa fa-fw fa-{{ $order->name == 'transactions.code' ? $order->sens : 'unsorted'}}"></span>
+              <a href="#" name="transactions.id" class="order">
+                <span class="fa fa-fw fa-{{ $order->name == 'transactions.id' ? $order->sens : 'unsorted'}}"></span>
               </a>
             </th>
             <th>
               Thời gian giao dịch
-              <a href="#" name="transactions.code" class="order">
-                <span class="fa fa-fw fa-{{ $order->name == 'transactions.code' ? $order->sens : 'unsorted'}}"></span>
+              <a href="#" name="transactions.created_date" class="order">
+                <span class="fa fa-fw fa-{{ $order->name == 'transactions.created_date' ? $order->sens : 'unsorted'}}"></span>
               </a>
             </th>
             <th>
@@ -140,22 +143,22 @@
 
             <th>
               Nhóm Khách hàng
-              <a href="#" name="transactions.pharmacieType" class="order">
-                <span class="fa fa-fw fa-{{ $order->name == 'transactions.pharmacieType' ? $order->sens : 'unsorted'}}"></span>
+              <a href="#" name="transactions.id" class="order">
+                <span class="fa fa-fw fa-{{ $order->name == 'transactions.id' ? $order->sens : 'unsorted'}}"></span>
               </a>
             </th>
 
             <th>
               SL thuốc
-              <a href="#" name="transactions.pharmacieType" class="order">
-                <span class="fa fa-fw fa-{{ $order->name == 'transactions.pharmacieType' ? $order->sens : 'unsorted'}}"></span>
+              <a href="#" name="transactions.countQty" class="order">
+                <span class="fa fa-fw fa-{{ $order->name == 'transactions.countQty' ? $order->sens : 'unsorted'}}"></span>
               </a>
             </th>
 
             <th>
               Giá trị GD
-              <a href="#" name="transactions.pharmacieType" class="order">
-                <span class="fa fa-fw fa-{{ $order->name == 'transactions.pharmacieType' ? $order->sens : 'unsorted'}}"></span>
+              <a href="#" name="transactions.end_total" class="order">
+                <span class="fa fa-fw fa-{{ $order->name == 'transactions.end_total' ? $order->sens : 'unsorted'}}"></span>
               </a>
             </th>
 

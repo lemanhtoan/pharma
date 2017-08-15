@@ -7,6 +7,7 @@ use App\Repositories\TransactionRepository;
 use App\Models\Province;
 use App\Models\District;
 use App\Models\Transaction;
+use App\Models\TransactionSend;
 
 class TransactionController extends Controller {
 
@@ -82,8 +83,9 @@ class TransactionController extends Controller {
         $district = [];
 
 		$minds = Mind::orderBy('name', 'asc')->get();
+		$transactionSend = TransactionSend::all();
 
-		return view('back.transactions.index', compact('posts', 'links', 'order', 'pharmacieType', 'province', 'district', 'minds'));
+		return view('back.transactions.index', compact('posts', 'links', 'order', 'pharmacieType', 'province', 'district', 'minds', 'transactionSend'));
 	}
 
 	public function create()
@@ -121,6 +123,7 @@ class TransactionController extends Controller {
         Request $request,
 		$id)
 	{
+//	    dd($request->all());
 		$post = $this->transactions_gestion->getById($id);
 
 		$this->transactions_gestion->update($request->all(), $post);
@@ -154,12 +157,13 @@ class TransactionController extends Controller {
 	public function search(SearchRequest $request)
 	{
 		$search = $request->input('search');
-        $sPharmacieType = $request->input('s_pharmacieType') ? $request->input('s_pharmacieType') : '';
+        $s_mind_id = $request->input('s_mind_id') ? $request->input('s_mind_id') : '';
+        $customerGroup = $request->input('s_customerGroup') ? $request->input('s_customerGroup') : '';
         $sStatus= $request->input('s_status');
         $sProvince = $request->input('s_province') ? $request->input('s_province') : '';
         $sDistrict = $request->input('s_district') ? $request->input('s_district') : '';
 
-        $posts = $this->transactions_gestion->search($this->nbrPages, $search, $sPharmacieType, $sStatus, $sProvince, $sDistrict);
+        $posts = $this->transactions_gestion->search($this->nbrPages, $search, $s_mind_id, $customerGroup, $sStatus, $sProvince, $sDistrict);
 		$links = $posts->appends(compact('search'))->render();
         $order = (object)[
             'name' => 'transactions.created_at',
@@ -175,8 +179,36 @@ class TransactionController extends Controller {
         }
 
 		$minds = Mind::orderBy('name', 'asc')->get();
+        $transactionSend = TransactionSend::all();
 
-		return view('back.transactions.index', compact('posts', 'links', 'order', 'pharmacieType', 'province', 'district', 'minds'));
+		return view('back.transactions.index', compact('posts', 'links', 'order', 'pharmacieType', 'province', 'district', 'minds', 'transactionSend'));
 	}
+
+	public function postTransactionSend(Request $request) {
+	    // check exist or not
+        $tranId = $request->input('transaction_id');
+        $transactionCheck = TransactionSend::where('transaction_id', $tranId)->get();
+        if (count($transactionCheck)) {
+            TransactionSend::where('transaction_id', $tranId)
+                ->update(['shipping_method' => $request->input('shipping_method'), 'code_send' =>  $request->input('code_send'),
+                    'qty_box' => $request->input('qty_box'), 'date_send' =>  $request->input('date_send'), 'note' =>  $request->input('note')]);
+        } else {
+            $transactionSend = new TransactionSend();
+            $transactionSend->transaction_id = $tranId;
+            $transactionSend->shipping_method = $request->input('shipping_method');
+            $transactionSend->code_send = $request->input('code_send');
+            $transactionSend->qty_box = $request->input('qty_box');
+            $transactionSend->date_send = $request->input('date_send');
+            $transactionSend->note = $request->input('note');
+            $transactionSend->save();
+
+            // update status to Đang giao
+            Transaction::where('id', $tranId)
+                ->update(['status' => 'Đang giao']);
+        }
+
+
+        return response()->json();
+    }
 
 }

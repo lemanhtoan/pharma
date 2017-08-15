@@ -2,9 +2,13 @@
 
 namespace App\Repositories;
 
+use App\Models\Drug;
+use App\Models\Mind_Drug;
 use App\Models\Transaction;
 use App\Models\Province;
 use App\Models\District;
+use App\Models\TransactionDrug;
+use App\Models\Mind;
 
 class TransactionRepository extends BaseRepository {
 
@@ -53,53 +57,63 @@ class TransactionRepository extends BaseRepository {
         return $query->paginate($n);
     }
 
-    public function search($n, $search,  $sPharmacieType, $sStatus, $sProvince, $sDistrict)
+    public function search($n,$search, $s_mind_id, $customerGroup, $sStatus, $sProvince, $sDistrict)
     {
         $query = $this->queryActiveWithUserOrderByDate();
 
         $query->where(function($q) use ($search) {
-            $q->where('code', 'like', "%$search%")
-                ->orWhere('name', 'like', "%$search%")
+            $q->where('owner', 'like', "%$search%")
                 ->orWhere('address', 'like', "%$search%")
-                ->orWhere('owner', 'like', "%$search%")
-                ->orWhere('email', 'like', "%$search%")
-                ->orWhere('license', 'like', "%$search%")
                 ->orWhere('phone', 'like', "%$search%");
         });
-        if($sPharmacieType) $query->where('pharmacieType', '=', "$sPharmacieType");
+
+//        $query->join('pharmacies', function($join)
+//        {
+//            $join->on('users.id', '=', 'contacts.user_id')
+//                ->where('contacts.user_id', '>', 5);
+//        });
+
+        if($s_mind_id) {
+            $query->where('mind_is', '=', $s_mind_id);
+        }
         if($sStatus =='0'){
             $query->where('status', '=', "$sStatus");
         }
         if($sStatus) $query->where('status', '=', "$sStatus");
-        if($sProvince) $query->where('province', '=', "$sProvince");
-        if($sDistrict) $query->where('district', '=', "$sDistrict");
+//        if($sProvince) $query->where('province', '=', "$sProvince");
+//        if($sDistrict) $query->where('district', '=', "$sDistrict");
         //echo $query->toSql();die;
 
         return $query->paginate($n);
     }
 
-    public function index($n,  $orderby = 'created_at', $direction = 'desc', $search=null, $sPharmacieType=null, $sStatus=null, $sProvince=null, $sDistrict=null)
+    public function index($n,  $orderby = 'created_at', $direction = 'desc', $search=null, $s_mind_id=null, $customerGroup=null, $sStatus=null, $sProvince=null, $sDistrict=null)
     {
-        if($search || $sStatus || $sStatus =='0' || $sPharmacieType || $sProvince || $sDistrict) {
+        if($search || $sStatus || $sStatus =='0' || $s_mind_id || $customerGroup || $sProvince || $sDistrict) {
             $query = $this->queryActiveWithUserOrderByDate();
 
             $query->where(function($q) use ($search) {
-                $q->where('code', 'like', "%$search%")
-                    ->where('name', 'like', "%$search%")
-                    ->orWhere('code', 'like', "%$search%")
+                $q->where('owner', 'like', "%$search%")
                     ->orWhere('address', 'like', "%$search%")
-                    ->orWhere('owner', 'like', "%$search%")
-                    ->orWhere('email', 'like', "%$search%")
-                    ->orWhere('license', 'like', "%$search%")
                     ->orWhere('phone', 'like', "%$search%");
             });
-            if($sPharmacieType) $query->where('pharmacieType', '=', "$sPharmacieType");
+
+//        $query->join('pharmacies', function($join)
+//        {
+//            $join->on('users.id', '=', 'contacts.user_id')
+//                ->where('contacts.user_id', '>', 5);
+//        });
+
+            if($s_mind_id) {
+                $query->where('mind_is', '=', $s_mind_id);
+            }
             if($sStatus =='0'){
                 $query->where('status', '=', "$sStatus");
             }
             if($sStatus) $query->where('status', '=', "$sStatus");
-            if($sProvince) $query->where('province', '=', "$sProvince");
-            if($sDistrict) $query->where('district', '=', "$sDistrict");
+//            if($sProvince) $query->where('province', '=', "$sProvince");
+//            if($sDistrict) $query->where('district', '=', "$sDistrict");
+
             $query->select('*')
                 ->orderBy($orderby, $direction);
         }else{
@@ -114,7 +128,14 @@ class TransactionRepository extends BaseRepository {
     public function show($id)
     {
         $post = $this->model->whereId($id)->firstOrFail();
-        return compact('post');
+        $tran_drugs = TransactionDrug::where('transaction_id', $id)->orderBy('drug_id', 'desc')->get();
+        $drugs = Drug::orderBy('name', 'asc')->get();
+        // fix phí
+        $phiMuaho = 20000;
+        $phiVanchuyen = 40000;
+        $khuyenMai = 55000;
+
+        return compact('post', 'tran_drugs', 'drugs', 'phiMuaho', 'phiVanchuyen', 'khuyenMai');
     }
 
     public function edit($post)
@@ -137,9 +158,77 @@ class TransactionRepository extends BaseRepository {
         return compact('post', 'province', 'district', 'pharmacieType');
     }
 
+    public function getDataMindDrug($mindId, $drugId, $type) {
+        $data = Mind_Drug::where('mind_id', $mindId)->where('drug_id', $drugId)->first();
+        if ($type=='discount') {
+            $price = $data->drug_special_price;
+        } else {
+            $price = $data->drug_price;
+        }
+        return $price;
+    }
+
     public function update($inputs, $post)
     {
-        $this->save($post, $inputs, 'update');
+        // update transaction_drug
+//        echo "<pre>"; var_dump($inputs['qty_update']);
+        // get min_id from transaction_id
+
+        $mindData = Transaction::where('id', $post->id)->first();
+        $mindId = $mindData->mind_id;
+
+        // get data of mind_drug where drug_id and mind_id => price
+        $qtys = $inputs['qty_update'];
+        $countQty = 0;
+        $caclSubPrice = 0;
+        foreach ($qtys as $idDrug => $dataQty) {
+            foreach ($dataQty as $type=>$qty) {
+                $countQty += $qty;
+                if ($qty != '0') {
+                    if ($type=='discount') {
+                        $productPrice = $this->getDataMindDrug($mindId, $idDrug, $type);
+                        TransactionDrug::where('transaction_id', $post->id)
+                            ->where('drug_id', $idDrug)
+                            ->where('type', 'discount')
+                            ->update(['qty' => $qty, 'price' => $productPrice*$qty]);
+                        $caclSubPrice += ($productPrice * $qty);
+                    } else {
+                        $productPrice = $this->getDataMindDrug($mindId, $idDrug, $type);
+                        TransactionDrug::where('transaction_id', $post->id)
+                            ->where('drug_id', $idDrug)
+                            ->where('type', 'root')
+                            ->update(['qty' => $qty, 'price' => $productPrice*$qty]);
+                        $caclSubPrice += ($productPrice * $qty);
+                    }
+                } else {
+                    // 0 :remove product from it
+                    TransactionDrug::where('transaction_id', $post->id)
+                        ->where('drug_id', $idDrug)
+                        ->where('type', $type)
+                        ->delete();
+                }
+            }
+        }
+
+        // calc again total count and price (s)
+        // sub_total before_total before_pay end_total countQty
+        $post->countQty = $countQty;
+        $post->sub_total = $caclSubPrice;
+        $post->before_total = $caclSubPrice;
+        $post->before_pay = $caclSubPrice;
+        // fix phí
+        $phiMuaho = 20000;
+        $phiVanchuyen = 40000;
+        $khuyenMai = 55000;
+        $post->end_total = ($caclSubPrice + $phiMuaho + $phiVanchuyen) - $khuyenMai;
+
+        $post->address = $inputs['address'];
+        $post->phone = $inputs['phone'];
+        $post->note = $inputs['note_trans'];
+        if ($inputs['transaction_status'] != "") {
+            $post->status = $inputs['transaction_status'];
+        }
+        $post->save();
     }
 
     public function updateActive($inputs)

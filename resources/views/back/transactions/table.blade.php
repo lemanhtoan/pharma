@@ -33,11 +33,15 @@ function getDataTrans($posts, $userId) {
       <?php echo getDataTrans($posts, $post->user_id);?>
     </td>
     <td>{{ $post->countQty }}</td>
-    <td>{{ $post->end_total }}</td>
+    <td><?php echo number_format($post->end_total) ?></td>
     <td><span class="status_<?php echo $post->id?>">{{ $post->status }}</span></td>
     <td>{{ $post->address }}</td>
-    <td>{{ $post->shipping_method }}</td>
-    <td>abc time</td>
+    <td><?php foreach ($transactionSend as $item) {?>
+      <?php if ($item->transaction_id == $post->id) {echo $item->shipping_method;}?>
+    <?php } ?></td>
+    <td><?php foreach ($transactionSend as $item) {?>
+      <?php if ($item->transaction_id == $post->id) {echo date("h:i:s d/m/Y", strtotime($item->date_send));}?>
+    <?php } ?></td>
     {!! Form::close() !!}
   </tr>
 @endforeach
