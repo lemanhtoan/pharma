@@ -9,7 +9,7 @@ if ( !Auth::check() ) {
 @extends('front.template')
 
 @section('main')
-
+    <?php if (count($dataTransaction)) { ?>
     <div class="row">
         <div class="col-md-8"><h2 class="title-main gray-color"><img src="{!!url('/images/bill_1_07.png')!!}" alt=""> Các đơn hàng của tôi </h2></div>
         <div class="col-md-4"><a class="btn-buy pull-right" href="">Lọc đơn hàng</a></div>
@@ -35,5 +35,8 @@ if ( !Auth::check() ) {
             </tbody>
         </table>
     </div>
+    <?php } else { ?>
+    <h4>Danh sách rỗng</h4>
+    <?php } ?>
 
 @stop

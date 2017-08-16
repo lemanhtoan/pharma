@@ -121,3 +121,4 @@ ALTER TABLE `transactions` ADD `countQty` INTEGER;
 
  // fix phí  tìm kiếm từ khóa   $phiMuaho =
 
+12. loi sua khi update composer not found controller : composer dumpautoload

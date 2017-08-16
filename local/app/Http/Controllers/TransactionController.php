@@ -9,6 +9,8 @@ use App\Models\District;
 use App\Models\Transaction;
 use App\Models\TransactionSend;
 
+use PDF;
+
 class TransactionController extends Controller {
 
 	protected $transactions_gestion;
@@ -207,8 +209,20 @@ class TransactionController extends Controller {
                 ->update(['status' => 'Đang giao']);
         }
 
-
         return response()->json();
+    }
+
+    public function in_hoa_don(Request $request) {
+
+        $ids = $request->input('dataChoise');
+        $arrIds = explode(",", $ids);
+        $orders = Transaction::whereIn('id', $arrIds)->get();
+        $title = 'Invoice order #';
+        $pdf = PDF::loadView('pdf.invoice', compact('title', 'orders'));
+        $path = base_path() . '/pdf/invoiceSave.pdf';
+        $pdf->save( $path );
+
+        return $pdf->stream();
     }
 
 }

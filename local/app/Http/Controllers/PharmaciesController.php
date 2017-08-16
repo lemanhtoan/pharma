@@ -22,7 +22,14 @@ class PharmaciesController extends Controller {
 
 		$this->middleware('redac', ['except' => ['indexFront', 'show', 'search']]);
 		$this->middleware('ajax', ['only' => ['updateActive', 'postChangeProvince']]);
-	}	
+	}
+
+	public function postPharStatus(Request $request){
+	    $ids =$request->input('dataChoise');
+	    $arrId = explode(",", $ids);
+        $this->pharmacies_gestion->updateActiveChecked($arrId);
+        return response()->json();
+    }
 
 	public function indexFront()
 	{

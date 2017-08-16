@@ -17,8 +17,18 @@ use Illuminate\Http\Request;
 
 use DateTime;
 
+use PDF;
+
 class HomeController extends Controller
 {
+    // test pdf
+    public function doPdf() {
+        $data = array(
+            'title' => 'Title page'
+        );
+        $pdf = PDF::loadView('pdf.invoice', $data);
+        return $pdf->download('invoice.pdf');
+    }
 
     public function getQuydinh(){
         $content = 'Noi dung quy dinh';

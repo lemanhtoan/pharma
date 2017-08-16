@@ -231,7 +231,7 @@ function getQty($productId, $type) {
 					<button data-drug="<?php echo $drug['drug_id'];?>" data-type="<?php echo $typePrice ?>" class="<?php echo $typePrice ?> btn-buy btn-cart btn-cart-<?php echo $drug['drug_id'];?>">Đặt hàng</button>
 
 
-					<?php if ( (getQty($drug['drug_id'], 'discount') > 0) && (getQty($drug['drug_id'], 'root') > 0) ) {$isLoad = 'isLoad';}?>
+					<?php if ( (getQty($drug['drug_id'], 'discount') > 0) && (getQty($drug['drug_id'], 'root') > 0) ) {$isLoad = 'isLoad';} else {$isLoad='';}?>
 
 					<?php if ($drug['max_discount_qty'] > 0) :?>
 						<div class="qty-box qty-<?php echo $drug['drug_id'];?> type_discount" data-type="type_discount">

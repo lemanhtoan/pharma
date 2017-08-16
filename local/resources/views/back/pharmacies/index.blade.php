@@ -55,6 +55,11 @@
 
     {!! Form::close() !!}
     <!--end search bar-->
+
+     <div class="row">
+       <input type="hidden" name="dataIds" class="dataIds">
+       <button id="changeStatus" type="button" data-target="#btnChangeStatus">Đổi trạng thái</button>
+     </div>
     </div>
   </div>
 
@@ -64,6 +69,9 @@
     <div class="table-responsive">
       <table class="table">
         <thead>
+          <th>
+            <input type="checkbox" id="selectall"/>
+          </th>
           <tr>
             <th>
               Mã Khách hàng
@@ -145,6 +153,63 @@
   <script>
 
     $(function() {
+
+        // update status
+        $('#changeStatus').click(function(){
+            // change status validation
+            var checkboxValues = [];
+            $('input[name="case[]"]:checked').each(function(index, elem) {
+                checkboxValues.push($(elem).val());
+            });
+
+            if (checkboxValues.length < 1) {
+                alert('Vui lòng chọn 1 hoặc nhiều khách hàng để đổi trạng thái');
+            } else {
+                var dataChoise = checkboxValues.join(',');
+                $('.dataIds').val(dataChoise);
+
+                var token = $('input[name="_token"]').val();
+                var dataChoise = $('.dataIds').val();
+                var dataChoiseArr = dataChoise.split(",");
+
+                $.ajax({
+                    url: '{{ url('postPharStatus') }}',
+                    type: 'PUT',
+                    data: "_token=" + token +"&dataChoise=" + dataChoise
+                })
+                    .done(function(response) {
+                        $.each( dataChoiseArr, function( key, value ) {
+                            console.log(value);
+                            $('.status_'+value + ' input').prop('checked', 'checked');
+                            $('.row-change-'+value).removeClass('warning');
+                        });
+
+                        console.log(response);
+                    })
+                    .fail(function() {
+                        alert('Lỗi thay đổi trạng thái');
+                    });
+
+                return false;
+            }
+
+        });
+
+        // checkbox function
+        $("#selectall").click(function () {
+            $('.case').prop('checked',  this.checked);
+        });
+
+        $(".case").click(function(){
+            if($(".case").length == $(".case:checked").length) {
+                $("#selectall").attr("checked", "true");
+            } else {
+                $("#selectall").removeAttr("checked");
+            }
+        });
+
+        // end change status ===============
+
 
         // change province load district
         $(document).on('change', '#s_province', function () {

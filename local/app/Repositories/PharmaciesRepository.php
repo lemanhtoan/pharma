@@ -151,6 +151,17 @@ class PharmaciesRepository extends BaseRepository {
         $post->save();
     }
 
+    public function updateActiveChecked($ids)
+    {
+        foreach ($ids as $id ){
+            $post = $this->getById($id);
+
+            $post->status = 1;
+
+            $post->save();
+        }
+    }
+
     public function store($inputs)
     {
         $this->save(new $this->model, $inputs);

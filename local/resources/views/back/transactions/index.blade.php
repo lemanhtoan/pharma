@@ -109,6 +109,7 @@
       </div>
       <!-- end modal change order status -->
 
+      <input type="hidden" name="invoiceIds" class="invoiceIds">
       <button id="printOrder">In hóa đơn</button>
     </div>
 
@@ -204,11 +205,51 @@
 <?php if(isset($_GET['s_status'])) {$sStatus =  $_GET['s_status'];} else {$sStatus = '';}?>
 <?php if(isset($_GET['s_province'])) {$sProvince =  $_GET['s_province'];} else {$sProvince = '';}?>
 <?php if(isset($_GET['s_district'])) {$sDistrict =  $_GET['s_district'];} else {$sDistrict = '';}?>
+
+<?php $urlRedirect = URL::to('/in-hoa-don');?>
 @section('scripts')
 
   <script>
 
     $(function() {
+
+        // print
+
+        $('#printOrder').click(function(){
+            // change status validation
+            var checkboxValues = [];
+            $('input[name="case[]"]:checked').each(function(index, elem) {
+                checkboxValues.push($(elem).val());
+            });
+
+            if (checkboxValues.length < 1) {
+                alert('Vui lòng chọn 1 hoặc nhiều giao dịch để in hóa đơn');
+            } else {
+                var dataChoise = checkboxValues.join(',');
+                $('.invoiceIds').val(dataChoise);
+
+                // ajax call
+                var token = $('input[name="_token"]').val();
+                var dataChoise = $('.invoiceIds').val();
+                $.ajax({
+                    url: '{{ url('in-hoa-don') }}' + "?dataChoise=" + dataChoise,
+                    type: 'GET'
+                })
+                .done(function(response) {
+                    window.open(
+                        '<?php echo $urlRedirect; ?>' + "?dataChoise=" + dataChoise,
+                        '_blank' // <- This is what makes it open in a new window.
+                    );
+                })
+                .fail(function() {
+                    alert('Lỗi in hóa đơn');
+                });
+
+                return false;
+            }
+
+        });
+
 
         $('#changeStatus').click(function(){
 

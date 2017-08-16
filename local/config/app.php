@@ -171,6 +171,8 @@ return [
 		App\Services\Html\HtmlServiceProvider::class,
 		Bestmomo\Filemanager\FilemanagerServiceProvider::class,
 
+        // pdf
+        Barryvdh\DomPDF\ServiceProvider::class,
 	],
 
 	/*
@@ -221,6 +223,8 @@ return [
 		'Form'		=> Collective\Html\FormFacade::class,
 		'HTML'		=> Collective\Html\HtmlFacade::class,
 
+        // pdf
+        'PDF' => Barryvdh\DomPDF\Facade::class,
 	],
 
 ];

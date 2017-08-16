@@ -4,11 +4,11 @@ Route::group(['middleware' => ['web']], function () {
 
 	// Home
 	Route::get('/', [
-		'uses' => 'HomeController@index', 
+		'uses' => 'HomeController@index',
 		'as' => 'home'
 	]);
 
-	// Auth front-end
+    // Auth front-end
     Route::put('postProductCart', 'HomeController@postProductCart');
     Route::get('checkout', 'HomeController@getCheckout');
     Route::get('before-buy', 'HomeController@getBeforeBuy');
@@ -17,14 +17,18 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('quy-dinh', 'HomeController@getQuydinh');
     Route::get('ho-tro', 'HomeController@getHotro');
     Route::get('profile', 'HomeController@getProfile');
-    
+
     Route::post('updateProfile', 'HomeController@updateProfile');
-    
+
 
 	Route::get('history', 'HomeController@getHistory');
 
 
-	// Authentication routes...
+    // test pdf
+    Route::get('doPdf', 'HomeController@doPdf');
+
+
+    // Authentication routes...
 	Route::get('auth/login', 'Auth\AuthController@getLoginFront');
 	Route::post('auth/login', 'Auth\AuthController@postLoginFront');
 	Route::get('auth/logout', 'Auth\AuthController@getLogout');
@@ -75,6 +79,8 @@ Route::group(['middleware' => ['web']], function () {
 
     Route::post('postChangeProvince', 'PharmaciesController@postChangeProvince');
 
+    Route::put('postPharStatus', 'PharmaciesController@postPharStatus');
+
     Route::resource('pharmacies', 'PharmaciesController');
 
     // Customer
@@ -94,6 +100,8 @@ Route::group(['middleware' => ['web']], function () {
 	Route::get('transactions/search', 'TransactionController@search');
 
 	Route::post('postChangeProvince', 'TransactionController@postChangeProvince');
+
+    Route::get('in-hoa-don', 'TransactionController@in_hoa_don');
 
 	Route::resource('transactions', 'TransactionController');
 
