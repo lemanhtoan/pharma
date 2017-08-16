@@ -24,7 +24,7 @@
               <?php endforeach; ?>
           </select>
         </p>
-        <p>
+        <p class="gr-btn">
           <span id="btnUpdateSend">Cập nhật</span>
           <span id="btnProcessSend">Giao hàng</span>
           <span id="btnPrintSend">In hóa đơn</span>

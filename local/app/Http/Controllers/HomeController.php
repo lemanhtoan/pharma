@@ -19,6 +19,11 @@ use DateTime;
 
 use PDF;
 
+
+
+use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Collection;
+
 class HomeController extends Controller
 {
     // test pdf
@@ -31,12 +36,12 @@ class HomeController extends Controller
     }
 
     public function getQuydinh(){
-        $content = 'Noi dung quy dinh';
+        $content = 'Bài viết quy định';
         return view( 'front.static', compact('content') );
     }
 
     public function getHotro(){
-        $content = 'Noi dung ho tro';
+        $content = 'Bài viết hỗ trợ';
         return view( 'front.static', compact('content') );
     }
 
@@ -97,7 +102,7 @@ class HomeController extends Controller
 
         $drug = Mind::whereId($mind[0]->id)->firstOrFail();
 
-        $drugs = array();
+        $drugArr = array();
         if (count($drug->mind_drugs)) {
             $drugItem = array();
             foreach($drug->mind_drugs as $row) {
@@ -110,10 +115,20 @@ class HomeController extends Controller
                 $drugItem['status'] = $row->status;
                 $drugItem['drugInfo'] = $this->getDrugInfo($row->drug_id);
                 $drugItem['drugImage'] = $this->getDrugImage($row->drug_id);
-                $drugs[] = $drugItem;
+                $drugArr[] = $drugItem;
             }
         }
         //$products =  $query->paginate(15);
+
+        $currentPage = LengthAwarePaginator::resolveCurrentPage();
+        $col = new Collection($drugArr);
+
+        // fix test pagination
+        $perPage = 12   ;
+        $currentPageSearchResults = $col->slice(($currentPage - 1) * $perPage, $perPage)->all();
+        $drugs = new LengthAwarePaginator($currentPageSearchResults, count($col), $perPage, $currentPage,[ 'path' => LengthAwarePaginator::resolveCurrentPath()]);
+
+
 
         $nextMind = Mind::where('start_time', '>',  date("Y-m-d H:i:s") )
             ->orderBy('start_time', 'asc')
@@ -700,8 +715,7 @@ class HomeController extends Controller
         ->get(['id']);
 
         $drug = Mind::whereId($mind[0]->id)->firstOrFail();
-
-        $drugs = array();
+        $drugArr = array();
         if (count($drug->mind_drugs)) {
             $drugItem = array();
             foreach($drug->mind_drugs as $row) {
@@ -714,9 +728,18 @@ class HomeController extends Controller
                 $drugItem['status'] = $row->status;
                 $drugItem['drugInfo'] = $this->getDrugInfo($row->drug_id);
                 $drugItem['drugImage'] = $this->getDrugImage($row->drug_id);
-                $drugs[] = $drugItem;
+                $drugArr[] = $drugItem;
             }
         }
+
+        $currentPage = LengthAwarePaginator::resolveCurrentPage();
+        $col = new Collection($drugArr);
+
+        // fix test pagination
+        $perPage = 15;
+        $currentPageSearchResults = $col->slice(($currentPage - 1) * $perPage, $perPage)->all();
+        $drugs = new LengthAwarePaginator($currentPageSearchResults, count($col), $perPage, $currentPage,[ 'path' => LengthAwarePaginator::resolveCurrentPath()]);
+
         //$products =  $query->paginate(15);
 
         $nextMind = Mind::where('start_time', '>',  date("Y-m-d H:i:s") )

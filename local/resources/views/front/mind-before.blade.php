@@ -70,20 +70,24 @@
             <?php } ?>
         </ul>
 
-        <ul class="pag-nav pagination">
-            <li><a href="#">1</a></li>
-            <li class="active"><a href="#">2</a></li>
-            <li><a href="#">3</a></li>
-            <li><a href="#">4</a></li>
-            <li><a href="#">5</a></li>
-        </ul>
+        {{--<ul class="pag-nav pagination">--}}
+            {{--<li><a href="#">1</a></li>--}}
+            {{--<li class="active"><a href="#">2</a></li>--}}
+            {{--<li><a href="#">3</a></li>--}}
+            {{--<li><a href="#">4</a></li>--}}
+            {{--<li><a href="#">5</a></li>--}}
+        {{--</ul>--}}
+
+        <div class="pag-nav">
+            {!! $drugs->appends(Input::except('page'))->render() !!}
+        </div>
 
         <?php } else {?>
         <p>Danh sách rỗng</p>
         <?php } ?>
     </div>
 
-    <?php if ($nextMind) : $valueTime = $nextMind[0]->start_time; ?>
+    <?php if (count($nextMind)) { $valueTime = $nextMind[0]->start_time; ?>
 
     <!-- modal next-mind -->
     <div class="modal fade" id="mindModal" role="dialog">
@@ -255,6 +259,38 @@
         });
     </script>
 
-    <?php endif; ?>
+    <?php } else { ?>
+
+
+    <!-- modal next-mind -->
+    <div class="modal fade" id="mindModal" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><img src="{!!url('/images/close.png')!!}" alt=""></button>
+                    <h4 class="modal-title">Phiên tiếp theo sẽ mở vào:</h4>
+                <div class="modal-body">
+                    <div class="modal-box">
+                        <span class="left-time">Không có dữ liệu phiên tiếp theo</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <!-- end modal next-mind -->
+
+    <!-- not have next mind -->
+    <script type="text/javascript">
+        // body load show mind modal
+        $(window).on('load',function(){
+            setTimeout(function(){
+            $('#mindModal').modal('show');
+            }, 2000);
+        });
+    </script>
+    <?php } ?>
 
 @stop

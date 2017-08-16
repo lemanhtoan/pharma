@@ -248,7 +248,6 @@ class MindController extends Controller {
                 }
 
             }
-            // echo "<pre>"; print_r($items); die;
 
             if ($items) {
                 foreach ($items as $row) {
@@ -256,11 +255,11 @@ class MindController extends Controller {
                     if (isset($row)) {
                         $mind_drug->mind_id = $id;
                         $mind_drug->drug_id = $row['drug_id'];
-                        $mind_drug->drug_price = $row['drug_price'];
-                        $mind_drug->drug_special_price = $row['drug_special_price'];
-                        $mind_drug->max_discount_qty = $row['max_discount_qty'];
-                        $mind_drug->max_qty = $row['max_qty'];
-                        $mind_drug->note = $row['note'];
+                        $mind_drug->drug_price = $row['drug_price'] ? $row['drug_price'] : 0;
+                        $mind_drug->drug_special_price = $row['drug_special_price'] ? $row['drug_special_price']: 0;
+                        $mind_drug->max_discount_qty = $row['max_discount_qty'] ? $row['max_discount_qty'] : 0;
+                        $mind_drug->max_qty = $row['max_qty'] ? $row['max_qty'] : 0;
+                        $mind_drug->note = $row['note'] ? $row['note'] : '';
                         $mind_drug->status = 1;
                         $mind_drug->save();
                     }

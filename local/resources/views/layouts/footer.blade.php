@@ -356,4 +356,33 @@
     .addHeight {
         min-height: 376px;
     }
+
+    .pag-nav .pagination {
+        float: right;
+    }
+    .pag-nav .pagination li a, .pag-nav .pagination li.disabled span {
+        margin: 0 5px;
+        border-radius: 4px;
+        background: #17be9b;
+        color: #fff;
+        border-color: #17be9b
+    }
+    .pag-nav .pagination .active a, .pag-nav .pagination .active span {
+        color: #17be9b !important;
+        background: #fff;
+        border-color: #17be9b;
+        border-radius: 4px;
+    }
+    .pag-nav .pagination li a:hover,
+    .pag-nav .pagination .active a:hover {
+        color: #17be9b !important;
+        background: #fff;
+        border-color: #17be9b
+    }
+    .pag-nav li:last-child a {
+        margin-right: 0;
+    }
+    .pag-nav .pagination li span, pag-nav .pagination li a {
+        cursor: pointer;
+    }
 </style>
