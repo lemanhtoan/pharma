@@ -100,8 +100,12 @@
     .buy-form .checkout_step2 .box-shiper ul {
         text-align: left;
     }
-    .buy-form .checkout_step2 .box-shiper {
+    .buy-form .checkout_step2 .box-shiper {        
         text-align: center;
+    }
+    .buy-form .checkout_step2 .box-shiper .modal-dialog {text-align: left;}
+    .buy-form .checkout_step2 .box-shiper .modal-dialog .modal-content {
+        padding: 10px;
     }
     .buy-form .checkout_step2 {
         border: 1px solid #fff;
@@ -126,6 +130,50 @@
     div.box-shiper h3 {
         margin-top: 20px;
     }
+    .table-cart.table tbody{
+        width: 100%;
+        float: left;
+    }
+    .table-cart.table tbody > tr{
+        box-shadow: 0 1px 5px rgba(0, 0, 0, 0.15);
+        width: 100%;
+        float: left;
+        margin-bottom: 20px;
+        border: none;
+        background: #fff;
+    }
+    .table-cart.table tbody > tr > td:nth-child(6){
+        width: 35%;
+        float: left;
+        border: none;
+    }
+    .table-cart.table tbody > tr > td:nth-child(7){
+        width: 65%;
+        float: right;
+        border: none;
+    }
+    .table-cart.table tbody > tr > td:nth-child(8){
+        width: 50%;
+        float: left;
+        border: none;
+    }
+    .table-cart.table tbody > tr > td:nth-child(9){
+        width: 50%;
+        float: right;
+        border: none;
+    }
+    table.table-cart tbody tr td p {
+        margin-left: 5px;
+        font-size: 14px;
+        margin-top: 0;
+    }
+    table.table-cart tbody > tr > td .qty-del{margin-left: 5px}
+    table.table-cart tbody > tr > td .qty-box {
+        width: auto;
+    }
+    
+
+
 }
 
 @media only screen and (max-width: 480px) {
@@ -133,6 +181,9 @@
         text-align: center;
         width: 100%;
         padding: 15px 20px;
+    }
+    table.table-cart tbody input.qty-count {
+        width: 35px !important;
     }
 }
 @media only screen and (min-width: 1024px) {
