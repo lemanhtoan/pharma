@@ -107,6 +107,7 @@
     .buy-form .checkout_step2 .box-shiper .modal-dialog .modal-content {
         padding: 10px;
     }
+    .checkout_step2.after_order,
     .buy-form .checkout_step2 {
         border: 1px solid #fff;
         background: #fff;
@@ -116,6 +117,7 @@
         border-radius: 3px;
         padding: 10px 10px 15px;
     }
+    .checkout_step2.after_order{margin-bottom: 20px}
     .row-value {
         width: 40%;
         display: inline-block;
