@@ -297,6 +297,13 @@
     .addHeight {
       min-height: 250px !important;
     }
+    .table-cart img.show-detail {
+      width: 100%;
+      max-width: 100%;
+    }
+    .table-cart tbody tr td {
+      text-align: left;
+    }
   }
   @media (min-width: 992px) {
     .mb-nav {
