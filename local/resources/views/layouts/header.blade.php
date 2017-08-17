@@ -265,6 +265,35 @@
     .row-top .col-md-4 {
       padding-right: 0;
     }
+    div.box-green, div.box-wd {
+      margin-bottom: 10px;
+    }
+    .left-time {
+      text-align: center;
+    }
+    #timeExpire {
+      padding-left:16%;
+    }
+    #mindModal #timeExpire {
+      padding-left:0;
+    }
+      #mindModal .modal-box {
+      width: 100%;
+        padding: 5px;
+     }
+      #mindModal .box-count {
+        width: 45px;
+      }
+    #mindModal .box-second {
+      width: 80px;
+    }
+    span.top-sp-1 {
+      font-size: 18px;
+      padding: 6px ;
+    }
+    #mindModal  h4.modal-title {
+      font-size: 17px;
+    }
   }
   @media (min-width: 992px) {
     .mb-nav {
