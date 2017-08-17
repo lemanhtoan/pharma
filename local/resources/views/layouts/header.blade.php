@@ -63,30 +63,33 @@
     </div>
 
     <!-- menu mobile -->
-    <div class="navmenu navmenu-default navmenu-fixed-left">
-      <a href="{!! url('/') !!}"><img class="navmenu-brand logo logo-mb" src="{!!url('/images/logo.png')!!}" align="logo" /></a>
-      <ul class="nav navmenu-nav">
-        <li {!! classActivePath('/') !!}><a href="{!! url('/') !!}">Đặt hàng</a></li>
-        <li {!! classActivePath('history') !!}><a href="{!! url('history') !!}">Lịch sử</a></li>
-        <li {!! classActivePath('quy-dinh') !!}><a href="{!! url('quy-dinh') !!}">Quy định</a></li>
-        <li {!! classActivePath('ho-tro') !!}><a href="{!! url('ho-tro') !!}">Hỗ trợ</a></li>
-      </ul>
-    </div>
-
-    <div class="canvas">
-      <div class="navbar navbar-default navbar-fixed-top">
-        <div class="col-item-3">
-          <button type="button" class="navbar-toggle" data-toggle="offcanvas" data-recalc="false" data-target=".navmenu" data-canvas=".canvas">
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-        </div>
-        <div class="col-item-6">
-          <a href="{!! url('/') !!}"><img class="logo logo-mb" src="{!!url('/images/logo.png')!!}" align="logo" /></a>
-        </div>
-        <div class="col-item-3">Account</div>
+    <div class="mb-nav">
+      <div class="navmenu navmenu-default navmenu-fixed-left">
+        <a href="{!! url('/') !!}"><img class="navmenu-brand logo logo-mb" src="{!!url('/images/logo.png')!!}" align="logo" /></a>
+        <ul class="nav navmenu-nav">
+          <li {!! classActivePath('/') !!}><a href="{!! url('/') !!}">Đặt hàng</a></li>
+          <li {!! classActivePath('history') !!}><a href="{!! url('history') !!}">Lịch sử</a></li>
+          <li {!! classActivePath('quy-dinh') !!}><a href="{!! url('quy-dinh') !!}">Quy định</a></li>
+          <li {!! classActivePath('ho-tro') !!}><a href="{!! url('ho-tro') !!}">Hỗ trợ</a></li>
+        </ul>
       </div>
+
+      <div class="canvas">
+        <div class="navbar navbar-default navbar-fixed-top">
+          <div class="col-item-3">
+            <button type="button" class="navbar-toggle" data-toggle="offcanvas" data-recalc="false" data-target=".navmenu" data-canvas=".canvas">
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+          </div>
+          <div class="col-item-6">
+            <a href="{!! url('/') !!}"><img class="logo logo-mb" src="{!!url('/images/logo.png')!!}" align="logo" /></a>
+          </div>
+          <div class="col-item-3">Account</div>
+        </div>
+      </div>
+
     </div>
     <!-- menu mobile -->
 
@@ -128,16 +131,9 @@
   }
 
   @media (min-width: 992px) {
-    body {
-      padding: 0;
+    .mb-nav {
+      display: none;
     }
-    .navbar {
-      right: auto;
-      background: none;
-      border: none;
-    }
-    .canvas {
-      padding: 0;
-    }
+   
   }
 </style>

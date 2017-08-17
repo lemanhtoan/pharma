@@ -5,16 +5,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="bb71d8f3-df9c-4e23-82e7-5fed778bf868" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/local/app/Http/Controllers/DiscountController.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/local/app/Http/Requests/DiscountRequest.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/local/app/Models/Discount.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/local/app/Repositories/DiscountRepository.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/local/resources/views/back/discount/create.blade.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/local/resources/views/back/discount/edit.blade.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/local/resources/views/back/discount/index.blade.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/local/resources/views/back/discount/show.blade.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/local/resources/views/back/discount/table.blade.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/local/resources/views/back/discount/template.blade.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/apple-touch-icon-precomposed.png" afterPath="$PROJECT_DIR$/apple-touch-icon-precomposed.png" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bt.png" afterPath="$PROJECT_DIR$/bt.png" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ckeditor/plugins/about/dialogs/hidpi/logo_ckeditor.png" afterPath="$PROJECT_DIR$/ckeditor/plugins/about/dialogs/hidpi/logo_ckeditor.png" />
@@ -2567,6 +2557,7 @@
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/local/app/Http/Controllers/ContactController.php" afterPath="$PROJECT_DIR$/local/app/Http/Controllers/ContactController.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/local/app/Http/Controllers/Controller.php" afterPath="$PROJECT_DIR$/local/app/Http/Controllers/Controller.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/local/app/Http/Controllers/CustomerController.php" afterPath="$PROJECT_DIR$/local/app/Http/Controllers/CustomerController.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/local/app/Http/Controllers/DiscountController.php" afterPath="$PROJECT_DIR$/local/app/Http/Controllers/DiscountController.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/local/app/Http/Controllers/DrugController.php" afterPath="$PROJECT_DIR$/local/app/Http/Controllers/DrugController.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/local/app/Http/Controllers/GroupDrugController.php" afterPath="$PROJECT_DIR$/local/app/Http/Controllers/GroupDrugController.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/local/app/Http/Controllers/HomeController.php" afterPath="$PROJECT_DIR$/local/app/Http/Controllers/HomeController.php" />
@@ -2596,6 +2587,7 @@
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/local/app/Http/Requests/CommentRequest.php" afterPath="$PROJECT_DIR$/local/app/Http/Requests/CommentRequest.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/local/app/Http/Requests/ContactRequest.php" afterPath="$PROJECT_DIR$/local/app/Http/Requests/ContactRequest.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/local/app/Http/Requests/CustomerRequest.php" afterPath="$PROJECT_DIR$/local/app/Http/Requests/CustomerRequest.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/local/app/Http/Requests/DiscountRequest.php" afterPath="$PROJECT_DIR$/local/app/Http/Requests/DiscountRequest.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/local/app/Http/Requests/DrugRequest.php" afterPath="$PROJECT_DIR$/local/app/Http/Requests/DrugRequest.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/local/app/Http/Requests/GroupDrugRequest.php" afterPath="$PROJECT_DIR$/local/app/Http/Requests/GroupDrugRequest.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/local/app/Http/Requests/MindRequest.php" afterPath="$PROJECT_DIR$/local/app/Http/Requests/MindRequest.php" />
@@ -2619,6 +2611,7 @@
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/local/app/Models/Comment.php" afterPath="$PROJECT_DIR$/local/app/Models/Comment.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/local/app/Models/Contact.php" afterPath="$PROJECT_DIR$/local/app/Models/Contact.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/local/app/Models/Customer.php" afterPath="$PROJECT_DIR$/local/app/Models/Customer.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/local/app/Models/Discount.php" afterPath="$PROJECT_DIR$/local/app/Models/Discount.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/local/app/Models/District.php" afterPath="$PROJECT_DIR$/local/app/Models/District.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/local/app/Models/Drug.php" afterPath="$PROJECT_DIR$/local/app/Models/Drug.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/local/app/Models/Drug_img.php" afterPath="$PROJECT_DIR$/local/app/Models/Drug_img.php" />
@@ -2648,6 +2641,7 @@
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/local/app/Repositories/CommentRepository.php" afterPath="$PROJECT_DIR$/local/app/Repositories/CommentRepository.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/local/app/Repositories/ContactRepository.php" afterPath="$PROJECT_DIR$/local/app/Repositories/ContactRepository.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/local/app/Repositories/CustomerRepository.php" afterPath="$PROJECT_DIR$/local/app/Repositories/CustomerRepository.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/local/app/Repositories/DiscountRepository.php" afterPath="$PROJECT_DIR$/local/app/Repositories/DiscountRepository.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/local/app/Repositories/DrugRepository.php" afterPath="$PROJECT_DIR$/local/app/Repositories/DrugRepository.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/local/app/Repositories/GroupDrugRepository.php" afterPath="$PROJECT_DIR$/local/app/Repositories/GroupDrugRepository.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/local/app/Repositories/MindRepository.php" afterPath="$PROJECT_DIR$/local/app/Repositories/MindRepository.php" />
@@ -2703,6 +2697,7 @@
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/local/database/migrations/2017_08_09_041051_create_transaction_drug_table.php" afterPath="$PROJECT_DIR$/local/database/migrations/2017_08_09_041051_create_transaction_drug_table.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/local/database/migrations/2017_08_09_041057_create_transaction_send_table.php" afterPath="$PROJECT_DIR$/local/database/migrations/2017_08_09_041057_create_transaction_send_table.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/local/database/migrations/2017_08_13_042051_create_user_logs_table.php" afterPath="$PROJECT_DIR$/local/database/migrations/2017_08_13_042051_create_user_logs_table.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/local/database/migrations/2017_08_17_041140_create_config_discount_table.php" afterPath="$PROJECT_DIR$/local/database/migrations/2017_08_17_041140_create_config_discount_table.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/local/database/seeds/DatabaseSeeder.php" afterPath="$PROJECT_DIR$/local/database/seeds/DatabaseSeeder.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/local/gulpfile.js" afterPath="$PROJECT_DIR$/local/gulpfile.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/local/nitrous.json" afterPath="$PROJECT_DIR$/local/nitrous.json" />
@@ -2899,6 +2894,12 @@
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/local/resources/views/back/customer/show.blade.php" afterPath="$PROJECT_DIR$/local/resources/views/back/customer/show.blade.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/local/resources/views/back/customer/table.blade.php" afterPath="$PROJECT_DIR$/local/resources/views/back/customer/table.blade.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/local/resources/views/back/customer/template.blade.php" afterPath="$PROJECT_DIR$/local/resources/views/back/customer/template.blade.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/local/resources/views/back/discount/create.blade.php" afterPath="$PROJECT_DIR$/local/resources/views/back/discount/create.blade.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/local/resources/views/back/discount/edit.blade.php" afterPath="$PROJECT_DIR$/local/resources/views/back/discount/edit.blade.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/local/resources/views/back/discount/index.blade.php" afterPath="$PROJECT_DIR$/local/resources/views/back/discount/index.blade.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/local/resources/views/back/discount/show.blade.php" afterPath="$PROJECT_DIR$/local/resources/views/back/discount/show.blade.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/local/resources/views/back/discount/table.blade.php" afterPath="$PROJECT_DIR$/local/resources/views/back/discount/table.blade.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/local/resources/views/back/discount/template.blade.php" afterPath="$PROJECT_DIR$/local/resources/views/back/discount/template.blade.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/local/resources/views/back/drug/create.blade.php" afterPath="$PROJECT_DIR$/local/resources/views/back/drug/create.blade.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/local/resources/views/back/drug/edit.blade.php" afterPath="$PROJECT_DIR$/local/resources/views/back/drug/edit.blade.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/local/resources/views/back/drug/index.blade.php" afterPath="$PROJECT_DIR$/local/resources/views/back/drug/index.blade.php" />
@@ -12727,6 +12728,7 @@
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/owl-carousel/owl.carousel.min.js" afterPath="$PROJECT_DIR$/owl-carousel/owl.carousel.min.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/owl-carousel/owl.theme.css" afterPath="$PROJECT_DIR$/owl-carousel/owl.theme.css" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/owl-carousel/owl.transitions.css" afterPath="$PROJECT_DIR$/owl-carousel/owl.transitions.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pharma.sql" afterPath="$PROJECT_DIR$/pharma.sql" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/robots.txt" afterPath="$PROJECT_DIR$/robots.txt" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/storage/app/public/.gitignore" afterPath="$PROJECT_DIR$/storage/app/public/.gitignore" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/storage/framework/sessions/876a3df296da6ab5d0d4266ad72d2c3b7eb6ab73" afterPath="$PROJECT_DIR$/storage/framework/sessions/876a3df296da6ab5d0d4266ad72d2c3b7eb6ab73" />
@@ -13469,8 +13471,18 @@
       <file leaf-file-name="header.blade.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/local/resources/views/layouts/header.blade.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="148">
-              <caret line="71" column="93" lean-forward="false" selection-start-line="71" selection-start-column="93" selection-end-line="71" selection-end-column="93" />
+            <state relative-caret-position="652">
+              <caret line="136" column="3" lean-forward="false" selection-start-line="136" selection-start-column="3" selection-end-line="136" selection-end-column="3" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="mind-before.blade.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/local/resources/views/front/mind-before.blade.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="6480">
+              <caret line="270" column="0" lean-forward="false" selection-start-line="270" selection-start-column="0" selection-end-line="270" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -13561,7 +13573,6 @@
         <option value="$PROJECT_DIR$/local/app/Http/Controllers/MindController.php" />
         <option value="$PROJECT_DIR$/local/app/Http/Controllers/HomeController.php" />
         <option value="$PROJECT_DIR$/local/resources/views/layouts/footer.blade.php" />
-        <option value="$PROJECT_DIR$/local/resources/views/front/mind-before.blade.php" />
         <option value="$PROJECT_DIR$/local/note.txt" />
         <option value="$PROJECT_DIR$/local/database/migrations/2017_08_17_041140_create_config_discount_table.php" />
         <option value="$PROJECT_DIR$/local/app/Http/routes.php" />
@@ -13576,6 +13587,7 @@
         <option value="$PROJECT_DIR$/local/resources/views/back/discount/table.blade.php" />
         <option value="$PROJECT_DIR$/local/resources/views/back/discount/show.blade.php" />
         <option value="$PROJECT_DIR$/local/resources/views/back/discount/template.blade.php" />
+        <option value="$PROJECT_DIR$/local/resources/views/front/mind-before.blade.php" />
         <option value="$PROJECT_DIR$/local/resources/views/layouts/header.blade.php" />
       </list>
     </option>
@@ -13684,6 +13696,32 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="layouts" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="pharma" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="pharma" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="local" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="resources" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="views" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="front" />
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
           </PATH>
@@ -13920,12 +13958,12 @@
       <workItem from="1502764465603" duration="16930000" />
       <workItem from="1502850999870" duration="17953000" />
       <workItem from="1502899861510" duration="6069000" />
-      <workItem from="1502938379154" duration="7887000" />
+      <workItem from="1502938379154" duration="8155000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="53549000" />
+    <option name="totallyTimeSpent" value="53817000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
@@ -15982,14 +16020,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/local/resources/views/front/mind-before.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="773">
-          <caret line="289" column="0" lean-forward="true" selection-start-line="289" selection-start-column="0" selection-end-line="289" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/local/database/migrations/2017_08_13_042051_create_user_logs_table.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -16185,10 +16215,18 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/local/resources/views/front/mind-before.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="6480">
+          <caret line="270" column="0" lean-forward="false" selection-start-line="270" selection-start-column="0" selection-end-line="270" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/local/resources/views/layouts/header.blade.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="148">
-          <caret line="71" column="93" lean-forward="false" selection-start-line="71" selection-start-column="93" selection-end-line="71" selection-end-column="93" />
+        <state relative-caret-position="652">
+          <caret line="136" column="3" lean-forward="false" selection-start-line="136" selection-start-column="3" selection-end-line="136" selection-end-column="3" />
           <folding />
         </state>
       </provider>
