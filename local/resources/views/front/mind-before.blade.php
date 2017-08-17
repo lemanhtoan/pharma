@@ -226,6 +226,49 @@
     <!-- end modal next-mind -->
 
     <script type="text/javascript">
+
+        // body load show mind modal
+        $(window).on('load',function(){
+            setTimeout(function(){
+                $('#mindModal').modal('show');
+            }, 2000);
+        });
+    </script>
+
+    <?php } else { ?>
+
+    <!-- modal next-mind -->
+    <div class="modal fade" id="mindModal" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><img src="{!!url('/images/close.png')!!}" alt=""></button>
+                    <h4 class="modal-title">Phiên tiếp theo sẽ mở vào:</h4>
+                    <div class="modal-body">
+                        <div class="modal-box">
+                            <span class="left-time">Không có dữ liệu phiên tiếp theo</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- end modal next-mind -->
+
+    <!-- not have next mind -->
+    <script type="text/javascript">
+        // body load show mind modal
+        $(window).on('load',function(){
+            setTimeout(function(){
+            $('#mindModal').modal('show');
+            }, 2000);
+        });
+    </script>
+    <?php } ?>
+
+    <script>
+
         // media drug
         $("#drug-media.drug-media").owlCarousel({
             items : 1,
@@ -250,47 +293,5 @@
             var idDrug = $(this).attr('data-drug');
             $('#detailDrugModal.detailDrugModal-'+idDrug).modal('show');
         });
-
-        // body load show mind modal
-        $(window).on('load',function(){
-            setTimeout(function(){
-                $('#mindModal').modal('show');
-            }, 2000);
-        });
     </script>
-
-    <?php } else { ?>
-
-
-    <!-- modal next-mind -->
-    <div class="modal fade" id="mindModal" role="dialog">
-        <div class="modal-dialog">
-
-            <!-- Modal content-->
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal"><img src="{!!url('/images/close.png')!!}" alt=""></button>
-                    <h4 class="modal-title">Phiên tiếp theo sẽ mở vào:</h4>
-                <div class="modal-body">
-                    <div class="modal-box">
-                        <span class="left-time">Không có dữ liệu phiên tiếp theo</span>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-    </div>
-    <!-- end modal next-mind -->
-
-    <!-- not have next mind -->
-    <script type="text/javascript">
-        // body load show mind modal
-        $(window).on('load',function(){
-            setTimeout(function(){
-            $('#mindModal').modal('show');
-            }, 2000);
-        });
-    </script>
-    <?php } ?>
-
 @stop

@@ -106,6 +106,11 @@ Route::group(['middleware' => ['web']], function () {
 	Route::resource('transactions', 'TransactionController');
 
 
+    // Discount
+    Route::get('discount/order', ['uses' => 'DiscountController@indexOrder', 'as' => 'discount.order']);
+    Route::get('discount', 'DiscountController@indexFront');
+    Route::resource('discount', 'DiscountController');
+
 	// Blog
 	Route::get('blog/order', ['uses' => 'BlogController@indexOrder', 'as' => 'blog.order']);
 	Route::get('articles', 'BlogController@indexFront');

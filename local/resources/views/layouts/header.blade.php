@@ -11,10 +11,13 @@
   {!! HTML::style('owl-carousel/owl.carousel.css') !!}
   {!! HTML::style('owl-carousel/owl.theme.css') !!}
 
+  {!! HTML::style('http://www.jasny.net/bootstrap/dist/css/jasny-bootstrap.min.css') !!}
+
   {!! HTML::script('//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js') !!}
   <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.10.2.min.js"><\/script>')</script>
   {!! HTML::script('js/bootstrap.min.js') !!}
   {!! HTML::script('owl-carousel/owl.carousel.min.js') !!}
+  {!! HTML::script('http://www.jasny.net/bootstrap/dist/js/jasny-bootstrap.min.js') !!}
 
 </head>
 <body>
@@ -58,5 +61,83 @@
         <li {!! classActivePath('ho-tro') !!}><a href="{!! url('ho-tro') !!}">Hỗ trợ</a></li>
       </ul>
     </div>
+
+    <!-- menu mobile -->
+    <div class="navmenu navmenu-default navmenu-fixed-left">
+      <a href="{!! url('/') !!}"><img class="navmenu-brand logo logo-mb" src="{!!url('/images/logo.png')!!}" align="logo" /></a>
+      <ul class="nav navmenu-nav">
+        <li {!! classActivePath('/') !!}><a href="{!! url('/') !!}">Đặt hàng</a></li>
+        <li {!! classActivePath('history') !!}><a href="{!! url('history') !!}">Lịch sử</a></li>
+        <li {!! classActivePath('quy-dinh') !!}><a href="{!! url('quy-dinh') !!}">Quy định</a></li>
+        <li {!! classActivePath('ho-tro') !!}><a href="{!! url('ho-tro') !!}">Hỗ trợ</a></li>
+      </ul>
+    </div>
+
+    <div class="canvas">
+      <div class="navbar navbar-default navbar-fixed-top">
+        <div class="col-item-3">
+          <button type="button" class="navbar-toggle" data-toggle="offcanvas" data-recalc="false" data-target=".navmenu" data-canvas=".canvas">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+        </div>
+        <div class="col-item-6">
+          <a href="{!! url('/') !!}"><img class="logo logo-mb" src="{!!url('/images/logo.png')!!}" align="logo" /></a>
+        </div>
+        <div class="col-item-3">Account</div>
+      </div>
+    </div>
+    <!-- menu mobile -->
+
   </div>
+
+
 </header>
+
+
+<style>
+  .navbar-toggle {
+    float: left;
+    margin-left: 15px;
+  }
+
+  .navmenu-fixed-left {
+    display: none;
+  }
+  .navmenu-fixed-left.in {
+    display: block;
+  }
+  .navmenu {
+    z-index: 1;
+  }
+
+  .canvas {
+    position: relative;
+    left: 0;
+    z-index: 2;
+    min-height: 100%;
+    padding: 50px 0 0 0;
+    background: #fff;
+  }
+
+  @media (min-width: 0) {
+    .navbar-toggle {
+      display: block; /* force showing the toggle */
+    }
+  }
+
+  @media (min-width: 992px) {
+    body {
+      padding: 0;
+    }
+    .navbar {
+      right: auto;
+      background: none;
+      border: none;
+    }
+    .canvas {
+      padding: 0;
+    }
+  }
+</style>

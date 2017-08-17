@@ -93,6 +93,10 @@
                     <li {!! classActiveSegment(1, 'customer') !!}>
                         <a href="{!! route('customer.index') !!}"><span class="fa fa-fw fa-dashboard"></span> Người dùng</a>
                     </li>
+
+                    <li {!! classActiveSegment(1, 'discount') !!}>
+                        <a href="{!! route('discount.index') !!}"><span class="fa fa-fw fa-dashboard"></span> Khuyến mãi</a>
+                    </li>
                     @endif
                 </ul>
             </div>

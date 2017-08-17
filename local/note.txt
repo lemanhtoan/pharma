@@ -122,3 +122,39 @@ ALTER TABLE `transactions` ADD `countQty` INTEGER;
  // fix phí  tìm kiếm từ khóa   $phiMuaho =
 
 12. loi sua khi update composer not found controller : composer dumpautoload
+
+13. tinh khuyen mai
+
+Chính sách KM:
+Giảm % trên tổng giá trị đơn hàng theo các bậc (cách tính như tính thuế TNCN) và không quá 1tr:
+- Từ 2-4tr, giảm 3%
+- Từ 4-6tr giảm 3.5%
+- Từ 6-8tr giảm 4%
+- Từ 8-10tr giảm 4.5%
+- Trên 10tr giảm 5%
+
+vd cụ thể: Nếu giá trị đơn hàng là 6tr5, thì số tiền được giảm là:
+4tr x 3% + 2tr x 3.5% + 500k*4% = 210k
+
+dua tren sub_total = 6tr5
+discount(id, name, from, to, level, percent)
+
+php artisan make:migration create_config_discount_table
+
+1, giam gia 3%, 2, 4, 1, 3
+
+cua hinh 10 level
+
+$discountValue = 0;
+if (sub_total >= to(lv1)  {
+    $discountValue += ( to(lv1) * percent(lv1) ) / 100;
+}
+
+if (sub_total >= to(lv2)  {
+    $discountValue += ( ( to(lv2) - to(lv1) ) * percent(lv2) ) / 100;
+}
+
+if (sub_total >= to(lv3)  {
+    $discountValue += ( ( to(lv3) - to(lv2) ) * percent(lv3) ) / 100;
+}
+

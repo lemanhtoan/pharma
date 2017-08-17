@@ -354,7 +354,7 @@
 </script>
 <style type="text/css">
     .addHeight {
-        min-height: 376px;
+        min-height: 394px;
     }
 
     .pag-nav .pagination {
@@ -384,5 +384,28 @@
     }
     .pag-nav .pagination li span, pag-nav .pagination li a {
         cursor: pointer;
+    }
+    h3.title-product {
+        min-height: 35px;
+    }
+    h4.modal-title {
+        margin-bottom: 10px;
+    }
+
+    footer {
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        height: 70px;
+        width: 100%;
+    }
+
+    body {
+        margin: 0 0 70px !important;
+    }
+
+    html {
+        position: relative;
+        min-height: 100%;
     }
 </style>
