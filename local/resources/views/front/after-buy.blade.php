@@ -10,9 +10,9 @@ if ( !Auth::check() ) {
 
 @section('main')
 
-    <div class="row">
-        <div class="col-md-8"><h2 class="title-main gray-color"><img src="{!!url('/images/bill_1_07.png')!!}" alt=""> Chi tiết đơn hàng </h2></div>
-        <div class="col-md-4"><a class="btn-buy pull-right" href="{!!url('/')!!}">< Trở lại</a></div>
+    <div class="row checkout_step1">
+        <div class="col-md-8 col-xs-8"><h2 class="title-main gray-color"><img src="{!!url('/images/bill_1_07.png')!!}" alt=""> Chi tiết đơn hàng </h2></div>
+        <div class="col-md-4 col-xs-4"><a class="btn-buy pull-right" href="{!!url('/')!!}">< Trở lại</a></div>
     </div>
     
     <?php if (isset($message)) : ?>
@@ -23,7 +23,7 @@ if ( !Auth::check() ) {
         </div>
     </div>
     <?php endif;?>
-
+<div class="checkout_step2 after_order">
     <div class="row">
         <p class="status-text"><b>Trạng thái: </b> <?php echo $dataTransaction->status ?></p>
     </div>
@@ -98,5 +98,5 @@ if ( !Auth::check() ) {
             </table>
         </div>
     </div>
-
+</div>
 @stop
