@@ -158,3 +158,5 @@ if (sub_total >= to(lv3)  {
     $discountValue += ( ( to(lv3) - to(lv2) ) * percent(lv3) ) / 100;
 }
 
+ADMIN
+admin@email.com / admin

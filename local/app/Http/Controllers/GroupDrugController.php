@@ -1,5 +1,6 @@
 <?php namespace App\Http\Controllers;
 
+use App\Models\Drug;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Http\Request;
 use App\Http\Requests\GroupDrugRequest;
@@ -67,7 +68,9 @@ class GroupDrugController extends Controller {
 			'sens' => 'sort-' . $request->sens			
 		];
 
-		return view('back.groupdrug.index', compact('posts', 'links', 'order'));
+		$drugs = Drug::all();
+
+		return view('back.groupdrug.index', compact('posts', 'links', 'order', 'drugs'));
 	}
 
 	public function create()
@@ -136,7 +139,8 @@ class GroupDrugController extends Controller {
             'name' => 'group_drugs.created_at',
             'sens' => 'sort-' . 'desc'
         ];
-		return view('back.groupdrug.index', compact('posts', 'links', 'order'));
+		$drugs = Drug::all();
+		return view('back.groupdrug.index', compact('posts', 'links', 'order', 'drugs'));
 	}
 
 }

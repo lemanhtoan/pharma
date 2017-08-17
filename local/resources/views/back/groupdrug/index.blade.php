@@ -51,6 +51,7 @@
                 <span class="fa fa-fw fa-{{ $order->name == 'group_drugs.full_name' ? $order->sens : 'unsorted'}}"></span>
               </a>
             </th>
+            <th>Số lượng thuốc</th>
             <th>
               Trạng thái
               <a href="#" name="group_drugs.status" class="order">

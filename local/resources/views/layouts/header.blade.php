@@ -229,13 +229,16 @@
       width: calc(100% - 20px);
     }
     .modal-col-1 {
-      width: 40%;
+      width: 100%;
     }
     .modal-col-2 {
-      width: 60%;
+      width: 100%;
+    }
+    #detailDrugModal .modal-dialog {
+      top: 10%;
     }
     #detailDrugModal .modal-body{
-      min-height: 330px;
+      min-height: 490px;
     }
     div.box-wd h4 {
       font-size: 16px;
@@ -243,6 +246,24 @@
     }
     .list-products ul.products li {
       padding: 10px;
+    }
+    .box-1-column .row {
+      margin-left: 0;
+      margin-right: 0;
+    }
+    .row.bg-padding {
+      background: #fff;
+      padding: 0 5px;
+      box-shadow: 1px 2px 4px #dadada;
+    }
+    h2.title-main {
+      font-size: 20px;
+    }
+    h2.title-main img {
+      width: 30px;
+    }
+    .row-top .col-md-4 {
+      padding-right: 0;
     }
   }
   @media (min-width: 992px) {

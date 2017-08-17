@@ -10,12 +10,12 @@ if ( !Auth::check() ) {
 
 @section('main')
     <?php if (count($dataTransaction)) { ?>
-    <div class="row">
+    <div class="row row-top">
         <div class="col-md-8"><h2 class="title-main gray-color"><img src="{!!url('/images/bill_1_07.png')!!}" alt=""> Các đơn hàng của tôi </h2></div>
         <div class="col-md-4"><a class="btn-buy pull-right" href="">Lọc đơn hàng</a></div>
     </div>
 
-    <div class="row">
+    <div class="row bg-padding">
         <table class="table table-order history">
             <thead>
             <tr>
