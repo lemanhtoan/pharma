@@ -1,3 +1,134 @@
+.fox-filter
+.row {
+    margin-left: 0;
+    margin-bottom: 10px;
+}
+
+.row.box-other {
+    float: left;
+    width: 100%;
+    margin-left: 15px;
+}
+
+
+form.searchform {
+    float: left;
+    width: 100%;
+}
+
+.row.box-other button {
+    background: #17be9b;
+    color: #fff;
+    border: none;
+    padding: 5px 10px;
+}
+.col-md-1 .btn {
+    background: #17be9b;
+    color: #fff;
+    border: none;
+    font-weight: bold;
+}
+form.transaction_update label {
+    width: 40%;
+    float: left;
+}
+form.transaction_update input,
+form.transaction_update select {
+    width: 60%;
+    float: right;
+    padding: 5px
+}
+
+form.transaction_update p {
+    float: left;
+    width: 100%;
+    line-height: 30px;
+    padding: 5px
+}
+
+form.transaction_update .box-table  label {
+    width: 60%;
+}
+
+form.transaction_update p.bg, .table-backend tr.bg {
+    background: #e4e4e4;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+p.gr-btn span, .search-bar .btn {
+    background: #17be9b;
+    color: #fff;
+    padding: 6px 10px;
+    margin-right: 5px;
+    cursor: pointer;
+    border: none;
+}
+.search-bar .btn:hover {
+    background: #17be9b;
+    color: #fff;
+    border: none;
+}
+.row-i {
+    width: 100%;
+    float: left;
+    margin-bottom: 10px;
+}
+.row-i2 {
+    margin-bottom: 10px;
+    float: left;
+    width: 100%;
+}
+.search-bar input.form-control {
+    min-width: 400px;
+}
+.pharcies #changeStatus {
+    margin-left: 30px;
+    background: #17be9b;
+    color: #fff;
+    border: none;
+    padding: 5px 10px;
+}
+div#time_send {
+    width: 57%;
+}
+.bootstrap-datetimepicker-widget {
+    z-index: 100000 !important;
+}
+.bootstrap-datetimepicker-widget li {
+    list-style: none;
+}
+.search-bar {
+    width: 100%;
+}
+.row-item
+.btn-green {
+    margin-top: 20px;
+    float: inherit;
+}
+
+span#btnCancel {
+    margin-left: 40%;
+}
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    margin: 0;
+}
+
+/* hide up/down arrows ("spinners") on input fields marked type="number" */
+.no-spinners {
+    -moz-appearance:textfield;
+}
+
+.no-spinners::-webkit-outer-spin-button,
+.no-spinners::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
 .bg-white {
     background: #fff;
 }

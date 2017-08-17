@@ -56,7 +56,7 @@
     {!! Form::close() !!}
     <!--end search bar-->
 
-     <div class="row">
+     <div class="row pharcies">
        <input type="hidden" name="dataIds" class="dataIds">
        <button id="changeStatus" type="button" data-target="#btnChangeStatus">Đổi trạng thái</button>
      </div>
@@ -69,10 +69,11 @@
     <div class="table-responsive">
       <table class="table">
         <thead>
-          <th>
-            <input type="checkbox" id="selectall"/>
-          </th>
+
           <tr>
+          <th>
+              <input type="checkbox" id="selectall"/>
+          </th>
             <th>
               Mã Khách hàng
               <a href="#" name="pharmacies.code" class="order">

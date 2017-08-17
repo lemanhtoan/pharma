@@ -6,6 +6,7 @@ if ( !Auth::check() ) {
     die();
 }
 
+
 if (Session::has('pharma.cartDataJson')) {
 	$cartGetSessionJsonFront =  Session::get('pharma.cartDataJson');
 }
@@ -37,7 +38,6 @@ function getQty($productId, $type) {
     }
     return $qty;
 }
-
 ?>
 @extends('front.template-bar')
 
@@ -56,7 +56,7 @@ function getQty($productId, $type) {
 		</div>
 	</div>
 
-    <?php if ($nextMind) : $valueTime = $nextMind[0]->start_time; ?>
+    <?php  if (count($nextMind)) : $valueTime = $nextMind[0]->start_time; ?>
 	<div class="box-wd">
 		<h4>Thông tin phiên mới nhất</h4>
 		<div class="box-content">
@@ -296,13 +296,10 @@ function getQty($productId, $type) {
 			<?php } ?>
 			</ul>
 
-			<ul class="pag-nav pagination">
-				<li><a href="#">1</a></li>
-				<li class="active"><a href="#">2</a></li>
-				<li><a href="#">3</a></li>
-				<li><a href="#">4</a></li>
-				<li><a href="#">5</a></li>
-			</ul>
+			<div class="pag-nav">
+				{!! $drugs->appends(Input::except('page'))->render() !!}
+			</div>
+
 		</div>
 		<?php } else {?>
 			<p>Danh sách rỗng</p>
