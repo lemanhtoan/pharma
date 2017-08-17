@@ -294,6 +294,9 @@
     #mindModal  h4.modal-title {
       font-size: 17px;
     }
+    .addHeight {
+      min-height: 250px !important;
+    }
   }
   @media (min-width: 992px) {
     .mb-nav {
