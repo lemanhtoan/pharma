@@ -23,7 +23,7 @@
 <body>
 <header>
   <div class="container">
-    <div class="row">
+    <div class="row hidden-xs hidden-sm">
       <div class="col-md-6">
         <h1><a href="{!! url('/') !!}"><img class="logo" src="{!!url('/images/logo.png')!!}" align="logo" /></a></h1>
       </div>
@@ -53,7 +53,7 @@
       </div>
     </div>
 
-    <div class="row">
+    <div class="row  hidden-xs hidden-sm">
       <ul class="main-menu">
         <li {!! classActivePath('/') !!}><a href="{!! url('/') !!}">Đặt hàng</a></li>
         <li {!! classActivePath('history') !!}><a href="{!! url('history') !!}">Lịch sử</a></li>
@@ -67,10 +67,12 @@
       <div class="navmenu navmenu-default navmenu-fixed-left">
         <a href="{!! url('/') !!}"><img class="navmenu-brand logo logo-mb" src="{!!url('/images/logo.png')!!}" align="logo" /></a>
         <ul class="nav navmenu-nav">
-          <li {!! classActivePath('/') !!}><a href="{!! url('/') !!}">Đặt hàng</a></li>
-          <li {!! classActivePath('history') !!}><a href="{!! url('history') !!}">Lịch sử</a></li>
-          <li {!! classActivePath('quy-dinh') !!}><a href="{!! url('quy-dinh') !!}">Quy định</a></li>
-          <li {!! classActivePath('ho-tro') !!}><a href="{!! url('ho-tro') !!}">Hỗ trợ</a></li>
+          <li {!! classActivePath('/') !!}><a href="{!! url('/') !!}"><img class="icon-mb" src="{!!url('/images/menu_left_03.png')!!}" />Đặt hàng</a></li>
+          <li {!! classActivePath('history') !!}><a href="{!! url('history') !!}"><img class="icon-mb" src="{!!url('/images/menu_left_07.png')!!}" />Lịch sử</a></li>
+          <li {!! classActivePath('quy-dinh') !!}><a href="{!! url('quy-dinh') !!}"><img class="icon-mb" src="{!!url('/images/menu_left_11.png')!!}" />Quy định</a></li>
+          <li {!! classActivePath('ho-tro') !!}><a href="{!! url('ho-tro') !!}"><img class="icon-mb" src="{!!url('/images/menu_left_09.png')!!}" />Hỗ trợ</a></li>
+          <li {!! classActivePath('profile') !!}><a href="{!! url('profile') !!}"><img class="icon-mb" src="{!!url('/images/menu_left_13.png')!!}" />Tài khoản</a></li>
+          <li {!! classActivePath('auth/logout') !!}><a href="{!! url('auth/logout') !!}"><img class="icon-mb" src="{!!url('/images/menu_left_15.png')!!}" />Đăng xuất</a></li>
         </ul>
       </div>
 
@@ -86,7 +88,14 @@
           <div class="col-item-6">
             <a href="{!! url('/') !!}"><img class="logo logo-mb" src="{!!url('/images/logo.png')!!}" align="logo" /></a>
           </div>
-          <div class="col-item-3">Account</div>
+          <div class="col-item-3">
+            <?php if (Auth::check()) $user = Auth::user()->id;
+            if ( !Auth::check() ) { ?>
+            <a href="{!! url('auth/login') !!}"><img class="icon-mb" src="{!!url('/images/bill_1_03.png')!!}" /></a>
+            <?php } else { ?>
+            <a href="{!! url('profile') !!}"><img class="icon-mb" src="{!!url('/images/bill_1_03.png')!!}" /></a>
+            <?php } ?>
+          </div>
         </div>
       </div>
 
@@ -100,6 +109,73 @@
 
 
 <style>
+
+  .logo-mb {
+    width: 50px;
+    text-align: center;
+    padding-top: 6px;
+  }
+  .navmenu-fixed-left.in .logo-mb {
+    width: 100px;
+    margin-left: 100px;
+  }
+  .navmenu-fixed-left.in .navmenu-nav {
+    color: #fff;
+    font-weight: bold;
+  }
+  .navmenu-fixed-left.in a {
+    color: #fff !important;
+  }
+  .navmenu-fixed-left.in li {
+    width: 96%;
+    margin-left: 2%;
+    cursor: pointer;
+    border-bottom: 1px solid #d0d0d0;
+  }
+  .navmenu-fixed-left.in li:last-child {
+    border-bottom: none;
+  }
+  .navmenu-fixed-left.in .icon-mb {
+    width: 30px;
+    margin-right: 15px;
+  }
+  .navmenu-fixed-left.in {
+    background: #17be9b;
+    border-color: #17be9b;
+  }
+  .col-item-3 {
+    float: left;
+    width: 25%;
+  }
+
+  .col-item-6 {
+    float: left;
+    width: 50%;
+    text-align: center;
+  }
+
+  .col-item-3 img.icon-mb {
+    float: right;
+    margin-right: 15px;
+    padding: 25px 0 10px;
+    width: 30px;
+  }
+  .navbar-fixed-top {
+    height: 76px;
+    background: #17be9b;
+    overflow: hidden;
+    border-color: #17be9b;
+  }
+  .navbar-fixed-top .navbar-toggle, .navbar-fixed-top .navbar-toggle:hover {
+    border-color: #17be9b;
+    background: none;
+    padding: 20px 10px;
+  }
+  .navbar-fixed-top .navbar-toggle .icon-bar {
+    background-color: #fff;
+    width: 25px;
+    height: 3px;
+  }
   .navbar-toggle {
     float: left;
     margin-left: 15px;
@@ -129,7 +205,46 @@
       display: block; /* force showing the toggle */
     }
   }
-
+  @media (max-width: 767px) {
+    .navmenu-default .navmenu-nav>.active>a {
+      background-color: #1bdeb5;
+    }
+    .main-content {
+      margin-top: 35px;
+    }
+    body {
+      background: #f1f5f7;
+    }
+    .profile-form {
+      width: 100% !important;
+    }
+    .profile-form .inp-password {
+      padding-left: 0px !important;
+      width: calc(100% - 25px);
+    }
+    div img.icon-clear {
+      height: 34px !important;
+    }
+    .profile-form .btn-continue {
+      width: calc(100% - 20px);
+    }
+    .modal-col-1 {
+      width: 40%;
+    }
+    .modal-col-2 {
+      width: 60%;
+    }
+    #detailDrugModal .modal-body{
+      min-height: 330px;
+    }
+    div.box-wd h4 {
+      font-size: 16px;
+      padding: 3px 15px;
+    }
+    .list-products ul.products li {
+      padding: 10px;
+    }
+  }
   @media (min-width: 992px) {
     .mb-nav {
       display: none;
