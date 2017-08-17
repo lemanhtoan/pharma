@@ -9,9 +9,9 @@ if ( !Auth::check() ) {
 @extends('front.template')
 
 @section('main')
-    <div class="row">
-        <div class="col-md-8"><h2 class="title-main gray-color"><img src="{!!url('/images/bill_1_07.png')!!}" alt=""> Thông tin đơn hàng </h2></div>
-        <div class="col-md-4"><a class="btn-buy pull-right" href="{!!url('/')!!}">< Trở lại</a></div>
+    <div class="row checkout_step1">
+        <div class="col-md-8 col-xs-8"><h2 class="title-main gray-color"><img src="{!!url('/images/bill_1_07.png')!!}" alt=""> Thông tin đơn hàng </h2></div>
+        <div class="col-md-4 col-xs-4"><a class="btn-buy pull-right" href="{!!url('/')!!}">< Trở lại</a></div>
     </div>
 
     <div class="row">
@@ -60,7 +60,7 @@ if ( !Auth::check() ) {
                     <p>Giá:  <?php echo number_format($drug['drugBasePrice']->drug_price) ?>đ</p>
                 </td>
                 <td>
-                    <?php 
+                    <?php
                     $qtyDiscount = 0;
                     $qtyRoot = 0;
                     $qtyTotal = 0;
@@ -124,8 +124,8 @@ if ( !Auth::check() ) {
 
     <?php if (isset($qtyTotal) && ($qtyTotal > 0)) :?>
     <div class="row">
-        <div class="col-md-8 row-total">Tổng cộng: <b class="total-qty-cart"><?php echo $qtyTotal;?></b> sản phẩm: <b class="total-price-cart"><?php echo number_format($priceTotal);?>đ</b></div>
-        <div class="col-md-4"><a class="btn-continue pull-right" href="{!! url('before-buy') !!}">Tiếp tục</a></div>
+        <div class="col-md-8 row-total col-xs-12">Tổng cộng: <b class="total-qty-cart"><?php echo $qtyTotal;?></b> sản phẩm: <b class="total-price-cart"><?php echo number_format($priceTotal);?>đ</b></div>
+        <div class="col-md-4 col-xs-12 button_continue"><a class="btn-continue pull-right" href="{!! url('before-buy') !!}">Tiếp tục</a></div>
     </div>
     <?php endif; ?>
 
