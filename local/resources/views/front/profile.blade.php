@@ -52,13 +52,13 @@ if ( !Auth::check() ) {
 		<div class="item-row">
 			<label for="log" class="control-label">Điện thoại</label>
 			<input value="<?php if(isset($content)) {echo $content->phone;}else{echo '';}?>" class="form-control inp-password" placeholder="0123456789" name="phone" type="text" id="phone">
-			<img class="icon-clear clr-password" src="{!!url('/images/thong_tin_user_03.png')!!}" alt="">
+			<img class="icon-clear clr-phone" src="{!!url('/images/thong_tin_user_03.png')!!}" alt="">
 		</div>
 
 		<div class="item-row">
 			<label for="log" class="control-label">Email</label>
 			<input value="<?php if(isset($content)) {echo $content->email;}else{echo '';}?>" class="form-control inp-password" placeholder="Email" name="email" type="email" id="email">
-			<img class="icon-clear clr-password" src="{!!url('/images/thong_tin_user_03.png')!!}" alt="">
+			<img class="icon-clear clr-email" src="{!!url('/images/thong_tin_user_03.png')!!}" alt="">
 		</div>
 
         <div class="row">

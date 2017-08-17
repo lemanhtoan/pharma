@@ -220,7 +220,7 @@
     }
     .profile-form .inp-password {
       padding-left: 0px !important;
-      width: calc(100% - 25px);
+      width: calc(100% - 30px);
     }
     div img.icon-clear {
       height: 34px !important;

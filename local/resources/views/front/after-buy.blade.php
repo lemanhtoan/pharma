@@ -91,7 +91,7 @@ if ( !Auth::check() ) {
                         <?php if ($drug->type=="discount"):?><p>Giá ưu đãi: <?php echo ($drug->price)/($drug->qty) ?></p><?php endif;?>
                         <?php if ($drug->type=="root"):?><p>Giá thường: <?php echo ($drug->price)/($drug->qty) ?></p><?php endif;?>
                     </td>
-                    <td><?php echo $drug->price ?></td>
+                    <td><?php echo number_format($drug->price) ?></td>
                 </tr>
                 <?php endforeach; ?>
                 </tbody>
