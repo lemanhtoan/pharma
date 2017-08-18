@@ -1128,3 +1128,51 @@ input[type=number]::-webkit-outer-spin-button {
     top: -10px;
     opacity: 1;
 }
+
+
+@font-face {
+    font-family: FontAwesome;
+    src: url(../fonts/fontawesome-webfont.eot?v=4.2.0);
+    src: url(../fonts/fontawesome-webfont.eot?#iefix&v=4.2.0) format('embedded-opentype'), url(../fonts/fontawesome-webfont.woff?v=4.2.0) format('woff'), url(../fonts/fontawesome-webfont.ttf?v=4.2.0) format('truetype'), url(../fonts/fontawesome-webfont.svg?v=4.2.0#fontawesomeregular) format('svg');
+    font-weight: 400;
+    font-style: normal
+}
+.fa {
+    display: inline-block;
+    font: normal normal normal 14px/1 FontAwesome;
+    font-size: inherit;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale
+}
+.fa-unsorted:before,
+.fa-sort:before {
+    content: "\f0dc"
+}
+.fa-sort-down:before,
+.fa-sort-desc:before {
+    content: "\f0dd"
+}
+.fa-sort-up:before,
+.fa-sort-asc:before {
+    content: "\f0de"
+}
+.table-order i {
+    color: #fff;
+}
+.table-order span.title {
+    float: left;
+    text-align: right;
+    width: 58%;
+}
+.sdesc {
+    float: left;
+    margin-left: -8px;
+}
+.sasc {
+    float: left;
+    margin-left: 10px;
+}
+.no-padl {
+    margin-left: 10px;
+}

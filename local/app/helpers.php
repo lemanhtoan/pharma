@@ -1,5 +1,12 @@
 <?php
 
+if (!function_exists('getKhuyemai')) {
+	function getKhuyemai($total)
+	{
+		return $total;
+	}
+}
+
 if (!function_exists('classActivePath')) {
 	function classActivePath($path)
 	{

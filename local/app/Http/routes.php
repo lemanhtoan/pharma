@@ -22,7 +22,7 @@ Route::group(['middleware' => ['web']], function () {
 
 
 	Route::get('history', 'HomeController@getHistory');
-
+	
 
     // test pdf
     Route::get('doPdf', 'HomeController@doPdf');

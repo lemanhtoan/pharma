@@ -10,6 +10,9 @@ use App\Models\District;
 use App\Models\TransactionDrug;
 use App\Models\Mind;
 
+
+use App\Helpers\ProcessText;
+
 class TransactionRepository extends BaseRepository {
 
     public function __construct(
@@ -133,7 +136,9 @@ class TransactionRepository extends BaseRepository {
         // fix phí
         $phiMuaho = 20000;
         $phiVanchuyen = 40000;
-        $khuyenMai = 55000;
+
+        // get transction subtotal
+        $khuyenMai = ProcessText::getKhuyenMai($post->sub_total);
 
         return compact('post', 'tran_drugs', 'drugs', 'phiMuaho', 'phiVanchuyen', 'khuyenMai');
     }
@@ -219,7 +224,7 @@ class TransactionRepository extends BaseRepository {
         // fix phí
         $phiMuaho = 20000;
         $phiVanchuyen = 40000;
-        $khuyenMai = 55000;
+        $khuyenMai = ProcessText::getKhuyenMai($caclSubPrice); //55000;
         $post->end_total = ($caclSubPrice + $phiMuaho + $phiVanchuyen) - $khuyenMai;
 
         $post->address = $inputs['address'];

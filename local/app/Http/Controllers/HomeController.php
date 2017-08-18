@@ -11,6 +11,8 @@ use App\Models\Customer;
 use App\Models\Transaction;
 use App\Models\TransactionDrug;
 
+use App\Models\Discount;
+
 use Illuminate\Support\Facades\Auth;
 
 use Illuminate\Http\Request;
@@ -19,6 +21,7 @@ use DateTime;
 
 use PDF;
 
+use App\Helpers\ProcessText;
 
 
 use Illuminate\Pagination\LengthAwarePaginator;
@@ -26,6 +29,7 @@ use Illuminate\Support\Collection;
 
 class HomeController extends Controller
 {
+
     // test pdf
     public function doPdf() {
         $data = array(
@@ -96,6 +100,7 @@ class HomeController extends Controller
     {
         $mind = Mind::where('end_time', '>',  date("Y-m-d H:i:s") )
             ->where('start_time', '<',  date("Y-m-d H:i:s") )
+            ->where('status', '1' )
             ->orderBy('start_time', 'asc')
             ->limit(1)
             ->get(['id']);
@@ -131,6 +136,7 @@ class HomeController extends Controller
 
 
         $nextMind = Mind::where('start_time', '>',  date("Y-m-d H:i:s") )
+            ->where('status', '1' )
             ->orderBy('start_time', 'asc')
             ->limit(1)
             ->get();
@@ -203,7 +209,10 @@ class HomeController extends Controller
         $data = \Session::get('pharma.cartDataJson');
         if (Auth::check()) $user = Auth::user()->id;
         $dataUser = Customer::whereId($user)->firstOrFail();
-        return view( 'front.before-buy', compact('data', 'dataUser') );
+        $priceTotal = $data['countRootTotalPrice'];
+
+        $khuyenmai = ProcessText::getKhuyenMai($priceTotal);
+        return view( 'front.before-buy', compact('data', 'dataUser', 'khuyenmai') );
     }
 
     public function postProcessBuy(Request $request) {
@@ -214,7 +223,7 @@ class HomeController extends Controller
         // fix phí
         $phiMuaho = 20000;
         $phiVanchuyen = 40000;
-        $khuyenMai = 55000;
+        //$khuyenMai = 55000;
 
         $data = \Session::get('pharma.cartDataJson');
 
@@ -265,10 +274,14 @@ class HomeController extends Controller
         $transction->sub_total = $data['countRootTotalPrice'];
         $transction->buyer_cost = $phiMuaho;
         $transction->shipping_cost = $phiVanchuyen;
-        $transction->cost_discount = $khuyenMai;
+
+        $transction->cost_discount = ProcessText::getKhuyenMai($data['countRootTotalPrice']);
+
         $transction->before_total = $data['countRootTotalPrice'];
         $transction->before_pay = $data['countRootTotalPrice'];
-        $transction->end_total = ($data['countRootTotalPrice'] + $phiMuaho + $phiVanchuyen) - $khuyenMai;
+        
+
+        $transction->end_total = ($data['countRootTotalPrice'] + $phiMuaho + $phiVanchuyen) - ProcessText::getKhuyenMai($data['countRootTotalPrice']);
         $transction->countQty = $data['countQty'];
         $transction->save();
 
@@ -335,13 +348,21 @@ class HomeController extends Controller
         return view( 'front.after-buy', compact('dataTransaction', 'dataTranDrugs', 'drugs') );
     }
 
-    public function getHistory(){
+    public function getHistory(Request $request){
+        if (!empty($request->all())) {
+            $sort = $request->all();
+            if (Auth::check()) {
+                $user = Auth::user()->id;
+                $dataTransaction =  Transaction::where('user_id', $user)->orderBy(key($sort) , $sort[key($sort)] )->get();
+                return view( 'front.history', compact('dataTransaction', 'order') );
+            }
+        }
         if (Auth::check()) {
             $user = Auth::user()->id;
             $dataTransaction =  Transaction::where('user_id', $user)->orderBy('id', 'desc')->get();
-            return view( 'front.history', compact('dataTransaction') );
+            return view( 'front.history', compact('dataTransaction', 'order') );
         }
-        return view( 'front.history');
+        return view( 'front.history', compact('order'));
 
     }
 
@@ -710,10 +731,10 @@ class HomeController extends Controller
     public function mindBefore() {
 
         $mind = Mind::where('end_time', '<',  date("Y-m-d H:i:s") )
+        ->where('status', '1' )
         ->orderBy('end_time', 'desc')
         ->limit(1)
         ->get(['id']);
-
         $drug = Mind::whereId($mind[0]->id)->firstOrFail();
         $drugArr = array();
         if (count($drug->mind_drugs)) {
@@ -743,6 +764,7 @@ class HomeController extends Controller
         //$products =  $query->paginate(15);
 
         $nextMind = Mind::where('start_time', '>',  date("Y-m-d H:i:s") )
+            ->where('status', '1' )
             ->orderBy('start_time', 'asc')
             ->limit(1)
             ->get();

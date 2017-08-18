@@ -6152,14 +6152,15 @@ fieldset[disabled] .navbar-default .btn-link:focus {
     background-color: transparent
 }
 .navbar-inverse .navbar-toggle {
-    border-color: #333
+    border-color: none;
 }
 .navbar-inverse .navbar-toggle:hover,
 .navbar-inverse .navbar-toggle:focus {
-    background-color: #333
+    background-color: none;
 }
 .navbar-inverse .navbar-toggle .icon-bar {
-    background-color: #fff
+    background-color: #fff;
+    background-position: 1000000px;
 }
 .navbar-inverse .navbar-collapse,
 .navbar-inverse .navbar-form {
@@ -6172,6 +6173,9 @@ fieldset[disabled] .navbar-default .btn-link:focus {
     color: #fff
 }
 @media (max-width: 767px) {
+    .navbar-right.top-nav {
+        float: right;
+    }
     .navbar-inverse .navbar-nav .open .dropdown-menu>.dropdown-header {
         border-color: #d9534f
     }

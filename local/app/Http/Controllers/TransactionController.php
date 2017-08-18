@@ -218,8 +218,9 @@ class TransactionController extends Controller {
         $arrIds = explode(",", $ids);
         $orders = Transaction::whereIn('id', $arrIds)->get();
         $title = 'Invoice order #';
+		
         $pdf = PDF::loadView('pdf.invoice', compact('title', 'orders'));
-        $path = base_path() . '/pdf/invoiceSave.pdf';
+        $path = base_path() . '/pdf/invoice_'.date('d_m_Y').'.pdf';
         $pdf->save( $path );
 
         return $pdf->stream();

@@ -187,7 +187,7 @@ function getQty($productId, $type)
                         // If the count down is finished, write some text
                         if (distance < 0) {
                             clearInterval(x);
-                            document.getElementById("timeExpire").innerHTML = "Hết hạn";
+                            document.getElementById("timeExpire").innerHTML = "Không có dữ liệu phiên tiếp theo";
                         }
                     }, 1000);
                 </script>

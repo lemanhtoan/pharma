@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.6.5.2
--- https://www.phpmyadmin.net/
+-- version 4.5.4.1deb2ubuntu2
+-- http://www.phpmyadmin.net
 --
--- Host: 127.0.0.1
--- Generation Time: Aug 17, 2017 at 12:50 PM
--- Server version: 10.1.21-MariaDB
--- PHP Version: 5.6.30
+-- Máy chủ: localhost
+-- Thời gian đã tạo: Th8 18, 2017 lúc 11:47 AM
+-- Phiên bản máy phục vụ: 5.7.19-0ubuntu0.16.04.1
+-- Phiên bản PHP: 7.0.22-0ubuntu0.16.04.1
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -17,13 +17,13 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `pharma`
+-- Cơ sở dữ liệu: `pharma`
 --
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `config_discount`
+-- Cấu trúc bảng cho bảng `config_discount`
 --
 
 CREATE TABLE `config_discount` (
@@ -38,7 +38,7 @@ CREATE TABLE `config_discount` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `config_discount`
+-- Đang đổ dữ liệu cho bảng `config_discount`
 --
 
 INSERT INTO `config_discount` (`id`, `created_at`, `updated_at`, `level`, `name`, `from`, `to`, `percent`) VALUES
@@ -51,7 +51,7 @@ INSERT INTO `config_discount` (`id`, `created_at`, `updated_at`, `level`, `name`
 -- --------------------------------------------------------
 
 --
--- Table structure for table `contacts`
+-- Cấu trúc bảng cho bảng `contacts`
 --
 
 CREATE TABLE `contacts` (
@@ -65,7 +65,7 @@ CREATE TABLE `contacts` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `contacts`
+-- Đang đổ dữ liệu cho bảng `contacts`
 --
 
 INSERT INTO `contacts` (`id`, `name`, `email`, `text`, `seen`, `created_at`, `updated_at`) VALUES
@@ -76,7 +76,7 @@ INSERT INTO `contacts` (`id`, `name`, `email`, `text`, `seen`, `created_at`, `up
 -- --------------------------------------------------------
 
 --
--- Table structure for table `customers`
+-- Cấu trúc bảng cho bảng `customers`
 --
 
 CREATE TABLE `customers` (
@@ -114,11 +114,11 @@ CREATE TABLE `customers` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `customers`
+-- Đang đổ dữ liệu cho bảng `customers`
 --
 
 INSERT INTO `customers` (`id`, `uid`, `code`, `inviteCode`, `name`, `address`, `phone`, `password`, `email`, `orderCount`, `orderSuccess`, `totalPoint`, `status`, `latestOrderTime`, `facebookId`, `googleId`, `avatar`, `verified`, `pushNotify`, `province`, `lat`, `lng`, `updated`, `created`, `deleted`, `deletedAt`, `pharmacieId`, `created_at`, `updated_at`, `remember_token`, `isRole`) VALUES
-(1, 'ORyrZFFgQbjOjHG', 'KH00001', '9813096929', 'Quản trị', 'Toà nhà VTC, 23 Lạc Trung, Vĩnh Tuy, Hai Bà Trưng, Hà Nội, Vietnam', '841235841993', '$2y$10$bzffypDnx0UTNIRNzE8WTuEwnxhrWVMiSNJ/vLwznn3KPEXA0/t7m', 'admin@email.com', 11, 1, 0, 1, NULL, '1348313485253921', NULL, 'http://graph.facebook.com/1348313485253921/picture?type=square', 0, 1, 'Hà Nội', '20.976411', '105.785588', '2017-07-11 12:20:53', '2017-07-05 12:15:00', 0, NULL, NULL, NULL, '2017-08-12 20:35:31', 'WMzZorWNG1V6rKzGwEr5ioLtT3NJ64vjLMLjLwt9N3YuaddqjMt47KHCJ6sR', 'administrator'),
+(1, 'ORyrZFFgQbjOjHG', 'KH00001', '9813096929', 'Quản trị', 'Toà nhà VTC, 23 Lạc Trung, Vĩnh Tuy, Hai Bà Trưng, Hà Nội, Vietnam', '841235841993', '$2y$10$bzffypDnx0UTNIRNzE8WTuEwnxhrWVMiSNJ/vLwznn3KPEXA0/t7m', 'admin@email.com', 11, 1, 0, 1, NULL, '1348313485253921', NULL, 'http://graph.facebook.com/1348313485253921/picture?type=square', 0, 1, 'Hà Nội', '20.976411', '105.785588', '2017-07-11 12:20:53', '2017-07-05 12:15:00', 0, NULL, NULL, NULL, '2017-08-17 18:47:51', '6PjBvW6OCRIr0ainpQyj7bf2DXPkgtP06WqQtolFYICHah0QNj580VFXH8dg', 'administrator'),
 (2, '39749uZTYX8iNPS', 'KH00002', '4682299361', 'do duong', '165 Thái Hà, Hanoi', '84966545017', '$2y$10$bzffypDnx0UTNIRNzE8WTuEwnxhrWVMiSNJ/vLwznn3KPEXA0/t7m', 'user@gmail.com', 39, 8, 0, 0, NULL, NULL, '111152556609702095375', NULL, 0, 1, 'Hà Nội', '21.007327', '105.781571', '2017-07-11 11:51:56', '2017-07-05 13:48:58', 0, NULL, NULL, NULL, '2017-08-06 19:30:17', 'RukXJsB3vW3ax8Ovdv2n74zqL2xRl6Q6LjBZKUQ7reBxmUDvnM5WfUQV0jr8', NULL),
 (3, '6ihKK761hObKpWv', 'KH00003', '3873456070', 'Hồng Hoa', '4 Liễu Giai, Hanoi', '84915669610', 'bcrypt:$2y$10$tPjcKHmg0D.uvOui0Eq2UuRiuJ6ENyKunCXNOGZDRF4nMc854XUwG', NULL, 7, 0, 0, 1, NULL, NULL, NULL, NULL, 0, 1, 'Hà Nội', '21.034541865095754', '105.8140766993165', '2017-07-08 13:49:55', '2017-07-05 13:57:35', 0, NULL, NULL, NULL, NULL, NULL, NULL),
 (4, 'aTs6iGWJZ9OMDx8', 'KH00004', '4830883104', 'Mary Jane Asia', NULL, '841697449611', NULL, NULL, 2, 0, 0, 1, NULL, '1891556997749553', NULL, 'http://graph.facebook.com/1891556997749553/picture?type=square', 0, 1, 'Hà Nội', '21.031074', '105.785142', '2017-07-10 13:31:11', '2017-07-05 14:40:31', 0, NULL, NULL, NULL, NULL, NULL, NULL),
@@ -139,12 +139,12 @@ INSERT INTO `customers` (`id`, `uid`, `code`, `inviteCode`, `name`, `address`, `
 (19, 'Dw5NFYU0c2qS74e', 'KH00019', '2579750926', 'gandalf', 'Yên Lộ, Dương Nội, Hà Đông, Hà Nội', '84914776153', 'bcrypt:$2y$10$SC8IHwOJxnlRvpI2UgYAXueITQm.yMbJ8LmMsovQ4EnU3/BYY1qha', NULL, 0, 0, 0, 1, NULL, NULL, NULL, NULL, 0, 1, NULL, '20.9613209', '105.7452604', '2017-07-24 21:24:25', '2017-07-20 02:57:55', 1, '2017-07-24 21:24:25', NULL, NULL, NULL, NULL, NULL),
 (20, 'LmHtwpxQNOjGu2R', 'KH00020', '9990948231', 'Phu Kha', '28 Duy Tân, Dịch Vọng Hậu, Cầu Giấy, Hà Nội', '841697449699', NULL, NULL, 0, 0, 0, 1, NULL, '1699921403648035', NULL, 'http://graph.facebook.com/1699921403648035/picture?type=square', 0, 1, NULL, '21.0307022', '105.7846583', '2017-07-20 10:49:14', '2017-07-20 10:49:08', 0, NULL, NULL, NULL, NULL, NULL, NULL),
 (21, 'BvFZ72xriibwxKx', 'KH00021', '8162800045', 'Phạm Mạnh Tùng', 'triều khúc, thanh xuân', '841635678889', NULL, NULL, 11, 0, 0, 1, NULL, '1368757686577955', NULL, 'http://graph.facebook.com/1368757686577955/picture?type=square', 0, 1, 'Hà Nội', '20.960186', '105.742720', '2017-07-24 20:37:30', '2017-07-20 13:02:05', 0, NULL, NULL, NULL, NULL, NULL, NULL),
-(22, '598fc8de2d0fe', 'KH022', NULL, 'letoan', 'ha tinh', '09143905678', '$2y$10$m5XeLDCo2zp.aPZU8H5d0e/Sw0ViBnTbQqG1NGysG825in.wHe7Tq', 'toan@gmail.com', 0, 0, 0, 1, NULL, NULL, NULL, NULL, 0, 1, NULL, '0', '0', NULL, '2017-08-13 03:34:54', 0, NULL, 2, '2017-08-12 20:34:54', '2017-08-16 20:17:41', 'LUWIXC0HANbggeK3s2QKCVabt6Bjdk7iGzFU5QUhrPuaHIy1jpl6aaRse5E0', NULL);
+(22, '598fc8de2d0fe', 'KH022', NULL, 'letoan', 'ha tinh', '09143905678', '$2y$10$m5XeLDCo2zp.aPZU8H5d0e/Sw0ViBnTbQqG1NGysG825in.wHe7Tq', 'toan@gmail.com', 0, 0, 0, 1, NULL, NULL, NULL, NULL, 0, 1, NULL, '0', '0', NULL, '2017-08-13 03:34:54', 0, NULL, 2, '2017-08-12 20:34:54', '2017-08-17 11:17:05', 'VPCR3gZwl0UIpOnD1OGYnj3bDuA4qoSAYiLaoUslTn8QlhyneUm71kzdjhK7', NULL);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `districts`
+-- Cấu trúc bảng cho bảng `districts`
 --
 
 CREATE TABLE `districts` (
@@ -157,7 +157,7 @@ CREATE TABLE `districts` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `districts`
+-- Đang đổ dữ liệu cho bảng `districts`
 --
 
 INSERT INTO `districts` (`id`, `name`, `type`, `location`, `provinceId`, `status`) VALUES
@@ -862,7 +862,7 @@ INSERT INTO `districts` (`id`, `name`, `type`, `location`, `provinceId`, `status
 -- --------------------------------------------------------
 
 --
--- Table structure for table `drugs`
+-- Cấu trúc bảng cho bảng `drugs`
 --
 
 CREATE TABLE `drugs` (
@@ -897,7 +897,7 @@ CREATE TABLE `drugs` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `drugs`
+-- Đang đổ dữ liệu cho bảng `drugs`
 --
 
 INSERT INTO `drugs` (`id`, `uid`, `code`, `name`, `nameClean`, `content`, `activeIngredient`, `design`, `package`, `standard`, `expire`, `registerNumber`, `produceCompany`, `produceCountry`, `produceAddress`, `registerCompany`, `registerCountry`, `registerAddress`, `note`, `created`, `updated`, `status`, `group_drug_id`, `donvibuon`, `donvile`, `hesoquydoi`, `created_at`, `updated_at`) VALUES
@@ -1005,7 +1005,7 @@ INSERT INTO `drugs` (`id`, `uid`, `code`, `name`, `nameClean`, `content`, `activ
 -- --------------------------------------------------------
 
 --
--- Table structure for table `drug_image`
+-- Cấu trúc bảng cho bảng `drug_image`
 --
 
 CREATE TABLE `drug_image` (
@@ -1017,7 +1017,7 @@ CREATE TABLE `drug_image` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `drug_image`
+-- Đang đổ dữ liệu cho bảng `drug_image`
 --
 
 INSERT INTO `drug_image` (`id`, `drug_id`, `url`, `created_at`, `updated_at`) VALUES
@@ -1039,7 +1039,7 @@ INSERT INTO `drug_image` (`id`, `drug_id`, `url`, `created_at`, `updated_at`) VA
 -- --------------------------------------------------------
 
 --
--- Table structure for table `group_drugs`
+-- Cấu trúc bảng cho bảng `group_drugs`
 --
 
 CREATE TABLE `group_drugs` (
@@ -1054,7 +1054,7 @@ CREATE TABLE `group_drugs` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `group_drugs`
+-- Đang đổ dữ liệu cho bảng `group_drugs`
 --
 
 INSERT INTO `group_drugs` (`id`, `created_at`, `updated_at`, `code`, `short_name`, `full_name`, `note`, `status`) VALUES
@@ -1067,7 +1067,7 @@ INSERT INTO `group_drugs` (`id`, `created_at`, `updated_at`, `code`, `short_name
 -- --------------------------------------------------------
 
 --
--- Table structure for table `migrations`
+-- Cấu trúc bảng cho bảng `migrations`
 --
 
 CREATE TABLE `migrations` (
@@ -1076,7 +1076,7 @@ CREATE TABLE `migrations` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `migrations`
+-- Đang đổ dữ liệu cho bảng `migrations`
 --
 
 INSERT INTO `migrations` (`migration`, `batch`) VALUES
@@ -1101,7 +1101,7 @@ INSERT INTO `migrations` (`migration`, `batch`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `minds`
+-- Cấu trúc bảng cho bảng `minds`
 --
 
 CREATE TABLE `minds` (
@@ -1119,22 +1119,22 @@ CREATE TABLE `minds` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `minds`
+-- Đang đổ dữ liệu cho bảng `minds`
 --
 
 INSERT INTO `minds` (`id`, `created_at`, `updated_at`, `code`, `name`, `discount_cg1`, `discount_cg2`, `start_time`, `end_time`, `note`, `status`) VALUES
-(2, '2017-07-30 20:57:16', '2017-08-01 18:24:07', 'PH02', 'Phiên thứ 2', '500000.00', '1000000.00', '2017-08-10 10:52:37', '2017-08-26 10:56:37', 'Thông báo phiên 2', 1),
-(3, '2017-07-31 18:55:56', '2017-08-01 18:36:31', 'PH03', 'Phiên sô  3', '80000.00', '200000.00', '2017-08-02 08:28:43', '2017-08-26 10:28:43', 'thong bao cua phien', 0),
-(4, '2017-07-31 18:59:34', '2017-08-01 02:17:39', 'PH04', 'Phiên số 4 update', '100000.00', '500000.00', '2017-08-01 08:58:26', '2017-08-25 04:58:26', 'Phiên 1 update - thong bao', 1),
+(2, '2017-07-30 20:57:16', '2017-08-17 21:19:59', 'PH02', 'Phiên thứ 2', '500000.00', '1000000.00', '2017-08-24 10:52:37', '2017-09-20 10:56:37', 'Thông báo phiên 2', 1),
+(3, '2017-07-31 18:55:56', '2017-08-18 04:39:42', 'PH03', 'Phiên sô  3', '80000.00', '200000.00', '2017-08-19 08:28:43', '2017-08-26 10:28:43', 'thong bao cua phien', 0),
+(4, '2017-07-31 18:59:34', '2017-08-18 04:44:10', 'PH04', 'Phiên số 4 update', '100000.00', '500000.00', '2017-07-03 08:58:26', '2017-08-17 04:58:26', 'Phiên 1 update - thong bao', 1),
 (6, '2017-07-31 21:42:14', '2017-08-01 18:20:53', 'PH05', 'Phiên số 6', '60000.00', '90000.00', '2017-08-08 11:41:53', '2017-08-03 11:41:53', '111', 0),
 (7, '2017-08-01 18:30:51', '2017-08-16 20:24:47', 'PH07', 'Phiên số 7', '300000.00', '900000.00', '2017-08-07 08:30:27', '2017-07-31 08:30:27', '3333', 1),
-(8, '2017-08-01 18:35:35', '2017-08-01 18:35:35', 'PH08', 'Phiên số 8', '100000.00', '500000.00', '2017-08-16 08:35:21', '2017-08-19 08:35:21', '44', 1),
-(9, '2017-08-01 18:36:16', '2017-08-01 18:36:16', 'PH09', 'Phiên số 9', '200000.00', '400000.00', '2017-08-02 08:35:49', '2017-08-01 08:35:49', '42', 1);
+(8, '2017-08-01 18:35:35', '2017-08-17 21:19:35', 'PH08', 'Phiên số 8', '100000.00', '500000.00', '2017-08-24 08:35:21', '2017-08-31 08:35:21', '44', 1),
+(9, '2017-08-01 18:36:16', '2017-08-18 04:37:55', 'PH09', 'Phiên số 9', '200000.00', '400000.00', '2017-08-17 08:35:49', '2017-09-07 08:35:49', 'Phien 9', 1);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `mind_drug`
+-- Cấu trúc bảng cho bảng `mind_drug`
 --
 
 CREATE TABLE `mind_drug` (
@@ -1152,7 +1152,7 @@ CREATE TABLE `mind_drug` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `mind_drug`
+-- Đang đổ dữ liệu cho bảng `mind_drug`
 --
 
 INSERT INTO `mind_drug` (`id`, `created_at`, `updated_at`, `mind_id`, `drug_id`, `drug_price`, `drug_special_price`, `max_discount_qty`, `max_qty`, `note`, `status`) VALUES
@@ -1175,12 +1175,44 @@ INSERT INTO `mind_drug` (`id`, `created_at`, `updated_at`, `mind_id`, `drug_id`,
 (39, '2017-08-08 18:03:19', '2017-08-08 18:03:19', 10, 72, '100.00', '0.00', 0, 0, '', 1),
 (40, '2017-08-16 10:50:04', '2017-08-16 10:50:04', 7, 91, '1000.00', '0.00', 0, 0, '', 1),
 (41, '2017-08-16 10:50:42', '2017-08-16 10:50:42', 7, 19, '10000.00', '0.00', 0, 0, '', 1),
-(42, '2017-08-16 10:51:02', '2017-08-16 10:51:02', 7, 23, '500000.00', '0.00', 0, 0, '', 1);
+(42, '2017-08-16 10:51:02', '2017-08-16 10:51:02', 7, 23, '500000.00', '0.00', 0, 0, '', 1),
+(43, '2017-08-18 04:36:41', '2017-08-18 04:36:41', 9, 60, '190000.00', '0.00', 0, 0, '', 1),
+(44, '2017-08-18 04:36:41', '2017-08-18 04:36:41', 9, 34, '20000.00', '18000.00', 15, 0, '', 1),
+(45, '2017-08-18 04:36:41', '2017-08-18 04:36:41', 9, 72, '30000.00', '28000.00', 20, 0, '', 1),
+(46, '2017-08-18 04:36:41', '2017-08-18 04:36:41', 9, 9, '50000.00', '0.00', 0, 0, '', 1),
+(47, '2017-08-18 04:36:41', '2017-08-18 04:36:41', 9, 73, '60000.00', '0.00', 0, 0, '', 1),
+(48, '2017-08-18 04:36:41', '2017-08-18 04:36:41', 9, 91, '90000.00', '80000.00', 90, 0, '', 1),
+(49, '2017-08-18 04:36:41', '2017-08-18 04:36:41', 9, 94, '1000000.00', '900000.00', 20, 0, '', 1),
+(50, '2017-08-18 04:36:41', '2017-08-18 04:36:41', 9, 4, '15000.00', '0.00', 0, 0, '', 1),
+(51, '2017-08-18 04:36:41', '2017-08-18 04:36:41', 9, 5, '350000.00', '320000.00', 25, 0, '', 1),
+(52, '2017-08-18 04:36:41', '2017-08-18 04:36:41', 9, 81, '10000.00', '0.00', 0, 0, '', 1),
+(53, '2017-08-18 04:36:41', '2017-08-18 04:36:41', 9, 96, '400000.00', '380000.00', 30, 0, '', 1),
+(54, '2017-08-18 04:36:41', '2017-08-18 04:36:41', 9, 11, '10000.00', '9000.00', 50, 0, '', 1),
+(55, '2017-08-18 04:36:41', '2017-08-18 04:36:41', 9, 93, '90900.00', '0.00', 0, 0, '', 1),
+(56, '2017-08-18 04:36:41', '2017-08-18 04:36:41', 9, 74, '80000.00', '0.00', 0, 0, '', 1),
+(57, '2017-08-18 04:36:41', '2017-08-18 04:36:41', 9, 44, '70000.00', '0.00', 0, 0, '', 1),
+(58, '2017-08-18 04:36:41', '2017-08-18 04:36:41', 9, 14, '100000.00', '90000.00', 90, 0, '', 1),
+(59, '2017-08-18 04:36:41', '2017-08-18 04:36:41', 9, 66, '20000.00', '0.00', 0, 0, '', 1),
+(60, '2017-08-18 04:36:41', '2017-08-18 04:36:41', 9, 15, '76000.00', '0.00', 0, 0, '', 1),
+(61, '2017-08-18 04:39:42', '2017-08-18 04:39:42', 3, 72, '190000.00', '0.00', 0, 0, '', 1),
+(62, '2017-08-18 04:39:42', '2017-08-18 04:39:42', 3, 4, '50000.00', '450000.00', 20, 0, '', 1),
+(63, '2017-08-18 04:46:50', '2017-08-18 04:46:50', 4, 60, '100000.00', '0.00', 0, 0, '', 1),
+(64, '2017-08-18 04:46:50', '2017-08-18 04:46:50', 4, 72, '50000.00', '0.00', 0, 0, '', 1),
+(65, '2017-08-18 04:46:50', '2017-08-18 04:46:50', 4, 31, '60000.00', '0.00', 0, 0, '', 1),
+(66, '2017-08-18 04:46:50', '2017-08-18 04:46:50', 4, 30, '100000.00', '0.00', 0, 0, '', 1),
+(67, '2017-08-18 04:46:50', '2017-08-18 04:46:50', 4, 94, '40000.00', '0.00', 0, 0, '', 1),
+(68, '2017-08-18 04:46:50', '2017-08-18 04:46:50', 4, 43, '90000.00', '80000.00', 10, 0, '', 1),
+(69, '2017-08-18 04:46:50', '2017-08-18 04:46:50', 4, 14, '80000.00', '0.00', 0, 0, '', 1),
+(70, '2017-08-18 04:46:50', '2017-08-18 04:46:50', 4, 25, '78000.00', '0.00', 0, 0, '', 1),
+(71, '2017-08-18 04:46:50', '2017-08-18 04:46:50', 4, 85, '90000.00', '0.00', 0, 0, '', 1),
+(72, '2017-08-18 04:46:50', '2017-08-18 04:46:50', 4, 95, '90000.00', '0.00', 0, 0, '', 1),
+(73, '2017-08-18 04:46:50', '2017-08-18 04:46:50', 4, 16, '95000.00', '92000.00', 20, 0, '', 1),
+(74, '2017-08-18 04:46:50', '2017-08-18 04:46:50', 4, 77, '550000.00', '0.00', 0, 0, '', 1);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `password_resets`
+-- Cấu trúc bảng cho bảng `password_resets`
 --
 
 CREATE TABLE `password_resets` (
@@ -1192,7 +1224,7 @@ CREATE TABLE `password_resets` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `pharmacies`
+-- Cấu trúc bảng cho bảng `pharmacies`
 --
 
 CREATE TABLE `pharmacies` (
@@ -1231,7 +1263,7 @@ CREATE TABLE `pharmacies` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `pharmacies`
+-- Đang đổ dữ liệu cho bảng `pharmacies`
 --
 
 INSERT INTO `pharmacies` (`id`, `uid`, `code`, `name`, `username`, `address`, `district`, `phone`, `avatar`, `password`, `estimatedCount`, `estimatedAccepted`, `estimatedDenied`, `balance`, `balanceTotal`, `status`, `license`, `phamercist`, `owner`, `ownerPhone`, `lat`, `lng`, `email`, `province`, `pushNotify`, `created`, `updated`, `deleted`, `deletedAt`, `created_at`, `updated_at`, `pharmacieType`) VALUES
@@ -1253,7 +1285,7 @@ INSERT INTO `pharmacies` (`id`, `uid`, `code`, `name`, `username`, `address`, `d
 -- --------------------------------------------------------
 
 --
--- Table structure for table `provinces`
+-- Cấu trúc bảng cho bảng `provinces`
 --
 
 CREATE TABLE `provinces` (
@@ -1265,7 +1297,7 @@ CREATE TABLE `provinces` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `provinces`
+-- Đang đổ dữ liệu cho bảng `provinces`
 --
 
 INSERT INTO `provinces` (`id`, `name`, `type`, `sort`, `status`) VALUES
@@ -1336,7 +1368,7 @@ INSERT INTO `provinces` (`id`, `name`, `type`, `sort`, `status`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `roles`
+-- Cấu trúc bảng cho bảng `roles`
 --
 
 CREATE TABLE `roles` (
@@ -1348,7 +1380,7 @@ CREATE TABLE `roles` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `roles`
+-- Đang đổ dữ liệu cho bảng `roles`
 --
 
 INSERT INTO `roles` (`id`, `title`, `slug`, `created_at`, `updated_at`) VALUES
@@ -1359,7 +1391,7 @@ INSERT INTO `roles` (`id`, `title`, `slug`, `created_at`, `updated_at`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `transactions`
+-- Cấu trúc bảng cho bảng `transactions`
 --
 
 CREATE TABLE `transactions` (
@@ -1386,7 +1418,7 @@ CREATE TABLE `transactions` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `transactions`
+-- Đang đổ dữ liệu cho bảng `transactions`
 --
 
 INSERT INTO `transactions` (`id`, `created_at`, `updated_at`, `mind_id`, `user_id`, `created_date`, `address`, `phone`, `shipping_method`, `note`, `status`, `sub_total`, `shipping_cost`, `cost_discount`, `before_total`, `before_pay`, `end_total`, `owner`, `buyer_cost`, `countQty`) VALUES
@@ -1399,12 +1431,17 @@ INSERT INTO `transactions` (`id`, `created_at`, `updated_at`, `mind_id`, `user_i
 (12, '2017-08-13 02:39:39', '2017-08-15 03:00:27', 4, 22, '2017-08-13 09:39:39', '122 yen hoa', '0914390567', 'Vận chuyển tới khách hàng', 'note', 'Đang giao', '5254000.00', '40000.00', '55000.00', '5254000.00', '5254000.00', '5259000.00', 'letoan', '20000.00', 22),
 (13, '2017-08-13 18:43:23', '2017-08-14 21:23:52', 4, 22, '2017-08-14 01:43:23', '32323', '0914390567', 'Vận chuyển tới khách hàng', '322323', 'Đang giao', '1249000.00', '40000.00', '55000.00', '1249000.00', '1249000.00', '1254000.00', 'letoan', '20000.00', 5),
 (14, '2017-08-13 18:45:21', '2017-08-14 21:21:13', 4, 22, '2017-08-14 01:45:21', 'ha noi - viet nam 45', '0914390567', 'Vận chuyển tới khách hàng', 'notes', 'Đợi chia', '1000000.00', '40000.00', '55000.00', '1000000.00', '1000000.00', '1005000.00', 'letoan', '20000.00', 2),
-(15, '2017-08-16 20:15:01', '2017-08-16 20:15:01', 4, 22, '2017-08-17 03:15:01', 'ha tinh', '09143905678', 'Vận chuyển tới khách hàng', NULL, 'Đợi giao hàng', '3378000.00', '40000.00', '55000.00', '3378000.00', '3378000.00', '3383000.00', 'letoan', '20000.00', 13);
+(15, '2017-08-16 20:15:01', '2017-08-16 20:15:01', 4, 22, '2017-08-17 03:15:01', 'ha tinh', '09143905678', 'Vận chuyển tới khách hàng', NULL, 'Đợi giao hàng', '3378000.00', '40000.00', '55000.00', '3378000.00', '3378000.00', '3383000.00', 'letoan', '20000.00', 13),
+(16, '2017-08-17 10:58:51', '2017-08-17 10:58:51', 4, 22, '2017-08-17 17:58:51', 'ha tinh', '09143905678', 'Vận chuyển tới khách hàng', NULL, 'Đợi giao hàng', '5000000.00', '40000.00', '55000.00', '5000000.00', '5000000.00', '5005000.00', 'letoan', '20000.00', 15),
+(17, '2017-08-17 11:01:47', '2017-08-17 11:01:47', 4, 22, '2017-08-17 18:01:47', 'ha tinh', '09143905678', 'Vận chuyển tới khách hàng', NULL, 'Đợi giao hàng', '3954000.00', '40000.00', '55000.00', '3954000.00', '3954000.00', '3959000.00', 'letoan', '20000.00', 15),
+(18, '2017-08-17 11:14:23', '2017-08-17 11:14:23', 4, 22, '2017-08-17 18:14:23', 'ha tinh', '09143905678', 'Vận chuyển tới khách hàng', NULL, 'Đợi giao hàng', '2660000.00', '40000.00', '55000.00', '2660000.00', '2660000.00', '2665000.00', 'letoan', '20000.00', 7),
+(19, '2017-08-17 21:14:53', '2017-08-17 21:14:53', 4, 22, '2017-08-18 04:14:53', 'ha tinh', '09143905678', 'Vận chuyển tới khách hàng', NULL, 'Đợi giao hàng', '4400000.00', '40000.00', '134000.00', '4400000.00', '4400000.00', '4326000.00', 'letoan', '20000.00', 13),
+(20, '2017-08-18 04:31:18', '2017-08-18 04:31:18', 4, 22, '2017-08-18 11:31:18', 'ha tinh', '09143905678', 'Vận chuyển tới khách hàng', NULL, 'Đợi giao hàng', '3536000.00', '40000.00', '46080.00', '3536000.00', '3536000.00', '3549920.00', 'letoan', '20000.00', 14);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `transaction_drug`
+-- Cấu trúc bảng cho bảng `transaction_drug`
 --
 
 CREATE TABLE `transaction_drug` (
@@ -1419,7 +1456,7 @@ CREATE TABLE `transaction_drug` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `transaction_drug`
+-- Đang đổ dữ liệu cho bảng `transaction_drug`
 --
 
 INSERT INTO `transaction_drug` (`id`, `created_at`, `updated_at`, `transaction_id`, `drug_id`, `qty`, `price`, `type`) VALUES
@@ -1454,12 +1491,25 @@ INSERT INTO `transaction_drug` (`id`, `created_at`, `updated_at`, `transaction_i
 (57, '2017-08-13 18:45:22', '2017-08-13 18:45:22', 14, 59, 2, '1000000.00', 'root'),
 (58, '2017-08-16 20:15:01', '2017-08-16 20:15:01', 15, 90, 10, '2900000.00', 'discount'),
 (59, '2017-08-16 20:15:01', '2017-08-16 20:15:01', 15, 90, 1, '300000.00', 'root'),
-(60, '2017-08-16 20:15:01', '2017-08-16 20:15:01', 15, 60, 2, '178000.00', 'root');
+(60, '2017-08-16 20:15:01', '2017-08-16 20:15:01', 15, 60, 2, '178000.00', 'root'),
+(61, '2017-08-17 10:58:51', '2017-08-17 10:58:51', 16, 90, 10, '2900000.00', 'discount'),
+(62, '2017-08-17 10:58:51', '2017-08-17 10:58:51', 16, 59, 3, '1500000.00', 'root'),
+(63, '2017-08-17 10:58:51', '2017-08-17 10:58:51', 16, 90, 2, '600000.00', 'root'),
+(64, '2017-08-17 11:01:48', '2017-08-17 11:01:48', 17, 90, 10, '2900000.00', 'discount'),
+(65, '2017-08-17 11:01:48', '2017-08-17 11:01:48', 17, 33, 3, '54000.00', 'discount'),
+(66, '2017-08-17 11:01:48', '2017-08-17 11:01:48', 17, 59, 2, '1000000.00', 'root'),
+(67, '2017-08-17 11:14:23', '2017-08-17 11:14:23', 18, 90, 4, '1160000.00', 'discount'),
+(68, '2017-08-17 11:14:23', '2017-08-17 11:14:23', 18, 59, 3, '1500000.00', 'root'),
+(69, '2017-08-17 21:14:53', '2017-08-17 21:14:53', 19, 90, 10, '2900000.00', 'discount'),
+(70, '2017-08-17 21:14:53', '2017-08-17 21:14:53', 19, 59, 3, '1500000.00', 'root'),
+(71, '2017-08-18 04:31:18', '2017-08-18 04:31:18', 20, 90, 10, '2900000.00', 'discount'),
+(72, '2017-08-18 04:31:18', '2017-08-18 04:31:18', 20, 33, 2, '36000.00', 'discount'),
+(73, '2017-08-18 04:31:18', '2017-08-18 04:31:18', 20, 90, 2, '600000.00', 'root');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `transaction_send`
+-- Cấu trúc bảng cho bảng `transaction_send`
 --
 
 CREATE TABLE `transaction_send` (
@@ -1476,7 +1526,7 @@ CREATE TABLE `transaction_send` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `transaction_send`
+-- Đang đổ dữ liệu cho bảng `transaction_send`
 --
 
 INSERT INTO `transaction_send` (`id`, `created_at`, `updated_at`, `transaction_id`, `shipping_method`, `code_send`, `qty_box`, `date_send`, `note`, `status`) VALUES
@@ -1486,7 +1536,7 @@ INSERT INTO `transaction_send` (`id`, `created_at`, `updated_at`, `transaction_i
 -- --------------------------------------------------------
 
 --
--- Table structure for table `users`
+-- Cấu trúc bảng cho bảng `users`
 --
 
 CREATE TABLE `users` (
@@ -1505,7 +1555,7 @@ CREATE TABLE `users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `users`
+-- Đang đổ dữ liệu cho bảng `users`
 --
 
 INSERT INTO `users` (`id`, `username`, `email`, `password`, `role_id`, `seen`, `valid`, `confirmed`, `confirmation_code`, `created_at`, `updated_at`, `remember_token`) VALUES
@@ -1514,7 +1564,7 @@ INSERT INTO `users` (`id`, `username`, `email`, `password`, `role_id`, `seen`, `
 -- --------------------------------------------------------
 
 --
--- Table structure for table `user_logs`
+-- Cấu trúc bảng cho bảng `user_logs`
 --
 
 CREATE TABLE `user_logs` (
@@ -1525,7 +1575,7 @@ CREATE TABLE `user_logs` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `user_logs`
+-- Đang đổ dữ liệu cho bảng `user_logs`
 --
 
 INSERT INTO `user_logs` (`id`, `created_at`, `updated_at`, `user_id`) VALUES
@@ -1540,26 +1590,32 @@ INSERT INTO `user_logs` (`id`, `created_at`, `updated_at`, `user_id`) VALUES
 (9, '2017-08-15 08:26:09', '2017-08-15 08:26:09', 22),
 (10, '2017-08-15 09:16:36', '2017-08-15 09:16:36', 22),
 (11, '2017-08-16 20:05:47', '2017-08-16 20:05:47', 22),
-(12, '2017-08-16 20:17:51', '2017-08-16 20:17:51', 22);
+(12, '2017-08-16 20:17:51', '2017-08-16 20:17:51', 22),
+(13, '2017-08-17 09:43:57', '2017-08-17 09:43:57', 22),
+(14, '2017-08-17 09:58:48', '2017-08-17 09:58:48', 22),
+(15, '2017-08-17 10:26:52', '2017-08-17 10:26:52', 22),
+(16, '2017-08-17 11:17:53', '2017-08-17 11:17:53', 22),
+(17, '2017-08-17 18:38:31', '2017-08-17 18:38:31', 22),
+(18, '2017-08-17 18:48:29', '2017-08-17 18:48:29', 22);
 
 --
--- Indexes for dumped tables
+-- Chỉ mục cho các bảng đã đổ
 --
 
 --
--- Indexes for table `config_discount`
+-- Chỉ mục cho bảng `config_discount`
 --
 ALTER TABLE `config_discount`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `contacts`
+-- Chỉ mục cho bảng `contacts`
 --
 ALTER TABLE `contacts`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `customers`
+-- Chỉ mục cho bảng `customers`
 --
 ALTER TABLE `customers`
   ADD PRIMARY KEY (`id`),
@@ -1571,7 +1627,7 @@ ALTER TABLE `customers`
   ADD UNIQUE KEY `inviteCode` (`inviteCode`);
 
 --
--- Indexes for table `districts`
+-- Chỉ mục cho bảng `districts`
 --
 ALTER TABLE `districts`
   ADD PRIMARY KEY (`id`),
@@ -1580,7 +1636,7 @@ ALTER TABLE `districts`
   ADD KEY `name_2` (`name`,`status`);
 
 --
--- Indexes for table `drugs`
+-- Chỉ mục cho bảng `drugs`
 --
 ALTER TABLE `drugs`
   ADD PRIMARY KEY (`id`),
@@ -1589,40 +1645,40 @@ ALTER TABLE `drugs`
 ALTER TABLE `drugs` ADD FULLTEXT KEY `name` (`code`,`nameClean`);
 
 --
--- Indexes for table `drug_image`
+-- Chỉ mục cho bảng `drug_image`
 --
 ALTER TABLE `drug_image`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `group_drugs`
+-- Chỉ mục cho bảng `group_drugs`
 --
 ALTER TABLE `group_drugs`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `group_drugs_code_unique` (`code`);
 
 --
--- Indexes for table `minds`
+-- Chỉ mục cho bảng `minds`
 --
 ALTER TABLE `minds`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `minds_code_unique` (`code`);
 
 --
--- Indexes for table `mind_drug`
+-- Chỉ mục cho bảng `mind_drug`
 --
 ALTER TABLE `mind_drug`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `password_resets`
+-- Chỉ mục cho bảng `password_resets`
 --
 ALTER TABLE `password_resets`
   ADD KEY `password_resets_email_index` (`email`),
   ADD KEY `password_resets_token_index` (`token`);
 
 --
--- Indexes for table `pharmacies`
+-- Chỉ mục cho bảng `pharmacies`
 --
 ALTER TABLE `pharmacies`
   ADD PRIMARY KEY (`id`),
@@ -1632,38 +1688,38 @@ ALTER TABLE `pharmacies`
   ADD KEY `email` (`email`);
 
 --
--- Indexes for table `provinces`
+-- Chỉ mục cho bảng `provinces`
 --
 ALTER TABLE `provinces`
   ADD PRIMARY KEY (`id`),
   ADD KEY `sort` (`sort`);
 
 --
--- Indexes for table `roles`
+-- Chỉ mục cho bảng `roles`
 --
 ALTER TABLE `roles`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `transactions`
+-- Chỉ mục cho bảng `transactions`
 --
 ALTER TABLE `transactions`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `transaction_drug`
+-- Chỉ mục cho bảng `transaction_drug`
 --
 ALTER TABLE `transaction_drug`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `transaction_send`
+-- Chỉ mục cho bảng `transaction_send`
 --
 ALTER TABLE `transaction_send`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `users`
+-- Chỉ mục cho bảng `users`
 --
 ALTER TABLE `users`
   ADD PRIMARY KEY (`id`),
@@ -1672,101 +1728,101 @@ ALTER TABLE `users`
   ADD KEY `users_role_id_foreign` (`role_id`);
 
 --
--- Indexes for table `user_logs`
+-- Chỉ mục cho bảng `user_logs`
 --
 ALTER TABLE `user_logs`
   ADD PRIMARY KEY (`id`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- AUTO_INCREMENT cho các bảng đã đổ
 --
 
 --
--- AUTO_INCREMENT for table `config_discount`
+-- AUTO_INCREMENT cho bảng `config_discount`
 --
 ALTER TABLE `config_discount`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 --
--- AUTO_INCREMENT for table `contacts`
+-- AUTO_INCREMENT cho bảng `contacts`
 --
 ALTER TABLE `contacts`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
--- AUTO_INCREMENT for table `customers`
+-- AUTO_INCREMENT cho bảng `customers`
 --
 ALTER TABLE `customers`
   MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 --
--- AUTO_INCREMENT for table `districts`
+-- AUTO_INCREMENT cho bảng `districts`
 --
 ALTER TABLE `districts`
   MODIFY `id` int(5) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=974;
 --
--- AUTO_INCREMENT for table `drugs`
+-- AUTO_INCREMENT cho bảng `drugs`
 --
 ALTER TABLE `drugs`
   MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=103;
 --
--- AUTO_INCREMENT for table `drug_image`
+-- AUTO_INCREMENT cho bảng `drug_image`
 --
 ALTER TABLE `drug_image`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 --
--- AUTO_INCREMENT for table `group_drugs`
+-- AUTO_INCREMENT cho bảng `group_drugs`
 --
 ALTER TABLE `group_drugs`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 --
--- AUTO_INCREMENT for table `minds`
+-- AUTO_INCREMENT cho bảng `minds`
 --
 ALTER TABLE `minds`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 --
--- AUTO_INCREMENT for table `mind_drug`
+-- AUTO_INCREMENT cho bảng `mind_drug`
 --
 ALTER TABLE `mind_drug`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=75;
 --
--- AUTO_INCREMENT for table `pharmacies`
+-- AUTO_INCREMENT cho bảng `pharmacies`
 --
 ALTER TABLE `pharmacies`
   MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 --
--- AUTO_INCREMENT for table `roles`
+-- AUTO_INCREMENT cho bảng `roles`
 --
 ALTER TABLE `roles`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
--- AUTO_INCREMENT for table `transactions`
+-- AUTO_INCREMENT cho bảng `transactions`
 --
 ALTER TABLE `transactions`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 --
--- AUTO_INCREMENT for table `transaction_drug`
+-- AUTO_INCREMENT cho bảng `transaction_drug`
 --
 ALTER TABLE `transaction_drug`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=61;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=74;
 --
--- AUTO_INCREMENT for table `transaction_send`
+-- AUTO_INCREMENT cho bảng `transaction_send`
 --
 ALTER TABLE `transaction_send`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
--- AUTO_INCREMENT for table `users`
+-- AUTO_INCREMENT cho bảng `users`
 --
 ALTER TABLE `users`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
--- AUTO_INCREMENT for table `user_logs`
+-- AUTO_INCREMENT cho bảng `user_logs`
 --
 ALTER TABLE `user_logs`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 --
--- Constraints for dumped tables
+-- Các ràng buộc cho các bảng đã đổ
 --
 
 --
--- Constraints for table `users`
+-- Các ràng buộc cho bảng `users`
 --
 ALTER TABLE `users`
   ADD CONSTRAINT `users_role_id_foreign` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`);

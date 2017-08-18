@@ -1,7 +1,6 @@
 <html>
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <style>
         .page-break {
             page-break-after: always;
@@ -19,6 +18,7 @@
         th, td {
             padding: 15px;
         }
+        *{ font-family: DejaVu Sans; font-size: 12px;}
     </style>
 </head>
 <body>
@@ -29,14 +29,22 @@
             <thead>
             <tr>
                 <th>#</th>
-                <th>Tên người mua</th>
-                <th>Số điện thoại</th>
-                <th>Địa chỉ</th>
-                <th>Phương thức vận chuyển</th>
-                <th>Số lượng</th>
-                <th>Thành tiền</th>
-                <th>Ngày mua</th>
-                <th>Trạng thái</th>
+                <th>Name</th>
+                <th>Phone</th>
+                <th>Address</th>
+                <th>Shiping method</th>
+                <th>Quantity</th>
+                <th>Total</th>
+                <th>Date created</th>
+                <th>Status</th>
+                {{--<th>Tên người mua</th>--}}
+                {{--<th>Số điện thoại</th>--}}
+                {{--<th>Địa chỉ</th>--}}
+                {{--<th>Phương thức vận chuyển</th>--}}
+                {{--<th>Số lượng</th>--}}
+                {{--<th>Thành tiền</th>--}}
+                {{--<th>Ngày mua</th>--}}
+                {{--<th>Trạng thái</th>--}}
 
             </tr>
             </thead>

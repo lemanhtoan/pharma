@@ -145,6 +145,10 @@ php artisan make:migration create_config_discount_table
 
 cua hinh 10 level
 
+if (sub_total < from(lv1)  {
+    $discountValue = fix 50000;
+}
+
 $discountValue = 0;
 if (sub_total >= to(lv1)  {
     $discountValue += ( to(lv1) * percent(lv1) ) / 100;

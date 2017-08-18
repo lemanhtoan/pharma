@@ -49,7 +49,11 @@ if ( !Auth::check() ) {
                     </div>
                     <div class="row-old">
                         <div class="row-label">Khuyến mãi</div>
-                        <div class="row-value">55.000</div>
+                        <div class="row-value">
+
+                            <?php echo number_format($khuyenmai);?>
+
+                        </div>
                     </div>
                     <div class="row-even">
                         <div class="row-label"><b class="capt">Tổng</b></div>
