@@ -163,4 +163,20 @@ if (sub_total >= to(lv3)  {
 }
 
 ADMIN
+/administrator
 admin@email.com / admin
+
+user test: 09143905678 / 12345678
+
+http://162.222.226.195/cpanel
+myaawjcz NHam123##
+
+db
+myaawjcz_pharma
+myaawjcz_pharma / 123456a@
+
+fpt
+FTP Username: pharma@myaawu.com
+FTP server: ftp.myaawu.com
+FTP & explicit FTPS port:  21
+123456a@
