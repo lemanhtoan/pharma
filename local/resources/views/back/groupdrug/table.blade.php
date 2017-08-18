@@ -11,9 +11,10 @@
       <?php } echo $i; endif; ?>
     </th>
     <td>{!! Form::checkbox('status', $post->id, $post->status) !!}</td>
-    <td>{!! link_to('groupdrug/' . $post->id, 'Chi tiết', ['class' => 'btn btn-success btn-block btn']) !!}</td>
-    <td>{!! link_to_route('groupdrug.edit', 'Sửa', [$post->id], ['class' => 'btn btn-warning btn-block']) !!}</td>
-    <td>
+    <td class="change_info">{!! link_to('groupdrug/' . $post->id, 'Chi tiết', ['class' => 'btn btn-success btn-block btn']) !!}
+
+    {!! link_to_route('groupdrug.edit', 'Sửa', [$post->id], ['class' => 'btn btn-warning btn-block']) !!}
+    
     {!! Form::open(['method' => 'DELETE', 'route' => ['groupdrug.destroy', $post->id]]) !!}
       {!! Form::destroy('Xóa', 'Xác nhận xóa?') !!}
     {!! Form::close() !!}

@@ -22,8 +22,11 @@
     float: left;
     width: 100%;
     margin-left: 15px;
+    margin-bottom: 10px;
 }
-
+.row.pharcies {
+    margin-bottom: 10px;
+}
 
 form.searchform {
     float: left;
@@ -3269,8 +3272,8 @@ pre code {
 .container-fluid {
     margin-right: auto;
     margin-left: auto;
-    padding-left: 15px;
-    padding-right: 15px
+    padding-left: 0;
+    padding-right: 0
 }
 .row {
     margin-left: -15px;
@@ -4018,6 +4021,7 @@ th {
 .table>thead{
     background: #dff0d8;
     color: #3c763d;
+    font-size: 13px;
 }
 .table>thead>tr>th,
 .table>tbody>tr>th,
@@ -5022,16 +5026,25 @@ fieldset[disabled] .btn-link:focus {
     border-radius: 3px
 }
 .btn-block {
-    display: block;
-    width: 100%
+    display: inline-block;
+     width: 55px;
+    font-size: 13px;
+    padding: 6px 0;
+    margin-bottom: 5px;
 }
+.change_info .btn-block+.btn-block {
+    margin-top: 0;
+    padding: 6px 0;
+}
+.change_info form{display: inline-block;}
 .btn-block+.btn-block {
     margin-top: 5px
 }
 input[type=submit].btn-block,
 input[type=reset].btn-block,
 input[type=button].btn-block {
-    width: 100%
+    width: 55px;
+    padding: 6px 0;
 }
 .fade {
     opacity: 0;
@@ -7894,7 +7907,8 @@ button.close {
     margin-right: auto
 }
 .pull-right {
-    float: right!important
+    float: right!important;
+    margin-right: 30px;
 }
 .pull-left {
     float: left!important
@@ -8153,7 +8167,7 @@ body {
     padding-left: 0
 }
 #page-wrapper {
-    width: 98%;
+    width: 100%;
     padding: 0;
     background-color: #fff
 }
@@ -8166,7 +8180,7 @@ body {
         padding-left: 225px
     }
     #page-wrapper {
-        padding: 10px
+        padding: 10px 0
     }
 }
 .top-nav {
@@ -8229,7 +8243,7 @@ ul.alert-dropdown {
         position: fixed;
         top: 51px;
         left: 225px;
-        width: 225px;
+        width: 200px;
         margin-left: -225px;
         border: 0;
         border-radius: 0;
@@ -8237,7 +8251,7 @@ ul.alert-dropdown {
         background-color: #17be9b
     }
     .side-nav>li>a {
-        width: 225px
+        width: 200px
     }
     .side-nav li a:hover,
     .side-nav li a:focus {

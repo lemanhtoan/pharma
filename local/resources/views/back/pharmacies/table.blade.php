@@ -9,8 +9,8 @@
     <td>{{ $post->province }}</td>
     <td>{{ $post->phone }}</td>
     <td><span class="status_<?php echo $post->id?>">{!! Form::checkbox('status', $post->id, $post->status) !!}</span></td>
-    <td>{!! link_to_route('pharmacies.edit', 'Sửa', [$post->id], ['class' => 'btn btn-warning btn-block']) !!}</td>
-    <td>
+    <td class="change_info">{!! link_to_route('pharmacies.edit', 'Sửa', [$post->id], ['class' => 'btn btn-warning btn-block']) !!}
+
     {!! Form::open(['method' => 'DELETE', 'route' => ['pharmacies.destroy', $post->id]]) !!}
       {!! Form::destroy('Xóa', 'Xác nhận xóa?') !!}
     {!! Form::close() !!}

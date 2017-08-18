@@ -15,8 +15,8 @@
     <td>{{ $post->package }}</td>
     <td>{{ $post->produceCompany }}</td>
     <td>{!! Form::checkbox('status', $post->id, $post->status) !!} </td>
-    <td>{!! link_to_route('drug.edit', 'Sửa', [$post->id], ['class' => 'btn btn-warning btn-block']) !!}</td>
-    <td>
+    <td class="change_info">{!! link_to_route('drug.edit', 'Sửa', [$post->id], ['class' => 'btn btn-warning btn-block']) !!}
+    
       {!! Form::open(['method' => 'DELETE', 'route' => ['drug.destroy', $post->id]]) !!}
       {!! Form::destroy('Xóa', 'Xác nhận xóa?') !!}
       {!! Form::close() !!}
