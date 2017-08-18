@@ -75,6 +75,7 @@
                 <span class="fa fa-fw fa-{{ $order->name == 'customers.status' ? $order->sens : 'unsorted'}}"></span>
               </a>
             </th>
+            <th></th>
           </tr>
         </thead>
         <tbody>

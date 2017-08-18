@@ -98,6 +98,8 @@
                 <span class="fa fa-fw fa-{{ $order->name == 'drugs.status' ? $order->sens : 'unsorted'}}"></span>
               </a>
             </th>
+            <th></th>
+            <th></th>
           </tr>
         </thead>
         <tbody>

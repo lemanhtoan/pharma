@@ -45,6 +45,8 @@
                 <span class="fa fa-fw fa-{{ $order->name == 'minds.status' ? $order->sens : 'unsorted'}}"></span>
               </a>
             </th>
+            <th></th>
+            <th></th>
           </tr>
         </thead>
         <tbody>

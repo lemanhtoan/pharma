@@ -1,8 +1,22 @@
+.customer-info p ,
+.group_thuoc p ,
+.thuoc_info p ,
+.customer-info p {
+    width: 100%; 
+    float: left;
+}
+.customer-info p b,
+.group_thuoc p b,
+.thuoc_info p b,
+.customer-info p b{
+    width: 130px;float: left;}
 .fox-filter
 .row {
     margin-left: 0;
     margin-bottom: 10px;
 }
+.col-md-6.thuoc_info1{padding-right: 30px}
+.col-md-6.thuoc_info2{padding-left:  30px}
 
 .row.box-other {
     float: left;

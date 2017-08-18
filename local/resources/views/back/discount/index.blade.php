@@ -44,6 +44,8 @@
                 <span class="fa fa-fw fa-{{ $order->name == 'config_discount.percent' ? $order->sens : 'unsorted'}}"></span>
               </a>
             </th>
+            <th></th>
+            <th></th>
           </tr>
         </thead>
         <tbody>

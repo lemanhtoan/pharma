@@ -3,8 +3,8 @@
 
   @include('back.partials.entete', ['icone' => 'pencil', 'fil' => 'Thuốc', 'title' => 'Thuốc'. link_to_route('drug.index', 'Quay lại', [], ['class' => 'btn btn-info pull-right'])])
 
-  <div class="row col-lg-12">
-    <div class="col-md-6">
+  <div class="row col-lg-12 thuoc_info">
+    <div class="col-md-6 thuoc_info1">
       <p><b>Mã thuốc: </b> {{ $post->code }}</p>
       <p><b>Tên thuốc: </b> {{ $post->name }}</p>
       <p><b>Nhóm thuốc: </b>
@@ -24,7 +24,7 @@
       <p><b>Hệ số quy đổi: </b>{{ $post->hesoquydoi }}</p>
     </div>
 
-    <div class="col-md-6">
+    <div class="col-md-6 thuoc_info2">
       <p><b>Số đăng ký: </b>{{ $post->registerNumber }}</p>
       <p><b>Công ty sản xuất: </b>{{ $post->produceCompany }}</p>
       <p><b>Nước sản xuất: </b>{{ $post->produceCountry }}</p>
