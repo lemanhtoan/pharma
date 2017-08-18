@@ -52,9 +52,10 @@ if ( !Auth::check() ) {
                 <input  class="special_price<?php echo $drug['drug_id'];?>" type="hidden" name="special_price" value="<?php echo $specialPrice ?>">
 
 
-                <td><?php $img = $drug['drugImage']; if($img) { $url = Config::get('constants.pathDrugImg').$img[0]->url;} else {$url = 'images/product.png';}; ?>
-                    <img class="show-detail" data-drug="<?php echo $drug['drug_id'];?>" src="{!! url($url) !!}" alt=""></td>
-                <td><h3 class="" data-drug="<?php echo $drug['drug_id'];?>"><?php echo  $drug['drugInfo']->name;?></h3></td>
+                <td colspan="2"><?php $img = $drug['drugImage']; if($img) { $url = Config::get('constants.pathDrugImg').$img[0]->url;} else {$url = 'images/product.png';}; ?>
+                    <img class="show-detail" data-drug="<?php echo $drug['drug_id'];?>" src="{!! url($url) !!}" alt="">
+                    <h3 class="" data-drug="<?php echo $drug['drug_id'];?>"><?php echo  $drug['drugInfo']->name;?></h3>
+                </td>
                 <td>
                     <?php if($drug['drugBasePrice']->drug_special_price > 0) : ?><p class="green-color">Ưu đãi: <?php echo number_format($drug['drugBasePrice']->drug_special_price) ?>đ</p> <?php endif;?>
                     <p>Giá:  <?php echo number_format($drug['drugBasePrice']->drug_price) ?>đ</p>
