@@ -8,6 +8,16 @@
     border-color: #ccc !important;
 }
 @media (max-width: 1023px){
+    .alert.alert-success.alert-dismissable {
+        margin: 10px 15px 0;
+    }
+
+    .box-wd.home_list #timeExpire {
+        float: none;
+        padding-left: 0;
+        width: 210px;
+        margin: 0 auto;
+    }
     .box-shiper .modal-dialog {max-width: 400px}
     div.list-products ul.products img{
         width: 30%;
@@ -197,6 +207,16 @@
 
 }
 
+@media only screen and (max-width: 360px) {
+    .checkout_step2.after_order .table > tbody > tr > td,
+    .checkout_step2.after_order .table > tbody > tr > th,
+    .checkout_step2.after_order .table > tfoot > tr > td,
+    .checkout_step2.after_order .table > tfoot > tr > th,
+    .checkout_step2.after_order .table > thead > tr > td,
+    .checkout_step2.after_order .table > thead > tr > th {
+        padding: 3px;
+    }
+}
 @media only screen and (max-width: 480px) {
     .button_continue .btn-continue{
         text-align: center;
@@ -206,6 +226,7 @@
     table.table-cart tbody input.qty-count {
         width: 35px !important;
     }
+
 }
 @media only screen and (min-width: 1024px) {
     .row-label {
@@ -654,6 +675,9 @@ span.limit-product {
         width: 35%;
         color: #9e9e9e;
     }
+    .box-wd.home_list .box-content {
+        padding: 10px 15px;
+    }
     div.copy-right {
         background: #fff;
         color: #717070;
@@ -835,6 +859,7 @@ input.qty-count {
     border-bottom: none;
 }
 
+
 #mindModal  h4.modal-title {
     text-transform: uppercase;
     color: #17be9b;
@@ -858,7 +883,7 @@ input.qty-count {
 
 #timeExpire {
     float: left;
-    padding-left: 4px;
+    padding-left: 3px;
 }
 
 .box-count {

@@ -223,7 +223,7 @@
       width: calc(100% - 30px);
     }
     div img.icon-clear {
-      height: 34px !important;
+      height: 30px !important;
     }
     .profile-form .btn-continue {
       width: calc(100% - 20px);

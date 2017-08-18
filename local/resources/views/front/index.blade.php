@@ -66,7 +66,7 @@ function getQty($productId, $type)
     </div>
 
     <?php  if (count($nextMind)) : $valueTime = $nextMind[0]->start_time; ?>
-    <div class="box-wd">
+    <div class="box-wd home_list">
         <h4>Thông tin phiên mới nhất</h4>
         <div class="box-content">
             <h5>Phiên tiếp theo sẽ mở vào:</h5>
