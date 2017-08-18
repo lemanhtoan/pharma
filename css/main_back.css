@@ -3998,7 +3998,12 @@ th {
 .table {
     width: 100%;
     max-width: 100%;
-    margin-bottom: 20px
+    margin-bottom: 20px;
+    border: 1px solid #ddd;
+}
+.table>thead{
+    background: #dff0d8;
+    color: #3c763d;
 }
 .table>thead>tr>th,
 .table>tbody>tr>th,
@@ -4146,8 +4151,10 @@ table th[class*=col-] {
 .table>thead>tr.warning>th,
 .table>tbody>tr.warning>th,
 .table>tfoot>tr.warning>th {
-    background-color: #ececec;
+    /*background-color: #ececec;*/
 }
+.table > tbody > tr:nth-child(2n){background-color: #ececec;}
+
 .table-hover>tbody>tr>td.warning:hover,
 .table-hover>tbody>tr>th.warning:hover,
 .table-hover>tbody>tr.warning:hover>td,
@@ -6143,7 +6150,7 @@ fieldset[disabled] .navbar-default .btn-link:focus {
 .navbar-inverse .navbar-nav>.active>a:hover,
 .navbar-inverse .navbar-nav>.active>a:focus {
     color: #fff;
-    background-color: #d9534f
+    background-color: #109176;
 }
 .navbar-inverse .navbar-nav>.disabled>a,
 .navbar-inverse .navbar-nav>.disabled>a:hover,
@@ -8121,7 +8128,7 @@ button.close {
 
 body {
     margin-top: 100px;
-    background-color: #17be9b
+    background-color: #fff;
 }
 @media (min-width: 768px) {
     body {
@@ -8167,7 +8174,7 @@ body {
 .top-nav>.open>a:hover,
 .top-nav>.open>a:focus {
     color: #fff;
-    background-color: #d9534f
+    background-color: #109176
 }
 .top-nav>.open>.dropdown-menu {
     float: left;
@@ -8221,7 +8228,7 @@ ul.alert-dropdown {
     .side-nav li a:hover,
     .side-nav li a:focus {
         outline: 0;
-        background-color: #d9534f!important
+        background-color: #109176!important
     }
 }
 .side-nav>li>ul {
