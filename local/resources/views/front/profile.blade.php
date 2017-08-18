@@ -30,7 +30,7 @@ if ( !Auth::check() ) {
 		        </div>
 		    </div>
 	    <?php endif;?>
-
+	   <div class="group-profile">
         <div class="item-row">
 			<label for="log" class="control-label">Tài khoản</label>
 			<input readonly="readonly
@@ -64,6 +64,7 @@ if ( !Auth::check() ) {
         <div class="row">
             <button type="submit" class="btn btn-continue pull-left">Cập nhật</button>
         </div>
+		   </div>
     </form>
     <?php } else { echo $content;} ?>
 
