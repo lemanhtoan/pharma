@@ -86,7 +86,7 @@
             </button>
           </div>
           <div class="col-item-6">
-            <a href="{!! url('/') !!}"><img class="logo logo-mb" src="{!!url('/images/logo.png')!!}" align="logo" /></a>
+            <a href="{!! url('/') !!}"><img class="logo logo-mb" src="{!!url('/images/logo-mb.png')!!}" align="logo" /></a>
           </div>
           <div class="col-item-3">
             <?php if (Auth::check()) $user = Auth::user()->id;
@@ -248,8 +248,8 @@
       padding: 10px;
     }
     .box-1-column .row {
-      margin-left: 0;
-      margin-right: 0;
+      /*margin-left: 0;
+      margin-right: 0;*/
     }
     .row.bg-padding {
       background: #fff;
