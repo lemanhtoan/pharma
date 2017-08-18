@@ -20,6 +20,7 @@
         width: 70%;
         float: right;
         text-align: left;
+        padding-left: 10px;
     }
     div.list-products ul.products li,
     .box-1-nob div.list-products ul.products li{
@@ -625,8 +626,8 @@ span.limit-product {
         box-shadow: 0 0 3px #edf1f3;
         background: #fff;
     }
-    div img.icon-clear {
-        height: 25px;
+    div.box-login img.icon-clear {
+        height: 25px !important;
     }
     .box-login .item-row input {
         width: 65%;
