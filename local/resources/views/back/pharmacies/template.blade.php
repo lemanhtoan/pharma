@@ -87,11 +87,9 @@
 		</div>
 
 		<div class="form-group">
-			<div class="col-md-1">
-				{!! Form::submit('Cập nhật') !!}
-			</div>
-			<div class="col-md-1">
-				<a href="{!! route('pharmacies.index') !!}" class="btn btn-default">Hủy</a>
+			<div class="col-md-3">
+				<div class="link-left">{!! Form::submit('Cập nhật') !!}</div>
+				<div class="link-right"><a href="{!! route('pharmacies.index') !!}" class="btn btn-default">Hủy</a></div>
 			</div>
 		</div>
 

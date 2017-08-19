@@ -73,7 +73,7 @@
       // Active gestion
       $(document).on('change', ':checkbox[name="status"]', function() {
         $(this).parents('tr').toggleClass('warning');
-        $(this).hide().parent().append('<i class="fa fa-refresh fa-spin"></i>');
+//        // $(this).hide().parent().append('<i class="fa fa-refresh fa-spin"></i>');
         var token = $('input[name="_token"]').val();
         $.ajax({
           url: '{{ url('postActmind') }}' + '/' + this.value,
@@ -81,8 +81,8 @@
           data: "status=" + this.checked + "&_token=" + token
         })
         .done(function() {
-          $('.fa-spin').remove();
-          $('input:checkbox[name="status"]:hidden').show();
+//          $('.fa-spin').remove();
+//          $('input:checkbox[name="status"]:hidden').show();
         })
         .fail(function() {
           $('.fa-spin').remove();

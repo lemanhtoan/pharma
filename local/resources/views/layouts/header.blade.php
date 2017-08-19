@@ -43,12 +43,14 @@
 
         </div>
         <div class="tr-line tr-3 pull-right">
-          <div class="input-group tsearch">
-            <input type="text" class="form-control"  placeholder="Tìm kiếm..." >
-            <span class="input-group-addon">
-               <button type="submit"> <span class="glyphicon glyphicon-search"></span></button>
-            </span>
-          </div>
+          <form action="{!! url('tim-kiem') !!}" method="get">
+            <div class="input-group tsearch">
+              <input type="text" value="<?php if(isset($_GET['txtkeyword'])) {echo $_GET['txtkeyword'];} else {echo '';}?>" name="txtkeyword" class="form-control"  placeholder="Tìm kiếm..." >
+              <span class="input-group-addon">
+                 <button type="submit"> <span class="glyphicon glyphicon-search"></span></button>
+              </span>
+            </div>
+          </form>
         </div>
       </div>
     </div>

@@ -17,7 +17,7 @@ if ( !Auth::check() ) {
     <div class="row">
         <div class="box-green">
             <b class="green-color">Dự kiến: </b>
-            Đơn hàng sẽ được gọi xác nhận sau 12:00 và sẽ được xuất đi cùng ngày.
+            <?php echo $mindMessage->note; ?>
         </div>
     </div>
 

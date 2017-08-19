@@ -43,7 +43,9 @@ if ( !Auth::check() ) {
             <tbody>
             <?php foreach ($dataTransaction as $tran) :?>
             <tr>
-                <td><?php $date = date_create($tran->created_date); echo date_format($date, 'd/m/Y');?><br><span class="red"><?php echo '#',$tran->id;?></span></td>
+                <td><?php $date = date_create($tran->created_date); echo date_format($date, 'd/m/Y');?><br><span class="red">
+                        {!! link_to('orderview/' . $tran->id, '#'.$tran->id) !!}
+                    </span></td>
                 <td><?php echo number_format($tran->end_total) ?>đ</td>
                 <td><?php echo $tran->status ?></td>
             </tr>
@@ -54,5 +56,9 @@ if ( !Auth::check() ) {
     <?php } else { ?>
     <h4>Danh sách rỗng</h4>
     <?php } ?>
-
+    <style>
+        .red a {
+            color: red;
+        }
+    </style>
 @stop

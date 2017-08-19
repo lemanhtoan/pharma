@@ -45,6 +45,7 @@ class TransactionController extends Controller {
 
 	public function indexOrder(Request $request)
 	{
+
         $posts = $this->transactions_gestion->index(
 			10, 
 			$request->name,
@@ -65,14 +66,13 @@ class TransactionController extends Controller {
                 's_province' => $request->s_province,
                 's_district' => $request->s_district
 			]);
-
+        $transactionSend = TransactionSend::all();
 		if($request->ajax()) {
 			return response()->json([
-				'view' => view('back.transactions.table', compact('statut', 'posts'))->render(),
+				'view' => view('back.transactions.table', compact('statut', 'posts', 'transactionSend'))->render(),
 				'links' => e($links->setPath('order')->render())
 			]);		
 		}
-
 		$links->setPath('')->render();
 
 		$order = (object)[
@@ -85,8 +85,8 @@ class TransactionController extends Controller {
         $district = [];
 
 		$minds = Mind::orderBy('name', 'asc')->get();
-		$transactionSend = TransactionSend::all();
 
+//dd($transactionSend);
 		return view('back.transactions.index', compact('posts', 'links', 'order', 'pharmacieType', 'province', 'district', 'minds', 'transactionSend'));
 	}
 

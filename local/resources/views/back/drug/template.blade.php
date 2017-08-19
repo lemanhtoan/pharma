@@ -145,11 +145,9 @@
 
         <div class="row">
             <div class="form-group">
-                <div class="col-md-1" style="margin-right: 15px">
-                    {!! Form::submit('Cập nhật') !!}
-                </div>
-                <div class="col-md-1">
-                    <a href="{!! route('drug.index') !!}" class="btn btn-default">Hủy</a>
+                <div class="col-md-3">
+                    <div class="link-left">{!! Form::submit('Cập nhật') !!}</div>
+                    <div class="link-right"><a href="{!! route('drug.index') !!}" class="btn btn-default">Hủy</a></div>
                 </div>
             </div>
         </div>

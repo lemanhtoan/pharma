@@ -71,7 +71,7 @@
         <thead>
 
           <tr>
-          <th>
+          <th  style="text-align: center">
               <input type="checkbox" id="selectall"/>
           </th>
             <th>
@@ -245,7 +245,7 @@
       // Active gestion
       $(document).on('change', ':checkbox[name="status"]', function() {
         $(this).parents('tr').toggleClass('warning');
-        $(this).hide().parent().append('<i class="fa fa-refresh fa-spin"></i>');
+        // $(this).hide().parent().append('<i class="fa fa-refresh fa-spin"></i>');
         var token = $('input[name="_token"]').val();
         $.ajax({
           url: '{{ url('postActpharmacies') }}' + '/' + this.value,

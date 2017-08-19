@@ -29,6 +29,43 @@ use Illuminate\Support\Collection;
 
 class HomeController extends Controller
 {
+    public function showOrder($id) {
+        if (Auth::check()) $user = Auth::user()->id;
+        $transctionId =  Transaction::where('user_id', $user)->where('id', $id)->first();
+        $dataTransaction = Transaction::whereId($transctionId->id)->firstOrFail();
+        $dataTranDrugs = TransactionDrug::where('transaction_id', $transctionId->id)->orderBy('drug_id', 'desc')->get();
+        $drugs = Drug::orderBy('name', 'asc')->get();
+        return view( 'front.orderview', compact('dataTransaction', 'dataTranDrugs', 'drugs', 'id') );
+
+    }
+    public function searchData(Request $request)
+    {
+        $keyword = $request->input('txtkeyword');
+        $drugSearchs = \DB::table('drugs')->where('name', 'LIKE', '%' . $keyword . '%')->orWhere('code', 'LIKE', '%' . $keyword . '%')
+            ->orWhere('content', 'LIKE', '%' . $keyword . '%')
+            ->orWhere('activeIngredient', 'LIKE', '%' . $keyword . '%')
+            ->orWhere('design', 'LIKE', '%' . $keyword . '%')
+            ->orWhere('produceCompany', 'LIKE', '%' . $keyword . '%')
+            ->orWhere('produceCountry', 'LIKE', '%' . $keyword . '%')
+            ->orWhere('donvibuon', 'LIKE', '%' . $keyword . '%')
+            ->orWhere('donvile', 'LIKE', '%' . $keyword . '%')->get();
+        $drugArr = array();
+        $drugItem = array();
+        foreach($drugSearchs as $row) {
+            $drugItem['drug_id'] = $row->id;
+            $drugItem['drugInfo'] = $this->getDrugInfo($row->id);
+            $drugItem['drugImage'] = $this->getDrugImage($row->id);
+            $drugArr[] = $drugItem;
+        }
+        $currentPage = LengthAwarePaginator::resolveCurrentPage();
+        $col = new Collection($drugArr);
+
+        // fix test pagination
+        $perPage = 15;
+        $currentPageSearchResults = $col->slice(($currentPage - 1) * $perPage, $perPage)->all();
+        $drugs = new LengthAwarePaginator($currentPageSearchResults, count($col), $perPage, $currentPage,[ 'path' => LengthAwarePaginator::resolveCurrentPath()]);
+        return view( 'front.search', compact('drugs'));
+    }
 
     // test pdf
     public function doPdf() {
@@ -104,44 +141,55 @@ class HomeController extends Controller
             ->orderBy('start_time', 'asc')
             ->limit(1)
             ->get(['id']);
+        if (count($mind)) {
+            $drug = Mind::whereId($mind[0]->id)->firstOrFail();
 
-        $drug = Mind::whereId($mind[0]->id)->firstOrFail();
-
-        $drugArr = array();
-        if (count($drug->mind_drugs)) {
-            $drugItem = array();
-            foreach($drug->mind_drugs as $row) {
-                $drugItem['drug_id'] = $row->drug_id;
-                $drugItem['drug_price'] = $row->drug_price;
-                $drugItem['drug_special_price'] = $row->drug_special_price;
-                $drugItem['max_discount_qty'] = $row->max_discount_qty;
-                $drugItem['max_qty'] = $row->max_qty;
-                $drugItem['note'] = $row->note;
-                $drugItem['status'] = $row->status;
-                $drugItem['drugInfo'] = $this->getDrugInfo($row->drug_id);
-                $drugItem['drugImage'] = $this->getDrugImage($row->drug_id);
-                $drugArr[] = $drugItem;
+            $drugArr = array();
+            if (count($drug->mind_drugs)) {
+                $drugItem = array();
+                foreach($drug->mind_drugs as $row) {
+                    $drugItem['drug_id'] = $row->drug_id;
+                    $drugItem['drug_price'] = $row->drug_price;
+                    $drugItem['drug_special_price'] = $row->drug_special_price;
+                    $drugItem['max_discount_qty'] = $row->max_discount_qty;
+                    $drugItem['max_qty'] = $row->max_qty;
+                    $drugItem['note'] = $row->note;
+                    $drugItem['status'] = $row->status;
+                    $drugItem['drugInfo'] = $this->getDrugInfo($row->drug_id);
+                    $drugItem['drugImage'] = $this->getDrugImage($row->drug_id);
+                    $drugArr[] = $drugItem;
+                }
             }
+            //$products =  $query->paginate(15);
+
+            $currentPage = LengthAwarePaginator::resolveCurrentPage();
+            $col = new Collection($drugArr);
+
+            // fix test pagination
+            $perPage = 12   ;
+            $currentPageSearchResults = $col->slice(($currentPage - 1) * $perPage, $perPage)->all();
+            $drugs = new LengthAwarePaginator($currentPageSearchResults, count($col), $perPage, $currentPage,[ 'path' => LengthAwarePaginator::resolveCurrentPath()]);
+
+
+
+            $nextMind = Mind::where('start_time', '>',  date("Y-m-d H:i:s") )
+                ->where('status', '1' )
+                ->orderBy('start_time', 'asc')
+                ->limit(1)
+                ->get();
+
+            return view( 'front.index', compact('mind', 'drugs', 'nextMind') );
+        } else {
+            $drugs = $mind = array();
+            $nextMind = Mind::where('start_time', '>',  date("Y-m-d H:i:s") )
+                ->where('status', '1' )
+                ->orderBy('start_time', 'asc')
+                ->limit(1)
+                ->get();
+
+            return view( 'front.index', compact('mind', 'drugs', 'nextMind') );
         }
-        //$products =  $query->paginate(15);
 
-        $currentPage = LengthAwarePaginator::resolveCurrentPage();
-        $col = new Collection($drugArr);
-
-        // fix test pagination
-        $perPage = 12   ;
-        $currentPageSearchResults = $col->slice(($currentPage - 1) * $perPage, $perPage)->all();
-        $drugs = new LengthAwarePaginator($currentPageSearchResults, count($col), $perPage, $currentPage,[ 'path' => LengthAwarePaginator::resolveCurrentPath()]);
-
-
-
-        $nextMind = Mind::where('start_time', '>',  date("Y-m-d H:i:s") )
-            ->where('status', '1' )
-            ->orderBy('start_time', 'asc')
-            ->limit(1)
-            ->get();
-
-        return view( 'front.index', compact('mind', 'drugs', 'nextMind') );
     }
 
     public function getDrugInfo($id) {
@@ -202,7 +250,10 @@ class HomeController extends Controller
                 $drugs[] = $drugItem;
             }
         }
-        return view( 'front.checkout', compact('data', 'drugs') );
+
+        $mindId = $data['mind_id'];
+        $mindMessage = Mind::whereId($mindId)->firstOrFail();
+        return view( 'front.checkout', compact('data', 'drugs', 'mindMessage') );
     }
 
     public function getBeforeBuy() {
@@ -212,7 +263,9 @@ class HomeController extends Controller
         $priceTotal = $data['countRootTotalPrice'];
 
         $khuyenmai = ProcessText::getKhuyenMai($priceTotal);
-        return view( 'front.before-buy', compact('data', 'dataUser', 'khuyenmai') );
+        $mindId = $data['mind_id'];
+        $mindMessage = Mind::whereId($mindId)->firstOrFail();
+        return view( 'front.before-buy', compact('data', 'dataUser', 'khuyenmai', 'mindMessage') );
     }
 
     public function postProcessBuy(Request $request) {
@@ -769,7 +822,18 @@ class HomeController extends Controller
             ->limit(1)
             ->get();
 
-        return view( 'front.mind-before', compact('drugs', 'nextMind') );
+
+        $mindCheckExist = Mind::where('end_time', '>',  date("Y-m-d H:i:s") )
+            ->where('start_time', '<',  date("Y-m-d H:i:s") )
+            ->where('status', '1' )
+            ->orderBy('start_time', 'asc')
+            ->limit(1)
+            ->get(['id']);
+        $isCheckMind = false;
+        if(count($mindCheckExist)) {
+            $isCheckMind = true;
+        }
+        return view( 'front.mind-before', compact('drugs', 'nextMind', 'isCheckMind') );
     }
 
     /**

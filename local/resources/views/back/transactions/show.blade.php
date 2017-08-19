@@ -1,12 +1,11 @@
 @extends('back.template')
 @section('main')
 
-  @include('back.partials.entete', ['icone' => 'pencil', 'fil' => 'Giao dịch', 'title' => 'Giao dịch' . link_to_route('transactions.index', 'Quay lại', [], ['class' => 'btn btn-info pull-right'])])
+  @include('back.partials.entete', ['icone' => 'pencil', 'fil' => 'Giao dịch' . "#{{ $post->id }}", 'title' => 'Chi tiết Giao dịch/'. " #$post->id " . link_to_route('transactions.index', 'Quay lại', [], ['class' => 'btn btn-info pull-right'])])
   {!! Form::model($post, ['route' => ['transactions.update', $post->id], 'method' => 'put', 'class' => 'transaction_update form-horizontal panel']) !!}
 
     <div class="row col-lg-12">
       <div class="col-md-6">
-        <p><label for="">Mã giao dịch:</label> #{{ $post->id }}</p>
         <p><label for="">Địa chỉ:</label> <input type="text" required name="address" class="address" value="<?php if(isset($post->address)) {echo $post->address;}else{echo '';} ?>"></p>
         <p><label for="">SĐT:</label> <input type="text" required name="phone" class="phone" value="<?php if(isset($post->phone)) {echo $post->phone;}else{echo '';} ?>"></p>
         <p><label for="">Phương thức thanh toán:</label> COD</p>
@@ -14,7 +13,7 @@
       </div>
       <div class="col-md-6">
         <p><label for="">Ngày giao dịch:</label> <?php echo date("h:i:s d/m/Y", strtotime($post->created_date))?></p>
-        <p><label for="">Trạng thái hiện tại:</label> <?php echo $post->status?></p>
+        <p><label for="">Trạng thái hiện tại:</label> <b style="color: red; font-size: 15px;"><?php echo $post->status?></b></p>
         <p><label for="">Cập nhật trạng thái:</label>
           <select class="form-control transaction_status" name="transaction_status">
             <option value="">Trạng thái</option>
@@ -69,7 +68,7 @@
                       <input type="number" min="0" name="qty_box" class="qty_box_send">
                     </div>
                     <div class="row-i2">
-                      <label for="">Số tiền thu hộ: </label><?php echo number_format($post->end_total); ?>
+                      <label for="">Số tiền thu hộ: </label><b><?php echo number_format($post->end_total); ?></b>
                     </div>
                   </div>
 
@@ -77,10 +76,8 @@
                     <label for="">Dự kiến giao hàng: </label>
                     <div class="form-group">
                       <div id="time_send" class="input-group input-append date">
-                        <input class="form-control time_send" required data-format="yyyy-MM-dd hh:mm:ss" type="text" name="time_send"/>
-                            <span class="add-on">
-                          <i data-time-icon="icon-time" data-date-icon="icon-calendar">
-                          </i>
+                        <span class="add-on" style="width: 100%">
+                          <input class="form-control time_send" required data-format="yyyy-MM-dd hh:mm:ss" type="text" name="time_send"/>
                         </span>
                       </div>
                     </div>
@@ -191,8 +188,11 @@
             data: "transaction_id=" + trans_id_send + "&shipping_method=" + transaction_method_send + "&code_send=" + code_send + "&qty_box=" + qty_box_send + "&date_send=" + time_send + "&note=" + note_send + "&_token=" + token
         })
         .done(function (response) {
-           console.log(response);
             $('.update-message').show();
+            setTimeout(function(){
+                  $('#btnProcessSendModal').modal('hide');
+              },
+            3000);
         })
         .fail(function () {
             console.log('Lỗi - giao hàng');

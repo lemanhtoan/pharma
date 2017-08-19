@@ -18,7 +18,7 @@ if ( !Auth::check() ) {
     <div class="row">
         <div class="box-green">
             <b class="green-color">Dự kiến: </b>
-            Đơn hàng sẽ được gọi xác nhận sau 12:00 và sẽ được xuất đi cùng ngày.
+            <?php echo $mindMessage->note; ?>
         </div>
     </div>
     <?php
@@ -147,6 +147,7 @@ if ( !Auth::check() ) {
                 $('.value_phone').text(post_phone);
                 $('.update-message').show();
                 $('.error-message').hide();
+                setTimeout(function(){$('#btnEditInfo').modal('hide');}, 2000);
             });
         });
     </script>

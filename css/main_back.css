@@ -1,3 +1,73 @@
+.customer-info-up p b {
+    width: 190px;
+}
+.link-left {
+    float: left;
+    margin-right: 30px;
+}
+.link-left .btn,
+.link-right .btn{
+    background: #17be9b;
+    color: #fff;
+    border: none;
+    font-weight: bold;
+}
+#btnProcessSendModal .update-message, #btnProcessSendModal .error-message {
+    text-align: center;
+}
+form.transaction_update p.bg label {
+    font-weight: bold;
+}
+.onoffswitch-checkbox {
+    display: none !important;
+}
+.onoffswitch {
+    position: relative; width: 70px;
+    -webkit-user-select:none; -moz-user-select:none; -ms-user-select: none;
+}
+.onoffswitch-checkbox {
+    display: none;
+}
+.onoffswitch-label {
+    display: block; overflow: hidden; cursor: pointer;
+    border: 2px solid #FFFFFF; border-radius: 20px;
+}
+.onoffswitch-inner {
+    display: block; width: 200%; margin-left: -100%;
+    transition: margin 0.3s ease-in 0s;
+}
+.onoffswitch-inner:before, .onoffswitch-inner:after {
+    display: block; float: left; width: 50%; height: 30px; padding: 0; line-height: 30px;
+    font-size: 14px; color: white; font-family: Trebuchet, Arial, sans-serif; font-weight: bold;
+    box-sizing: border-box;
+}
+.onoffswitch-inner:before {
+    content: "ON";
+    padding-left: 10px;
+    background-color: #17BE9B; color: #FFFFFF;
+}
+.onoffswitch-inner:after {
+    content: "OFF";
+    padding-right: 10px;
+    background-color: #EEEEEE; color: #999999;
+    text-align: right;
+}
+.onoffswitch-switch {
+    display: block; width: 18px; margin: 6px;
+    background: #FFFFFF;
+    position: absolute; top: 0; bottom: 0;
+    right: 40px;
+    border: 2px solid #FFFFFF; border-radius: 20px;
+    transition: all 0.3s ease-in 0s;
+    max-height: 22px;
+}
+.onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-inner {
+    margin-left: 0;
+}
+.onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-switch {
+    right: 0px;
+}
+
 .customer-info p ,
 .group_thuoc p ,
 .thuoc_info p ,
@@ -48,6 +118,7 @@ form.searchform {
 form.transaction_update label {
     width: 40%;
     float: left;
+    font-weight: normal;
 }
 form.transaction_update input,
 form.transaction_update select {
@@ -59,7 +130,7 @@ form.transaction_update select {
 form.transaction_update p {
     float: left;
     width: 100%;
-    line-height: 30px;
+    /*line-height: 30px;*/
     padding: 5px
 }
 
@@ -75,10 +146,11 @@ form.transaction_update p.bg, .table-backend tr.bg {
 p.gr-btn span, .search-bar .btn {
     background: #17be9b;
     color: #fff;
-    padding: 6px 10px;
+    padding: 10px 15px;
     margin-right: 5px;
     cursor: pointer;
     border: none;
+    font-weight: bold;
 }
 .search-bar .btn:hover {
     background: #17be9b;

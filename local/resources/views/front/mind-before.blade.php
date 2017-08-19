@@ -38,8 +38,7 @@
                     <div class="modal-dialog">
                         <!-- Modal content-->
                         <div class="modal-content">
-                            <button type="button" class="close" data-dismiss="modal"><img
-                                        src="{!!url('/images/close.png')!!}" alt=""></button>
+                            <button type="button" class="close" data-dismiss="modal"><img src="{!!url('/images/close.png')!!}" alt=""></button>
                             <div class="modal-body">
                                 <div class="modal-col-1">
                                     <!-- images drug -->
@@ -99,7 +98,7 @@
         <?php } ?>
     </div>
 
-    <?php if (count($nextMind)) { $valueTime = $nextMind[0]->start_time; ?>
+    <?php  if (count($nextMind)) { $valueTime = $nextMind[0]->start_time; ?>
 
     <!-- modal next-mind -->
     <div class="modal fade" id="mindModal" role="dialog">
@@ -108,8 +107,7 @@
             <!-- Modal content-->
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal"><img src="{!!url('/images/close.png')!!}"
-                                                                                  alt=""></button>
+                    {{--<button type="button" class="close" data-dismiss="modal"><img src="{!!url('/images/close.png')!!}" alt=""></button>--}}
                     <h4 class="modal-title">Phiên tiếp theo sẽ mở vào:</h4>
                     <p><?php
                         $hour = date("h", strtotime($valueTime));
@@ -241,15 +239,17 @@
         </div>
     </div>
     <!-- end modal next-mind -->
-
+    <?php if(!$isCheckMind) : ?>
     <script type="text/javascript">
         // body load show mind modal
         $(window).on('load', function () {
-            setTimeout(function () {
-                $('#mindModal').modal('show');
-            }, 2000);
+            $('#mindModal').modal({
+                backdrop: 'static',
+                keyboard: false
+            });
         });
     </script>
+    <?php endif;?>
 
     <?php } else { ?>
 
@@ -259,8 +259,7 @@
             <!-- Modal content-->
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal"><img src="{!!url('/images/close.png')!!}"
-                                                                                  alt=""></button>
+                    {{--<button type="button" class="close" data-dismiss="modal"><img src="{!!url('/images/close.png')!!}" alt=""></button>--}}
                     <h4 class="modal-title">Phiên tiếp theo sẽ mở vào:</h4>
                     <div class="modal-body">
                         <div class="modal-box">
@@ -271,16 +270,20 @@
             </div>
         </div>
         <!-- end modal next-mind -->
-
+    </div>
         <!-- not have next mind -->
+        <?php if(!$isCheckMind) : ?>
         <script type="text/javascript">
             // body load show mind modal
             $(window).on('load', function () {
-                setTimeout(function () {
-                    $('#mindModal').modal('show');
-                }, 2000);
+                $('#mindModal').modal({
+                    backdrop: 'static',
+                    keyboard: false
+                });
             });
         </script>
+        <?php endif;?>
+
     <?php } ?>
 
     <script>

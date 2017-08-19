@@ -22,7 +22,10 @@ Route::group(['middleware' => ['web']], function () {
 
 
 	Route::get('history', 'HomeController@getHistory');
-	
+
+    Route::resource('/tim-kiem', 'HomeController@searchData');
+
+    Route::get('orderview/{id}', 'HomeController@showOrder');
 
     // test pdf
     Route::get('doPdf', 'HomeController@doPdf');

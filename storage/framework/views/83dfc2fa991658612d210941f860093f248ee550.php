@@ -62,7 +62,7 @@
       // Seen gestion
       $(document).on('change', ':checkbox', function() {    
         $(this).parents('tr').toggleClass('warning');
-        $(this).hide().parent().append('<i class="fa fa-refresh fa-spin"></i>');
+        // $(this).hide().parent().append('<i class="fa fa-refresh fa-spin"></i>');
         var token = $('input[name="_token"]').val();
         $.ajax({
           url: '<?php echo url('userseen'); ?>' + '/' + this.value,

@@ -123,7 +123,7 @@
       <table class="table">
         <thead>
           <tr>
-            <th>
+            <th style="text-align: center">
               <input type="checkbox" id="selectall"/>
             </th>
             <th>
@@ -407,11 +407,12 @@
       width: 25px;
     }
     #btnChangeStatus .close {
-      top: -7px;
+      top: -13px;
       opacity: 1;
       position: absolute;
-      right: -7px;
+      right: -17px;
       z-index: 1000;
+      background: none;
     }
     #btnChangeStatus .modal-content {
       border: 3px solid rgb(23, 190, 155);

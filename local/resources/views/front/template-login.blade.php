@@ -6,6 +6,7 @@
 	{!! HTML::style('css/bootstrap.min.css') !!}
 	{!! HTML::style('css/styles.css') !!}
 	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="icon" href="{!!url('/images/favicon.png')!!}" width="50" >
 </head>
 <body>
 <section class="main-content">

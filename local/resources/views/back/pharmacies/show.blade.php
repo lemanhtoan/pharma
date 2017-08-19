@@ -1,12 +1,12 @@
 @extends('back.template')
 @section('main')
 
-  @include('back.partials.entete', ['icone' => 'pencil', 'fil' => 'Khách hàng', 'title' => 'Khách hàng'. link_to_route('pharmacies.index', 'Quay lại', [], ['class' => 'btn btn-info pull-right'])])
+  @include('back.partials.entete', ['icone' => 'pencil', 'fil' => 'Khách hàng', 'title' => 'Khách hàng '."$post->name". link_to_route('pharmacies.index', 'Quay lại', [], ['class' => 'btn btn-info pull-right'])])
 
-  <div class="row col-lg-12 customer-info">
-    <p><b>Mã Khách hàng: </b>{{ $post->code }}</p>
-    <p><b>Tên Khách hàng: </b>{{ $post->name }}</p>
-    <p><b>Số điện thoại: </b>{{ $post->phone }}</p>
+  <div class="row col-lg-12 customer-info-up">
+    <p><b>Mã Khách hàng: </b><b>{{ $post->code }}</b></p>
+    <p><b>Tên Khách hàng: </b><b>{{ $post->name }}</b></p>
+    <p><b>Số điện thoại: </b><b>{{ $post->phone }}</b></p>
     <p><b>Email: </b>{{ $post->email }}</p>
     <p><b>Địa chỉ: </b>{{ $post->address }}</p>
     <p><b>Tỉnh thành: </b>{{ $post->province }}</p>

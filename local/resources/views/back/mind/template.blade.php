@@ -34,22 +34,18 @@
 				<div class="form-group">
 					{!! Form::label('Bắt đầu') !!} <em>*</em>
 					<div id="start_time" class="input-group input-append date">
+                        <span class="add-on" style="width: 100%">
 						<input value="<?php if(isset($post->start_time)) {echo $post->start_time;}else{echo '';} ?>" class="form-control" required data-format="yyyy-MM-dd hh:mm:ss" type="text" name="start_time"/>
-					<span class="add-on">
-					  <i data-time-icon="icon-time" data-date-icon="icon-calendar">
-					  </i>
-					</span>
+                        </span>
 					</div>
 				</div>
 
 				<div class="form-group">
 					{!! Form::label('Kết thúc') !!} <em>*</em>
 					<div id="end_time" class="input-group input-append date">
+                        <span class="add-on" style="width: 100%">
 						<input value="<?php if(isset($post->end_time)) {echo $post->end_time;}else{echo '';} ?>" class="form-control" required data-format="yyyy-MM-dd hh:mm:ss" type="text" name="end_time"/>
-					<span class="add-on">
-					  <i data-time-icon="icon-time" data-date-icon="icon-calendar">
-					  </i>
-					</span>
+					    </span>
 					</div>
 				</div>
 			</div>
@@ -81,14 +77,14 @@
 				<div class="col-md-12">
 					<table class="table table-striped table-bordered" id="tbl">
 						<tr>
-							<th>#</th>
-							<th>Tên thuốc <em>*</em></th>
-							<th>Giá gốc <em>*</em></th>
-							<th>Giá KM</th>
-							<th>Giới hạn KM</th>
-							<th>Giới hạn Đặt hàng</th>
-							<th>Ghi chú</th>
-							<th  style="width:150px;">Hành động</th>
+							<th style="width: 5%">#</th>
+							<th style="width: 20%">Tên thuốc <em>*</em></th>
+							<th style="width: 10%">Giá gốc <em>*</em></th>
+							<th style="width: 10%">Giá KM</th>
+							<th style="width: 10%">Giới hạn KM</th>
+							<th style="width: 10%">Giới hạn Đặt hàng</th>
+							<th style="width: 25%">Ghi chú</th>
+							<th  style="width: 10%">Hành động</th>
 						</tr>
 					</table>
 				</div>
@@ -101,12 +97,10 @@
 		<!-- -->
 
 		<div class="form-group">
-			<div class="col-md-1" style="padding-left: 0; margin-right: 10px">
-				{!! Form::submit('Cập nhật') !!}
-			</div>
-			<div class="col-md-1">
-				<a href="{!! route('mind.index') !!}" class="btn btn-default">Hủy</a>
-			</div>
+            <div class="col-md-3">
+                <div class="link-left">{!! Form::submit('Cập nhật') !!}</div>
+                <div class="link-right"><a href="{!! route('mind.index') !!}" class="btn btn-default">Hủy</a></div>
+            </div>
 		</div>
 
 		{!! Form::close() !!}

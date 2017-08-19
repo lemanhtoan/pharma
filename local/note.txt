@@ -176,7 +176,16 @@ myaawjcz_pharma
 myaawjcz_pharma / 123456a@
 
 fpt
-FTP Username: pharma@myaawu.com
+FTP Username: pharma@pharma.myaawu.com
 FTP server: ftp.myaawu.com
 FTP & explicit FTPS port:  21
 123456a@
+
+
+update transaction table structure
+ALTER TABLE `transactions` ADD PRIMARY KEY(`id`);
+
+Nhớ phần bảng transaction phải set primary key ID
+
+
+

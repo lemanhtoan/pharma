@@ -3,6 +3,7 @@
 @section('main')
 	<div class="row">
 		<div class="box-login">
+			<div class="back-logo"><img class="logo" src="{!!url('/images/logo.png')!!}" align="logo" /></div>
 			<h2 class="intro-text"><span class="glyphicon glyphicon-user"></span>  Đăng nhập quản trị </h2>
 			<div class="box-wrap">
 				<div class="box-wrap-border">
@@ -30,5 +31,11 @@
 			</div>
 		</div>
 	</div>
+	<style>
+		.back-logo {
+			text-align: center;
+			margin-bottom: 80px;
+		}
+	</style>
 @stop
 
