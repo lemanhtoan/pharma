@@ -8,6 +8,11 @@ Route::group(['middleware' => ['web']], function () {
 		'as' => 'home'
 	]);
 
+    Route::get('getsettings', 'HomeController@getsettings');
+    Route::group(['prefix' => 'getsettings'], function() {
+        Route::get('/',['as'       =>'getsettings','uses' => 'HomeController@getsettings']);
+    });
+
     // Auth front-end
     Route::put('postProductCart', 'HomeController@postProductCart');
     Route::get('checkout', 'HomeController@getCheckout');
@@ -26,6 +31,15 @@ Route::group(['middleware' => ['web']], function () {
     Route::resource('/tim-kiem', 'HomeController@searchData');
 
     Route::get('orderview/{id}', 'HomeController@showOrder');
+
+
+
+    Route::post('/settLogo',['as'       =>'settLogo','uses' => 'HomeController@settLogo']);
+    Route::post('/settHotline',['as'       =>'settHotline','uses' => 'HomeController@settHotline']);
+    Route::post('/settMuaho',['as'       =>'settMuaho','uses' => 'HomeController@settMuaho']);
+    Route::post('/settVanchuyen',['as'       =>'settVanchuyen','uses' => 'HomeController@settVanchuyen']);
+    Route::post('/settQD',['as'       =>'settQD','uses' => 'HomeController@settQD']);
+    Route::post('/settHT',['as'       =>'settHT','uses' => 'HomeController@settHT']);
 
     // test pdf
     Route::get('doPdf', 'HomeController@doPdf');

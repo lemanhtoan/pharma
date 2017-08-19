@@ -28,7 +28,10 @@
 
         @yield('head')
 
-	</head>
+        <script type="text/javascript" src="{!! url('plugin/ckeditor/ckeditor.js') !!}"></script>
+
+
+    </head>
 
   <body>
    <div id="wrapper">
@@ -97,6 +100,11 @@
                     <li {!! classActiveSegment(1, 'discount') !!}>
                         <a href="{!! route('discount.index') !!}"><span class="fa fa-fw fa-dashboard"></span> Khuyến mãi</a>
                     </li>
+
+                    <li {!! classActiveSegment(1, 'getsettings') !!}>
+                        <a href="{!! url('getsettings') !!}"><span class="fa fa-fw fa-dashboard"></span> Cấu hình khác</a>
+                    </li>
+
                     @endif
                 </ul>
             </div>

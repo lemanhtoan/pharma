@@ -13,6 +13,8 @@ use App\Models\TransactionDrug;
 
 use App\Models\Discount;
 
+use App\Settings;
+
 use Illuminate\Support\Facades\Auth;
 
 use Illuminate\Http\Request;
@@ -29,6 +31,155 @@ use Illuminate\Support\Collection;
 
 class HomeController extends Controller
 {
+    //settLogo settHotline settMuaho settVanchuyen settQD settHT
+    public function settLogo(Request $rq) {
+        $check = Settings::where('name', 'dataLogo')->lists( 'content', 'id')->toArray();
+        if ($check) {
+            $checkId = key($check);
+            $checkContent = array_values($check)[0];
+            $cat = Settings::find($checkId);
+            $cat->name = 'dataLogo';
+            $file_path = public_path('uploads/commons/').$checkContent;
+            if ($rq->hasFile('logo')) {
+                if (file_exists($file_path))
+                {
+                    unlink($file_path);
+                }
+
+                $f = $rq->file('logo')->getClientOriginalName();
+                $filename = time().'_'.$f;
+                $cat->content = $filename;
+                $rq->file('logo')->move('uploads/commons/',$filename);
+            }
+            $cat->save();
+
+        } else {
+            $item = new Settings();
+            $f = $rq->file('logo')->getClientOriginalName();
+            $filename = time().'_'.$f;
+            $item->name = 'dataLogo';
+            $item->content = $filename;
+            $rq->file('logo')->move('uploads/commons/',$filename);
+            $item->save();
+        }
+        return redirect()->route('getsettings');
+    }
+
+    public function settHotline(Request $rq) {
+        $check = Settings::where('name', 'dataHotline')->lists( 'content', 'id')->toArray();
+        if ($check) {
+            $checkId = key($check);
+            $cat = Settings::find($checkId);
+            $cat->name = 'dataHotline';
+            $cat->content = $rq->hotline;
+            $cat->save();
+
+        } else {
+            $item = new Settings();
+            $item->name = 'dataHotline';
+            $item->content = $rq->hotline;
+            $item->save();
+        }
+
+        return redirect()->route('getsettings');
+    }
+
+    public function settMuaho(Request $rq) {
+        $check = Settings::where('name', 'dataKM')->lists( 'content', 'id')->toArray();
+        if ($check) {
+            $checkId = key($check);
+            $cat = Settings::find($checkId);
+            $cat->name = 'dataKM';
+            $cat->content = $rq->muaho;
+            $cat->save();
+
+        } else {
+            $item = new Settings();
+            $item->name = 'dataKM';
+            $item->content = $rq->muaho;
+            $item->save();
+        }
+
+        return redirect()->route('getsettings');
+    }
+
+    public function settVanchuyen(Request $rq) {
+        $check = Settings::where('name', 'dataVC')->lists( 'content', 'id')->toArray();
+        if ($check) {
+            $checkId = key($check);
+            $cat = Settings::find($checkId);
+            $cat->name = 'dataVC';
+            $cat->content = $rq->vanchuyen;
+            $cat->save();
+
+        } else {
+            $item = new Settings();
+            $item->name = 'dataVC';
+            $item->content = $rq->vanchuyen;
+            $item->save();
+        }
+
+        return redirect()->route('getsettings');
+    }
+    public function settQD(Request $rq) {
+        $check = Settings::where('name', 'dataQD')->lists( 'content', 'id')->toArray();
+        if ($check) {
+            $checkId = key($check);
+            $cat = Settings::find($checkId);
+            $cat->name = 'dataQD';
+            $cat->content = $rq->quydinh;
+            $cat->save();
+
+        } else {
+            $item = new Settings();
+            $item->name = 'dataQD';
+            $item->content = $rq->quydinh;
+            $item->save();
+        }
+
+        return redirect()->route('getsettings');
+    }
+    public function settHT(Request $rq) {
+        $check = Settings::where('name', 'dataHT')->lists( 'content', 'id')->toArray();
+        if ($check) {
+            $checkId = key($check);
+            $cat = Settings::find($checkId);
+            $cat->name = 'dataHT';
+            $cat->content = $rq->hotro;
+            $cat->save();
+
+        } else {
+            $item = new Settings();
+            $item->name = 'dataHT';
+            $item->content = $rq->hotro;
+            $item->save();
+        }
+
+        return redirect()->route('getsettings');
+    }
+
+    public function getsettings()
+    {
+        return View ('back.settings-list', $this->getDataSetting());
+    }
+    public function getDataSetting() {
+        $data = Settings::all();
+        $dataQD = Settings::where('name', 'dataQD')->get(['content'])->toArray();
+        $dataHT = Settings::where('name', 'dataHT')->get(['content'])->toArray();
+        $dataLogo = Settings::where('name', 'dataLogo')->get(['content'])->toArray();
+        $dataKM = Settings::where('name', 'dataKM')->get(['content'])->toArray();
+        $dataVC = Settings::where('name', 'dataVC')->get(['content'])->toArray();
+        $dataHotline = Settings::where('name', 'dataHotline')->get(['content'])->toArray();
+        return ['data'=>$data,
+            'dataQD'=> $dataQD,
+            'dataHT' => $dataHT,
+            'dataLogo' => $dataLogo,
+            'dataKM' => $dataKM,
+            'dataVC' => $dataVC,
+            'dataHotline' => $dataHotline
+        ];
+    }
+
     public function showOrder($id) {
         if (Auth::check()) $user = Auth::user()->id;
         $transctionId =  Transaction::where('user_id', $user)->where('id', $id)->first();
