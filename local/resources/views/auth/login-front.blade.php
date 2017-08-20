@@ -34,7 +34,8 @@ if ( Auth::check() ) {
 					<input class="btn btn-default" type="submit" value="Đăng nhập">
 
 					<p class="notes">
-						Vui lòng gọi 090xxxxxxxx nếu quý khách không thể đăng nhập hoặc quên mật khẩu.
+						<?php $dataHotline = DB::table('settings')->where('name', 'dataHotline')->select('content')->get()[0]; ?>
+						Vui lòng gọi <?php echo $dataHotline->content;?> nếu quý khách không thể đăng nhập hoặc quên mật khẩu.
 					</p>
 					{!! Form::close() !!}
 				</div>

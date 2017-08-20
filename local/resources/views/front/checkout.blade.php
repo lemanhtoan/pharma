@@ -33,8 +33,45 @@ if ( !Auth::check() ) {
             </tr>
             </thead>
             <tbody>
-            <?php foreach($drugs as $drug) { ?>
-            <tr>
+            <?php  foreach($drugs as $drug) { ?>
+
+            <?php
+            $qtyDiscount = 0;
+            $qtyRoot = 0;
+            $qtyTotal = 0;
+            $priceTotal = 0;
+            $cartCurrentDiscount = array();
+            $cartCurrentRoot = array();
+            if ($data) {
+                if (array_key_exists("productDiscount", $data['dataPrint'])) {
+                    $cartCurrentDiscount = $data['dataPrint']['productDiscount'];
+                    if (count($cartCurrentDiscount) > 0) {
+                        foreach ($cartCurrentDiscount as $productCurrent) {
+                            if ($drug['drug_id'] == $productCurrent['product_id']) {
+                                $qtyDiscount = $productCurrent['qty'];
+                            }
+                        }
+                    }
+                }
+
+                if (array_key_exists("productRoot", $data['dataPrint'])) {
+                    $cartCurrentRoot = $data['dataPrint']['productRoot'];
+                    if (count($cartCurrentRoot) > 0) {
+                        foreach ($cartCurrentRoot as $productCurrent) {
+                            if ($drug['drug_id'] == $productCurrent['product_id']) {
+                                $qtyRoot = $productCurrent['qty'];
+                            }
+                        }
+                    }
+                }
+
+                // get qty total and price total
+                $qtyTotal = $data['countQty'];
+                $priceTotal = $data['countRootTotalPrice']; // + $data['countDiscount'];
+            }
+            ?>
+            <?php if ($qtyDiscount>0 || $qtyRoot>0):?>
+            <tr class="tr-row-<?php echo $drug['drug_id'];?>">
                 <?php
                 $userId = 0;
                 if (Auth::check()) $userId = Auth::user()->id;
@@ -61,41 +98,7 @@ if ( !Auth::check() ) {
                     <p>Giá:  <?php echo number_format($drug['drugBasePrice']->drug_price) ?>đ</p>
                 </td>
                 <td>
-                    <?php
-                    $qtyDiscount = 0;
-                    $qtyRoot = 0;
-                    $qtyTotal = 0;
-                    $priceTotal = 0;
-                    $cartCurrentDiscount = array();
-                    $cartCurrentRoot = array();
-                    if ($data) {
-                        if (array_key_exists("productDiscount", $data['dataPrint'])) {
-                            $cartCurrentDiscount = $data['dataPrint']['productDiscount'];
-                            if (count($cartCurrentDiscount) > 0) {
-                                foreach ($cartCurrentDiscount as $productCurrent) {
-                                    if ($drug['drug_id'] == $productCurrent['product_id']) {
-                                        $qtyDiscount = $productCurrent['qty'];
-                                    }
-                                }
-                            }
-                        }
 
-                        if (array_key_exists("productRoot", $data['dataPrint'])) {
-                            $cartCurrentRoot = $data['dataPrint']['productRoot'];
-                            if (count($cartCurrentRoot) > 0) {
-                                foreach ($cartCurrentRoot as $productCurrent) {
-                                    if ($drug['drug_id'] == $productCurrent['product_id']) {
-                                        $qtyRoot = $productCurrent['qty'];
-                                    }
-                                }
-                            }
-                        }
-
-                        // get qty total and price total
-                        $qtyTotal = $data['countQty'];
-                        $priceTotal = $data['countRootTotalPrice']; // + $data['countDiscount'];
-                    }
-                    ?>
                     <?php if ($qtyDiscount > 0) :?>
                     <div class="qty-box qty-<?php echo $drug['drug_id'];?> type_discount" data-type="type_discount">
                         <span data-drug="<?php echo $drug['drug_id'];?>" data-type="type_discount" class="qty_discount qty-minus qty-minus-<?php echo $drug['drug_id'];?>">-</span>
@@ -117,6 +120,7 @@ if ( !Auth::check() ) {
                     <?php endif;?>
                 </td>
             </tr>
+            <?php endif;?>
             <?php } ?>
             </tbody>
         </table>

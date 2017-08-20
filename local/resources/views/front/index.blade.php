@@ -60,7 +60,6 @@ function getQty($productId, $type)
                         echo '0';
                     }?></label><b style="color: red">đ</b>)
             </p>
-            {{--<button class="btn-buy">Đặt hàng</button>--}}
             <a class="btn-buy" href="checkout">Đặt hàng</a>
         </div>
     </div>
