@@ -19,7 +19,7 @@
         </div>
     @endif
 
-    <div class="panel-body" style="float: left;width: 100%; padding: 20px;">
+    <div class="settings panel-body" style="float: left;width: 100%; padding: 20px;">
         <div class="row">
             <form action="settLogo" method="POST" role="form" enctype="multipart/form-data">
                 {{ csrf_field() }}
@@ -37,8 +37,8 @@
             <form action="settHotline" method="POST" role="form">
                 {{ csrf_field() }}
                 <div class="form-group">
-                    <?php $dataAddress = $dataHotline[0]['content']; ?>
-                    Địa chỉ : <textarea name="hotline" id="diachi" class="form-control" rows="4"><?php if ( isset($dataAddress)) {echo $dataAddress;} ?></textarea>
+                    <?php $dataHotline = $dataHotline[0]['content']; ?>
+                        Hotline : <input type="text" name="hotline" class="form-control" value="<?php if ( isset($dataHotline)) { echo $dataHotline;} ?>">
                 </div>
                 <input type="submit" name="btnDiachi" class="btn btn-primary" value="Lưu hotline" class="button" />
             </form>
@@ -93,7 +93,7 @@
             <form action="settHT" method="POST" role="form" enctype="multipart/form-data">
                 {{ csrf_field() }}
                 <div class="form-group">
-                    Quy định:
+                    Hỗ trợ:
                     <textarea name="hotro" id="hotro" class="form-control" rows="4"  >
 										<?php $dataHT = $dataHT[0]['content']; ?>
                         <?php if ( isset($dataHT)) {echo $dataHT;} ?>
@@ -114,4 +114,11 @@
 
     </div>
 
+    <style>
+        .settings .row {
+            margin: 10px 0;
+            border-bottom: 2px dotted #dadada;
+            padding: 10px 0;
+        }
+    </style>
 @stop

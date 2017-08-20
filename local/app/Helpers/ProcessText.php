@@ -4,6 +4,14 @@ use App\Models\Discount;
 
 class ProcessText {
 
+	static function getConfig($slug) {
+		$value = '';
+		$query = \DB::table('settings')->where('name', $slug)->select('content')->first();
+		if (count($query)){
+			$value = $query->content;
+		}
+		return $value;
+	}
 	static function getKhuyenMai($total) {
 		$discountValue = 0;
 		$unit = 1000000;

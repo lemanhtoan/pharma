@@ -228,12 +228,12 @@ class HomeController extends Controller
     }
 
     public function getQuydinh(){
-        $content = 'Bài viết quy định';
+        $content = ProcessText::getConfig('dataQD');
         return view( 'front.static', compact('content') );
     }
 
     public function getHotro(){
-        $content = 'Bài viết hỗ trợ';
+        $content = ProcessText::getConfig('dataHT');
         return view( 'front.static', compact('content') );
     }
 
@@ -414,9 +414,13 @@ class HomeController extends Controller
         $priceTotal = $data['countRootTotalPrice'];
 
         $khuyenmai = ProcessText::getKhuyenMai($priceTotal);
+        $muaho = ProcessText::getConfig('dataKM');
+        $vanchuyen =  ProcessText::getConfig('dataVC');
+
         $mindId = $data['mind_id'];
         $mindMessage = Mind::whereId($mindId)->firstOrFail();
-        return view( 'front.before-buy', compact('data', 'dataUser', 'khuyenmai', 'mindMessage') );
+
+        return view( 'front.before-buy', compact('data', 'dataUser', 'khuyenmai', 'mindMessage', 'muaho', 'vanchuyen') );
     }
 
     public function postProcessBuy(Request $request) {
@@ -425,8 +429,8 @@ class HomeController extends Controller
         $cPhone = $request->input('customer_phone');
 
         // fix phí
-        $phiMuaho = 20000;
-        $phiVanchuyen = 40000;
+        $phiMuaho = ProcessText::getConfig('dataKM');
+        $phiVanchuyen =  ProcessText::getConfig('dataVC');
         //$khuyenMai = 55000;
 
         $data = \Session::get('pharma.cartDataJson');

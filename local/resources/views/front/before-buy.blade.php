@@ -41,11 +41,11 @@ if ( !Auth::check() ) {
                     </div>
                     <div class="row-old">
                         <div class="row-label">Phí mua hộ</div>
-                        <div class="row-value">20.000</div>
+                        <div class="row-value"><?php echo number_format($muaho);?></div>
                     </div>
                     <div class="row-even">
                         <div class="row-label">Vận chuyển</div>
-                        <div class="row-value">40.000</div>
+                        <div class="row-value"><?php echo number_format($vanchuyen);?></div>
                     </div>
                     <div class="row-old">
                         <div class="row-label">Khuyến mãi</div>

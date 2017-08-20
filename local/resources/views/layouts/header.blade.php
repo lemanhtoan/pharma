@@ -25,11 +25,13 @@
   <div class="container">
     <div class="row hidden-xs hidden-sm">
       <div class="col-md-6">
-        <h1><a href="{!! url('/') !!}"><img class="logo" src="{!!url('/images/logo.png')!!}" align="logo" /></a></h1>
+        <?php $dataLogoPc = DB::table('settings')->where('name', 'dataLogo')->select('content')->get()[0]; ?>
+        <h1><a href="{!! url('/') !!}"><img class="logo" src="{!!url('/uploads/commons/'.$dataLogoPc->content )!!}" align="logo" /></a></h1>
       </div>
       <div class="col-md-6">
         <div class="tr-line tr-1 pull-right">
-          <span>Hotline: 094.234.6095</span>
+          <?php $dataHotline = DB::table('settings')->where('name', 'dataHotline')->select('content')->get()[0]; ?>
+          <span>Hotline: <?php echo $dataHotline->content?></span>
         </div>
         <div class="tr-line tr-2 pull-right">
           <?php if (Auth::check()) $user = Auth::user()->id;

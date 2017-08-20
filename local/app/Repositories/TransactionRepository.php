@@ -134,8 +134,8 @@ class TransactionRepository extends BaseRepository {
         $tran_drugs = TransactionDrug::where('transaction_id', $id)->orderBy('drug_id', 'desc')->get();
         $drugs = Drug::orderBy('name', 'asc')->get();
         // fix phí
-        $phiMuaho = 20000;
-        $phiVanchuyen = 40000;
+        $phiMuaho = ProcessText::getConfig('dataKM');
+        $phiVanchuyen =  ProcessText::getConfig('dataVC');
 
         // get transction subtotal
         $khuyenMai = ProcessText::getKhuyenMai($post->sub_total);
@@ -222,8 +222,10 @@ class TransactionRepository extends BaseRepository {
         $post->before_total = $caclSubPrice;
         $post->before_pay = $caclSubPrice;
         // fix phí
-        $phiMuaho = 20000;
-        $phiVanchuyen = 40000;
+
+        $phiMuaho = ProcessText::getConfig('dataKM');
+        $phiVanchuyen =  ProcessText::getConfig('dataVC');
+        
         $khuyenMai = ProcessText::getKhuyenMai($caclSubPrice); //55000;
         $post->end_total = ($caclSubPrice + $phiMuaho + $phiVanchuyen) - $khuyenMai;
 
