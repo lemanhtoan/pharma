@@ -102,7 +102,7 @@ if ( !Auth::check() ) {
                     <?php if ($qtyDiscount > 0) :?>
                     <div class="qty-box qty-<?php echo $drug['drug_id'];?> type_discount" data-type="type_discount">
                         <span data-drug="<?php echo $drug['drug_id'];?>" data-type="type_discount" class="qty_discount qty-minus qty-minus-<?php echo $drug['drug_id'];?>">-</span>
-                        <input value="<?php echo $qtyDiscount;?>" name="qty_discount" type="number"  min="0" data-drug="<?php echo $drug['drug_id'];?>" data-type="type_discount" class="no-spinners qty_discount qty-count qty-count-<?php echo $drug['drug_id'];?>"/>
+                        <input value="<?php echo $qtyDiscount;?>" name="qty_discount" type="number" max="0"  min="1" data-drug="<?php echo $drug['drug_id'];?>" data-type="type_discount" class="type_discount no-spinners qty_discount qty-count qty-count-<?php echo $drug['drug_id'];?>"/>
                         <span data-drug="<?php echo $drug['drug_id'];?>" data-type="type_discount" class="qty_discount qty-add qty-add-<?php echo $drug['drug_id'];?>">+</span>
 
                         <span data-drug="<?php echo $drug['drug_id'];?>" data-type="type_discount" class="qty_discount qty-del qty-del-<?php echo $drug['drug_id'];?>">x</span>
@@ -112,7 +112,7 @@ if ( !Auth::check() ) {
                     <?php if ($qtyRoot > 0) :?>
                     <div class="qty-box qty-<?php echo $drug['drug_id'];?> type_root" data-type="type_root">
                         <span data-drug="<?php echo $drug['drug_id'];?>" data-type="type_root" class="qty_root qty-minus qty-minus-<?php echo $drug['drug_id'];?>">-</span>
-                        <input value="<?php echo $qtyRoot;?>" name="qty_root" type="number" min="0" data-drug="<?php echo $drug['drug_id'];?>" data-type="type_root" class="no-spinners qty_root qty-count qty-count-<?php echo $drug['drug_id'];?>"/>
+                        <input value="<?php echo $qtyRoot;?>" name="qty_root" type="number" min="1"  max="0"  data-drug="<?php echo $drug['drug_id'];?>" data-type="type_root" class="type_root no-spinners qty_root qty-count qty-count-<?php echo $drug['drug_id'];?>"/>
                         <span data-drug="<?php echo $drug['drug_id'];?>" data-type="type_root" class="qty_root qty-add qty-add-<?php echo $drug['drug_id'];?>">+</span>
 
                         <span data-drug="<?php echo $drug['drug_id'];?>" data-type="type_root" class="qty_root qty-del qty-del-<?php echo $drug['drug_id'];?>">x</span>

@@ -26,6 +26,8 @@
 
             jQuery('.'+type_price+'.qty-'+jQuery(this).attr('data-drug')).show();
             jQuery('.btn-cart-'+jQuery(this).attr('data-drug')).hide();
+
+            jQuery('.box-spprice').show();
         } else {
             // root
             // add to 1 and show input
@@ -72,7 +74,7 @@
     $('.qty_discount.qty-add').click(function(e){
         e.preventDefault();
         discountAdd(jQuery(this).attr('data-drug'), '');
-
+        jQuery('.box-spprice').show();
     });
 
     function discountAdd(fieldName, type) {
@@ -258,10 +260,66 @@
         }
     }
 
+    $(".qty-count").change(function(e) {
+        console.log($(this).attr('data-type'), $(this).attr('data-drug'));
+        onchangeAdd($(this).attr('data-drug'), $(this).attr('data-type'));
+    });
+    // on change input qty
+    function onchangeAdd(fieldName, type) {
+        var currentVal = parseInt($('.'+type+'.qty-count-'+fieldName).val());
+//        console.log(currentVal,$('.'+type+'.qty-count-'+fieldName )); return false;
+        var qty_post = currentVal ;
+        var token = $('input[name="_token"]').val();
+        var mind_id = $('input[name="mind_id"]').val();
+        var user_id = $('input[name="user_id"]').val();
+        var price = $('.price' +fieldName).val();
+        var special_price = $('.special_price' +fieldName).val();
+        var  dataType = 'type_discount';//$(this).attr('data-type');
+        $.ajax({
+            url: '{{ url('postProductCart') }}',
+            type: 'PUT',
+            data: "type_add=" + dataType + "&product_id=" + fieldName + "&qty=" + qty_post + "&mind_id=" + mind_id + "&user_id=" + user_id + "&price=" + price + "&special_price=" + special_price + "&_token=" + token
+        })
+        .done(function(response) {
+            if(response.isRootPrice != '1' && response.isAddRoot == '0') {
+                $('.qty_discount.qty-count-'+fieldName).val(currentVal);
+                $('.qty_discount.qty-minus').val("-").removeAttr('style');
+                $('.type_root.qty-'+fieldName).hide();
+            } else if (response.isRootPrice == '1' && response.isAddRoot == '0') {
+                // qty > qty max discount
+                $('.qty_discount.qty-count-'+fieldName).val(currentVal);
+                $('.qty_discount.qty-minus').val("-").removeAttr('style');
+
+                $('.type_root.qty-'+fieldName).show();
+
+                // add new class to li.current-list
+                $('.current-list').addClass('addHeight');
+
+            } else if(response.isRootPrice == '1' && response.isAddRoot == '1') {
+                // qty > qty max discount and is add root true
+                $('.type_root.qty-count-'+fieldName).val(response.cartData.qtyRoot);
+                $('.type_root.qty-minus').val("-").removeAttr('style');
+
+                $('.type_root.qty-'+fieldName).show();
+
+                // add new class to li.current-list
+                $('.current-list').addClass('addHeight');
+            }
+            $('.current-price').text(formatNumber(response.cartData.countRootTotalPrice));
+            $('.discount-price').text(formatNumber(response.cartData.countDiscount));
+
+
+            $('.total-price-cart').text(formatNumber(response.cartData.countRootTotalPrice));
+            $('.total-qty-cart').text(formatNumber(response.cartData.countQty));
+        });
+    }
+
+
     // ROOT ADD
     $('.qty_root.qty-add').click(function(e){
         e.preventDefault();
         rootAdd(jQuery(this).attr('data-drug'), '');
+        jQuery('.box-spprice').show();
     });
 
 
@@ -340,6 +398,7 @@
 
                 jQuery('.tr-row-'+fieldName).remove();
 
+                jQuery('.box-spprice').hide();
             });
         }
     });
@@ -399,6 +458,8 @@
                 $('.btn-cart-'+fieldName).show();
 
                 jQuery('.tr-row-'+fieldName).remove();
+
+                jQuery('.box-spprice').hide();
             });
         }
     });
@@ -441,11 +502,15 @@
       });
       $("input.qty-count").keyup(function () {
         var maxValue = $(this).attr('max');
-        // Check correct, else revert back to old value.
-        if (parseInt($(this).val()) <= maxValue && parseInt($(this).val()) >= 0)
-          ;
-        else
-          $(this).val($(this).data("old"));
+        console.log(maxValue);
+        if (maxValue != 0) {
+            // Check correct, else revert back to old value.
+            if (parseInt($(this).val()) <= maxValue && parseInt($(this).val()) >= 0)
+                ;
+            else
+                $(this).val($(this).data("old"));
+        }
+
       });
     });
 

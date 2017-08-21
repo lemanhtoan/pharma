@@ -5,6 +5,9 @@ namespace App\Repositories;
 use App\Models\Mind;
 use App\Models\Drug;
 
+use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Collection;
+
 class MindRepository extends BaseRepository {
 
     public function __construct(
@@ -64,7 +67,17 @@ class MindRepository extends BaseRepository {
     {
         $drugs = Drug::all();
         $post = $this->model->whereId($id)->firstOrFail();
-        return compact('post', 'drugs');
+
+        $arrDrugs = $post->mind_drugs;
+        $currentPage = LengthAwarePaginator::resolveCurrentPage();
+        $col = new Collection($arrDrugs);
+
+        // fix test pagination
+        $perPage = 15;
+        $currentPageSearchResults = $col->slice(($currentPage - 1) * $perPage, $perPage)->all();
+        $drugArr = new LengthAwarePaginator($currentPageSearchResults, count($col), $perPage, $currentPage,[ 'path' => LengthAwarePaginator::resolveCurrentPath()]);
+
+        return compact('post', 'drugs', 'drugArr');
     }
 
     public function edit($post)

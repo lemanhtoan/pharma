@@ -1,3 +1,6 @@
+.box-spprice {
+    text-align: right;
+}
 .error-message {
     color: red;
 }
@@ -358,7 +361,7 @@ table.table-cart .qty-box {
     border-right : 1px solid #17be9b;
 }
 .table-cart tbody tr td h3{font-size: 18px;margin-top: 0;}
-.table-cart tbody tr td img{max-width: 184px;width: 50%; float: left;}
+.table-cart tbody tr td img{max-width: 184px;width: 50%; float: left; padding: 10px}
 .table-cart tbody tr td {
     border-bottom: 1px solid #17be9b;
     border-top: 1px solid #17be9b;

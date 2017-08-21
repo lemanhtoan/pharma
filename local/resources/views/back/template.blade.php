@@ -116,7 +116,7 @@
                 </div>
             </div>
 
-            <div class="col-md-10">
+            <div class="col-md-10 box-content-back">
 
                 @yield('main')
 

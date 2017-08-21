@@ -1,7 +1,7 @@
 @foreach ($posts as $post)
   <tr {!! !$post->status && session('statut') == 'admin'? 'class="warning"' : '' !!}>
-    <td>{!! link_to('mind/' . $post->id, $post->code) !!}</td>
-    <td>{{ $post->name }}</td>
+    <td><b>{!! link_to('mind/' . $post->id, $post->code) !!}</b></td>
+    <td><b>{{ $post->name }}</b></td>
     <td>
         <?php if (count($post->mind_drugs)) { echo count($post->mind_drugs); }?>
     </td>

@@ -8,8 +8,8 @@
       {{--<p>--}}
         {{--{!! link_to_route('mind.edit', 'Sửa', [$post->id], ['class' => 'edit-link']) !!}--}}
       {{--</p>--}}
-      <p>Mã phiên giao dịch: {{ $post->code }}</p>
-      <p>Tên phiên giao dịch: {{ $post->name }}</p>
+      <p>Mã phiên giao dịch: <b>{{ $post->code }}</b></p>
+      <p>Tên phiên giao dịch: <b>{{ $post->name }}</b></p>
       <p>Bắt đầu: {{ $post->start_time }}</p>
       <p>Kết thúc: {{ $post->end_time }}</p>
       <p>KM tối đa nhóm KH 1: {{ $post->discount_cg1 }}</p>
@@ -34,7 +34,7 @@
               <th style="width: 10%">Giới hạn Đặt hàng</th>
               <th style="width: 25%">Ghi chú</th>
             </tr>
-            @foreach($post->mind_drugs as $row)
+            @foreach($drugArr as $row)
                 <?php $stt++; ?>
                 <tr>
                   <td>{!!$stt!!}</td>
@@ -55,6 +55,9 @@
               </p>
             @endforeach
           </table>
+          <div class="pag-nav pull-right">
+            {{ $drugArr->links() }}
+          </div>
         </div>
       </div>
       <?php } else { ?>

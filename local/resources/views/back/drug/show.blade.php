@@ -34,12 +34,16 @@
       <p><b>Ảnh thuốc: </b>
         <?php $stt=0; ?>
         <div class="row">
+        <?php if (count($post->drug_img)) {?>
         @foreach($post->drug_img as $row)
         <?php $stt++; ?>
         <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
           Ảnh cũ: {!!$stt!!}<br><img src="{!!url(\Config::get('constants.pathDrugImg').$row->url)!!}" height="65">
         </div>
         @endforeach
+        <?php } else {  $url = 'images/product.png';?>
+          <img width="150px" src="{!! url($url) !!}" alt="">
+          <?php } ?>
         </div>
       </p>
       <p><b>Trạng thái: </b><?php if($post->status == '1') {echo 'Hoạt động';}else{echo 'Khóa';}?></p>

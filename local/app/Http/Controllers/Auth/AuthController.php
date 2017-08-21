@@ -167,7 +167,7 @@ class AuthController extends Controller
 		$userLog->user_id = $user->id;
 		$userLog->save();
 
-		return redirect('/mind-before');
+		return redirect('/');
 
 
 		$request->session()->put('user_id', $user->id);

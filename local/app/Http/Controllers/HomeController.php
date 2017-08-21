@@ -90,17 +90,51 @@ class HomeController extends Controller
                 ->orderBy('start_time', 'asc')
                 ->limit(1)
                 ->get();
-
-            return view( 'front.index', compact('mind', 'drugs', 'nextMind') );
+            $isCheckMind = false;
+            return view( 'front.index', compact('mind', 'drugs', 'nextMind', 'isCheckMind') );
         } else {
-            $drugs = $mind = array();
+
+            $mind = Mind::where('end_time', '<',  date("Y-m-d H:i:s") )
+                ->where('status', '1' )
+                ->orderBy('end_time', 'desc')
+                ->limit(1)
+                ->get(['id']);
+            $drug = Mind::whereId($mind[0]->id)->firstOrFail();
+            $drugArr = array();
+            if (count($drug->mind_drugs)) {
+                $drugItem = array();
+                foreach($drug->mind_drugs as $row) {
+                    $drugItem['drug_id'] = $row->drug_id;
+                    $drugItem['drug_price'] = $row->drug_price;
+                    $drugItem['drug_special_price'] = $row->drug_special_price;
+                    $drugItem['max_discount_qty'] = $row->max_discount_qty;
+                    $drugItem['max_qty'] = $row->max_qty;
+                    $drugItem['note'] = $row->note;
+                    $drugItem['status'] = $row->status;
+                    $drugItem['drugInfo'] = $this->getDrugInfo($row->drug_id);
+                    $drugItem['drugImage'] = $this->getDrugImage($row->drug_id);
+                    $drugArr[] = $drugItem;
+                }
+            }
+
+            $currentPage = LengthAwarePaginator::resolveCurrentPage();
+            $col = new Collection($drugArr);
+
+            // fix test pagination
+            $perPage = 12;
+            $currentPageSearchResults = $col->slice(($currentPage - 1) * $perPage, $perPage)->all();
+            $drugs = new LengthAwarePaginator($currentPageSearchResults, count($col), $perPage, $currentPage,[ 'path' => LengthAwarePaginator::resolveCurrentPath()]);
+
+            //$products =  $query->paginate(15);
+
             $nextMind = Mind::where('start_time', '>',  date("Y-m-d H:i:s") )
                 ->where('status', '1' )
                 ->orderBy('start_time', 'asc')
                 ->limit(1)
                 ->get();
 
-            return view( 'front.index', compact('mind', 'drugs', 'nextMind') );
+            $isCheckMind = true;
+            return view( 'front.index', compact('mind', 'drugs', 'nextMind', 'isCheckMind') );
         }
 
     }

@@ -1,9 +1,9 @@
 code,name,price,specialprice,maxqtydiscount,maxqty,note,,
-Telcardis 80_VD-17383-12,Telcardis 80," 100,000 "," 95,000 ", 10 , 100 ,,,
-Abicin 250_VD-17384-12,Abicin 250," 2,000 ",,,,,,code = Mã thuốc
-Vitamin C 1000 mg_VD-17414-12,Vitamin C 1000 mg," 50,000 "," 45,000 ", 10 , 50 ,Vitamin C 1000 mg,,name = Tên thuốc
-Dolodon_VD-17326-12,Dolodon," 30,000 ",,,,Dolodon,,price = Giá gốc
-Lamivudin 100 ICA_VD-17327-12,Lamivudin 100 ICA," 56,000 ",,,,,,specialprice = Giá KM
-Neumomicid_VD-17328-12,Neumomicid," 130,000 "," 126,000 ", 30 , 500 ,Neumomicid,,maxqtydiscount = SL KM tối đa
-,,,,,,,,maxqty = SL tối đa trong phiên
-,,,,,,,,note = Ghi chú
+Telcardis 80_VD-17383-12,Telcardis 80,"100,000","95,000",10,100,,,
+Abicin 250_VD-17384-12,Abicin 250,"2,000",,,,,,code = m� thu?c
+Vitamin C 1000 mg_VD-17414-12,Vitamin C 1000 mg,"50,000","45,000",10,50,Vitamin C 1000 mg,,name = t�n thu?c
+Dolodon_VD-17326-12,Dolodon,"30,000",,,,Dolodon,,price = gi� thu?c
+Lamivudin 100 ICA_VD-17327-12,Lamivudin 100 ICA,"56,000",,,,,,specialprice = gi� KM
+Neumomicid_VD-17328-12,Neumomicid,"130,000","126,000",30,500,Neumomicid,,maxqtydiscount = s? l??ng KM t?i ?a
+,,,,,,,,maxqty = s? l??ng t?i ?a trong phi�n
+,,,,,,,,note = ghi ch�
