@@ -641,6 +641,9 @@ function getQty($productId, $type)
         </div>
 
     </div>
+
+    <div id="divLoading"> </div>
+
     <?php } else {?>
     <p>Danh sách rỗng</p>
     <?php } ?>

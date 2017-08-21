@@ -20,23 +20,35 @@ class MindController extends Controller {
         $newData = array();
         $arrItem = array();
         foreach ($items as $item) {
-            $arrItem['code'] = $this->getDrugById($item->drug_id)['code'];
-            $arrItem['name'] = $this->getDrugById($item->drug_id)['name'];
-            $arrItem['price'] = $item->drug_price;
-            $arrItem['specialprice'] = $item->drug_special_price;
-            $arrItem['maxqtydiscount'] = $item->max_discount_qty;
-            $arrItem['maxqty'] = $item->max_qty;
-            $arrItem['note'] = $item->note;
+            $arrItem['Mã thuốc'] = $this->getDrugById($item->drug_id)['code'];
+            $arrItem['Tên thuốc'] = $this->getDrugById($item->drug_id)['name'];
+            $arrItem['Giá gốc'] = (float)$item->drug_price;
+            $arrItem['Giá KM'] = (float)$item->drug_special_price;
+            $arrItem['SL KM tối đa'] = (int)$item->max_discount_qty;
+            $arrItem['SL tối đa trong phiên'] = (int)$item->max_qty;
+            $arrItem['Ghi chú'] = $item->note;
             $newData[] = $arrItem;
         }
 
-        Excel::create('Mind_Id_'.$mindId, function($excel) use($newData) {
+        Excel::create('Mind_Id_'.$mindId.'_'.date('d-m-Y)'), function($excel) use($newData) {
+            // Set the title and Information fields
             $excel->sheet('MindExport', function($sheet) use($newData) {
-                //$sheet->fromArray($newData);
-                // Won't auto generate heading columns
-                $sheet->fromArray($newData, null, 'A1', false, true);
+                $sheet->fromArray($newData, null, 'A3', false, true);
+
+                $sheet->row(1, ['DANH SÁCH THUỐC TRONG PHIÊN']);
+
+                $sheet->setHeight(1, 60);
+                $sheet->cell('A1', function($cell) {
+                    $cell->setAlignment('center');
+                    $cell->setFont(array(
+                        'size'       => '16',
+                        'bold'       =>  true
+                    ));
+                });
+
+                $sheet->getStyle('A1')->getAlignment()->setWrapText(false);
             });
-        })->export('xls'); //xls //csv
+        })->export('xlsx');
     }
     
 	protected $mind_gestion;
@@ -127,10 +139,15 @@ class MindController extends Controller {
 
         if($request->file('imported-file'))
         {
+
             $path = $request->file('imported-file')->getRealPath();
             $data = Excel::load($path, function($reader)
             {
+                config(['excel.import.startRow' => 3]);
             })->get();
+            //dd($data);
+
+            $countError = 0;
 
             if(!empty($data) && $data->count())
             {
@@ -138,25 +155,37 @@ class MindController extends Controller {
                 {
                     if(!empty($row))
                     {
-                        if ($this->getDrug($row['code']) != false) {
+                        if ($this->getDrug($row['ma_thuoc']) != false) {
                             $dataArray[] =
                                 [
                                     'mind_id' => $post_id,
-                                    'drug_id' => $this->getDrug($row['code']),
-                                    'drug_price' => (float)$row['price'],
-                                    'drug_special_price' => (float)$row['specialprice'],
-                                    'max_discount_qty' => (int)$row['maxqtydiscount'],
-                                    'max_qty' => (int)$row['maxqty'],
-                                    'note' => $row['note'],
+                                    'drug_id' => $this->getDrug($row['ma_thuoc']),
+                                    'drug_price' => (float)$row['gia_goc'],
+                                    'drug_special_price' => (float)$row['gia_km'],
+                                    'max_discount_qty' => (int)$row['sl_km_toi_da'],
+                                    'max_qty' => (int)$row['sl_toi_da_trong_phien'],
+                                    'note' => $row['ghi_chu'],
                                     'status' => 1
                                 ];
+                        } else {
+                            $countError++;
                         }
                     }
                 }
                 if(!empty($dataArray))
                 {
-                    //echo "<pre>"; var_dump($dataArray);
-                   Mind_Drug::insert($dataArray);
+                    if ($countError == 0) {
+
+                        // delete old product
+                        Mind_Drug::where('mind_id', $post_id)->delete();
+
+                        Mind_Drug::insert($dataArray);
+
+//                        return redirect()->back()->with('success', 'Nhập dữ liệu từ file thành công');
+                    } else {
+                        return redirect("mind/$post_id")->with('errors', 'Có lỗi xảy ra khi nhập file, vui lòng cập nhật lại danh sách thuốc');
+                    }
+
                 }
             }
         }
@@ -266,13 +295,15 @@ class MindController extends Controller {
 
         if($request->file('imported-file'))
         {
-            // delete old product
-            Mind_Drug::where('mind_id', $id)->delete();
 
             $path = $request->file('imported-file')->getRealPath();
             $data = Excel::load($path, function($reader)
             {
+                config(['excel.import.startRow' => 3]);
             })->get();
+            //dd($data);
+
+            $countError = 0;
 
             if(!empty($data) && $data->count())
             {
@@ -280,25 +311,37 @@ class MindController extends Controller {
                 {
                     if(!empty($row))
                     {
-                        if ($this->getDrug($row['code']) != false) {
+                        if ($this->getDrug($row['ma_thuoc']) != false) {
                             $dataArray[] =
                                 [
                                     'mind_id' => $id,
-                                    'drug_id' => $this->getDrug($row['code']),
-                                    'drug_price' => (float)$row['price'],
-                                    'drug_special_price' => (float)$row['specialprice'],
-                                    'max_discount_qty' => (int)$row['maxqtydiscount'],
-                                    'max_qty' => (int)$row['maxqty'],
-                                    'note' => $row['note'],
+                                    'drug_id' => $this->getDrug($row['ma_thuoc']),
+                                    'drug_price' => (float)$row['gia_goc'],
+                                    'drug_special_price' => (float)$row['gia_km'],
+                                    'max_discount_qty' => (int)$row['sl_km_toi_da'],
+                                    'max_qty' => (int)$row['sl_toi_da_trong_phien'],
+                                    'note' => $row['ghi_chu'],
                                     'status' => 1
                                 ];
+                        } else {
+                            $countError++;
                         }
                     }
                 }
                 if(!empty($dataArray))
                 {
-                    //echo "<pre>"; var_dump($dataArray);
-                    Mind_Drug::insert($dataArray);
+                    if ($countError == 0) {
+
+                        // delete old product
+                        Mind_Drug::where('mind_id', $id)->delete();
+
+                        Mind_Drug::insert($dataArray);
+
+                        return redirect()->back()->with('success', 'Nhập dữ liệu từ file thành công');
+                    } else {
+                        return redirect()->back()->with('errors', 'Có lỗi xảy ra khi nhập file, vui lòng kiểm tra lại');
+                    }
+
                 }
             }
         } else {
