@@ -4,7 +4,7 @@ use App\Repositories\CustomerRepository;
 use App\Repositories\TransactionRepository;
 use App\Repositories\MindRepository;
 use App\Repositories\DrugRepository;
-
+use Carbon;
 class AdminController extends Controller {
 
 	public function admin(
@@ -19,21 +19,42 @@ class AdminController extends Controller {
         $nbrMind = $mind_gestion->getNumber();
         $nbrDrug = $drug_gestion->getNumber();
 
-        $u4 = \DB::select('SELECT * FROM `customers` WHERE `created_at` BETWEEN (NOW() - INTERVAL 7 DAY) AND NOW()');
-        $u3 = \DB::select('SELECT * FROM `customers` WHERE `created_at` BETWEEN (NOW() - INTERVAL 14 DAY) AND NOW() - INTERVAL 7 DAY');
-        $u2 = \DB::select('SELECT * FROM `customers` WHERE `created_at` BETWEEN (NOW() - INTERVAL 21 DAY) AND NOW() - INTERVAL 14 DAY');
-        $u1 = \DB::select('SELECT * FROM `customers` WHERE `created_at` BETWEEN (NOW() - INTERVAL 28 DAY) AND NOW() - INTERVAL 21 DAY');
+        $fromDate1 = new \Carbon('last week');
+        $toDate1 = new \Carbon('now');
+        $u4 = \DB::table('customers')->whereBetween('created_at', array($fromDate1->toDateTimeString(), $toDate1->toDateTimeString()) )->get();
+
+        $fromDate2 = \Carbon::now()->subDays(14);
+        $toDate2 = \Carbon::now()->subDays(7);
+        $u3 = \DB::table('customers')->whereBetween('created_at', array($fromDate2->toDateTimeString(), $toDate2->toDateTimeString()) )->get();
+
+        $fromDate3 = \Carbon::now()->subDays(21);
+        $toDate3 = \Carbon::now()->subDays(14);
+        $u2 = \DB::table('customers')->whereBetween('created_at', array($fromDate3->toDateTimeString(), $toDate3->toDateTimeString()) )->get();
+
+        $fromDate4 = \Carbon::now()->subDays(28);
+        $toDate4 = \Carbon::now()->subDays(21);
+        $u1 = \DB::table('customers')->whereBetween('created_at', array($fromDate4->toDateTimeString(), $toDate4->toDateTimeString()) )->get();
         $dataUser = array(
             "w1" => count($u1),
             "w2" => count($u2),
             "w3" => count($u3),
             "w4" => count($u4)
         );
+        $fromDate1 = new \Carbon('last week');
+        $toDate1 = new \Carbon('now');
+        $t4 = \DB::table('transactions')->whereBetween('created_at', array($fromDate1->toDateTimeString(), $toDate1->toDateTimeString()) )->get();
 
-        $t4 = \DB::select('SELECT * FROM `transactions` WHERE `created_at` BETWEEN (NOW() - INTERVAL 7 DAY) AND NOW()');
-        $t3 = \DB::select('SELECT * FROM `transactions` WHERE `created_at` BETWEEN (NOW() - INTERVAL 14 DAY) AND NOW() - INTERVAL 7 DAY');
-        $t2 = \DB::select('SELECT * FROM `transactions` WHERE `created_at` BETWEEN (NOW() - INTERVAL 21 DAY) AND NOW() - INTERVAL 14 DAY');
-        $t1 = \DB::select('SELECT * FROM `transactions` WHERE `created_at` BETWEEN (NOW() - INTERVAL 28 DAY) AND NOW() - INTERVAL 21 DAY ');
+        $fromDate2 = \Carbon::now()->subDays(14);
+        $toDate2 = \Carbon::now()->subDays(7);
+        $t3 = \DB::table('transactions')->whereBetween('created_at', array($fromDate2->toDateTimeString(), $toDate2->toDateTimeString()) )->get();
+
+        $fromDate3 = \Carbon::now()->subDays(21);
+        $toDate3 = \Carbon::now()->subDays(14);
+        $t2 = \DB::table('transactions')->whereBetween('created_at', array($fromDate3->toDateTimeString(), $toDate3->toDateTimeString()) )->get();
+
+        $fromDate4 = \Carbon::now()->subDays(28);
+        $toDate4 = \Carbon::now()->subDays(21);
+        $t1 = \DB::table('transactions')->whereBetween('created_at', array($fromDate4->toDateTimeString(), $toDate4->toDateTimeString()) )->get();
         $dataTrans = array(
             "w1" => count($t1),
             "w2" => count($t2),
