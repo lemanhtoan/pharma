@@ -575,6 +575,7 @@ h2.title-main {
     border: none;
     max-height: 132px;
     overflow: hidden;
+    min-height: 132px;
 }
 
 h3.title-product {
