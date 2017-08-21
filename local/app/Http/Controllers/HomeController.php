@@ -37,7 +37,7 @@ class HomeController extends Controller
      * @return Response
      */
     public function index()
-    {die('d');
+    {
         $mind = Mind::where('end_time', '>',  date("Y-m-d H:i:s") )
             ->where('start_time', '<',  date("Y-m-d H:i:s") )
             ->where('status', '1' )
@@ -63,6 +63,16 @@ class HomeController extends Controller
                     $drugArr[] = $drugItem;
                 }
             }
+
+            // sort
+            $price = array();
+            foreach ($drugArr as $key => $row)
+            {
+                $price[$key] = $row['drug_special_price'];
+            }
+            array_multisort($price, SORT_DESC, $drugArr);
+
+            //dd($drugArr);
             //$products =  $query->paginate(15);
 
             $currentPage = LengthAwarePaginator::resolveCurrentPage();
@@ -225,7 +235,6 @@ class HomeController extends Controller
 
     public function getsettings()
     {
-        die('f');
         return View ('back.settings-list', $this->getDataSetting());
     }
 
@@ -567,13 +576,18 @@ class HomeController extends Controller
             $sort = $request->all();
             if (Auth::check()) {
                 $user = Auth::user()->id;
-                $dataTransaction =  Transaction::where('user_id', $user)->orderBy(key($sort) , $sort[key($sort)] )->get();
+                if(key($sort) !='page') {
+                    $dataTransaction =  Transaction::where('user_id', $user)->orderBy(key($sort) , $sort[key($sort)] )->paginate(5);
+                } else {
+                    $dataTransaction =  Transaction::where('user_id', $user)->paginate(15);
+                }
+
                 return view( 'front.history', compact('dataTransaction', 'order') );
             }
         }
         if (Auth::check()) {
             $user = Auth::user()->id;
-            $dataTransaction =  Transaction::where('user_id', $user)->orderBy('id', 'desc')->get();
+            $dataTransaction =  Transaction::where('user_id', $user)->orderBy('id', 'desc')->paginate(15);
             return view( 'front.history', compact('dataTransaction', 'order') );
         }
         return view( 'front.history', compact('order'));

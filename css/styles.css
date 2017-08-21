@@ -8,6 +8,9 @@
     border-color: #ccc !important;
 }
 @media (max-width: 1023px){
+    #btnEditInfo .modal-dialog {
+        top:40%;
+    }
     .alert.alert-success.alert-dismissable {
         margin: 10px 15px 0;
     }

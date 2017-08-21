@@ -51,7 +51,12 @@ if ( !Auth::check() ) {
             </tr>
             <?php endforeach; ?>
             </tbody>
+
         </table>
+
+        <div class="pag-nav">
+            {{ $dataTransaction->links() }}
+        </div>
     </div>
     <?php } else { ?>
     <h4>Danh sách rỗng</h4>

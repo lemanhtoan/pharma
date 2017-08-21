@@ -339,7 +339,7 @@ function getQty($productId, $type)
         </ul>
 
         <div class="pag-nav">
-            {{--{!! $drugs->appends(Input::except('page'))->render() !!}--}}
+            {!! $drugs->appends(Input::except('page'))->render() !!}
         </div>
 
     </div>

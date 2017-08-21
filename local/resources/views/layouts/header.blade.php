@@ -69,7 +69,7 @@
     <!-- menu mobile -->
     <div class="mb-nav">
       <div class="navmenu navmenu-default navmenu-fixed-left">
-        <a href="{!! url('/') !!}"><img class="navmenu-brand logo logo-mb" src="{!!url('/images/logo.png')!!}" align="logo" /></a>
+        <a href="{!! url('/') !!}"><img class="navmenu-brand logo logo-mb" src="{!!url('/images/logo-mb.png')!!}" align="logo" /></a>
         <ul class="nav navmenu-nav">
           <li {!! classActivePath('/') !!}><a href="{!! url('/') !!}"><img class="icon-mb" src="{!!url('/images/menu_left_03.png')!!}" />Đặt hàng</a></li>
           <li {!! classActivePath('history') !!}><a href="{!! url('history') !!}"><img class="icon-mb" src="{!!url('/images/menu_left_07.png')!!}" />Lịch sử</a></li>

@@ -26,6 +26,7 @@
         <p class="gr-btn">
           <span id="btnUpdateSend">Cập nhật</span>
           <span id="btnProcessSend">Giao hàng</span>
+          <input type="hidden" class="idPrint" name="idPrint" value="<?php echo $post->id ?>">
           <span id="btnPrintSend">In hóa đơn</span>
         </p>
 
@@ -168,8 +169,32 @@
 @section('scripts')
 
 {!! HTML::script('js/bootstrap-datetimepicker.min.js') !!}
-
+<?php $urlRedirect = URL::to('/in-hoa-don');?>
 <script type="text/javascript">
+
+    // print
+    $('#btnPrintSend').click(function(){
+          // ajax call
+          var token = $('input[name="_token"]').val();
+          var dataChoise = $('.idPrint').val();
+          $.ajax({
+              url: '{{ url('in-hoa-don') }}' + "?dataChoise=" + dataChoise,
+              type: 'GET'
+          })
+          .done(function(response) {
+              window.open(
+                  '<?php echo $urlRedirect; ?>' + "?dataChoise=" + dataChoise,
+                  '_blank'
+              );
+          })
+          .fail(function() {
+              alert('Lỗi in hóa đơn');
+          });
+
+          return false;
+    });
+
+
     // send transaction
     // update status => đang giao
     $('#btnUpdate').click(function(){

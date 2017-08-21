@@ -214,7 +214,6 @@
     $(function() {
 
         // print
-
         $('#printOrder').click(function(){
             // change status validation
             var checkboxValues = [];
@@ -288,8 +287,6 @@
             $.each( dataChoiseArr, function( key, value ) {
               $('.status_'+value).text(statusSelect);
             });
-
-            console.log(response);
           })
           .fail(function() {
             alert('Lỗi thay đổi trạng thái');

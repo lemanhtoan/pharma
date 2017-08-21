@@ -217,7 +217,7 @@ class TransactionController extends Controller {
         $ids = $request->input('dataChoise');
         $arrIds = explode(",", $ids);
         $orders = Transaction::whereIn('id', $arrIds)->get();
-        $title = 'Invoice order #';
+        $title = 'Hóa đơn / Id #';
 		
 		htmlentities($orders, ENT_QUOTES, "UTF-8");
 		
