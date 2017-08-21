@@ -295,7 +295,17 @@ class HomeController extends Controller
         if (Auth::check()) $user = Auth::user()->id;
         $transctionId =  Transaction::where('user_id', $user)->where('id', $id)->first();
         $dataTransaction = Transaction::whereId($transctionId->id)->firstOrFail();
-        $dataTranDrugs = TransactionDrug::where('transaction_id', $transctionId->id)->orderBy('drug_id', 'desc')->get();
+        $dataTranDrugArrs = TransactionDrug::where('transaction_id', $transctionId->id)->orderBy('drug_id', 'desc')->get();
+
+        $currentPage = LengthAwarePaginator::resolveCurrentPage();
+        $col = new Collection($dataTranDrugArrs);
+
+        // fix test pagination
+        $perPage = 15;
+        $currentPageSearchResults = $col->slice(($currentPage - 1) * $perPage, $perPage)->all();
+        $dataTranDrugs = new LengthAwarePaginator($currentPageSearchResults, count($col), $perPage, $currentPage,[ 'path' => LengthAwarePaginator::resolveCurrentPath()]);
+
+
         $drugs = Drug::orderBy('name', 'asc')->get();
         return view( 'front.orderview', compact('dataTransaction', 'dataTranDrugs', 'drugs', 'id') );
 
@@ -405,7 +415,6 @@ class HomeController extends Controller
     }
 
     public function getCheckout() {
-
         $data = \Session::get('pharma.cartDataJson');
 
         // get all product id in cart
@@ -427,9 +436,7 @@ class HomeController extends Controller
         $mindId = \Session::get('pharma.cartData.mindId');
         $drugs = array();
         if (count($productIds)) {
-
             $drug = Mind::whereId($mindId)->firstOrFail();
-
             $drugItem = array();
             foreach($productIds as $id) {
                 if (count($drug->mind_drugs)) {
@@ -446,6 +453,7 @@ class HomeController extends Controller
                 $drugItem['drug_id'] = $id;
                 $drugItem['drugInfo'] = $this->getDrugInfo($id);
                 $drugItem['drugImage'] = $this->getDrugImage($id);
+//                var_dump($id, $mindId); echo "<hr>";
                 $drugItem['drugBasePrice'] =  $this->drugBasePrice($id, $mindId);
                 $drugs[] = $drugItem;
             }
@@ -585,7 +593,15 @@ class HomeController extends Controller
 
 
         $dataTransaction = Transaction::whereId($transctionId)->firstOrFail();
-        $dataTranDrugs = TransactionDrug::where('transaction_id', $transctionId)->orderBy('drug_id', 'desc')->get();
+        $dataTranDrugArrs = TransactionDrug::where('transaction_id', $transctionId)->orderBy('drug_id', 'desc')->get();
+
+        $currentPage = LengthAwarePaginator::resolveCurrentPage();
+        $col = new Collection($dataTranDrugArrs);
+
+        // fix test pagination
+        $perPage = 15;
+        $currentPageSearchResults = $col->slice(($currentPage - 1) * $perPage, $perPage)->all();
+        $dataTranDrugs = new LengthAwarePaginator($currentPageSearchResults, count($col), $perPage, $currentPage,[ 'path' => LengthAwarePaginator::resolveCurrentPath()]);
 
         $drugs = Drug::orderBy('name', 'asc')->get();
 
@@ -598,7 +614,17 @@ class HomeController extends Controller
         if (Auth::check()) $user = Auth::user()->id;
         $transctionId =  Transaction::where('user_id', $user)->orderBy('id', 'desc')->first();
         $dataTransaction = Transaction::whereId($transctionId->id)->firstOrFail();
-        $dataTranDrugs = TransactionDrug::where('transaction_id', $transctionId->id)->orderBy('drug_id', 'desc')->get();
+        $dataTranDrugArrs = TransactionDrug::where('transaction_id', $transctionId->id)->orderBy('drug_id', 'desc')->get();
+
+
+        $currentPage = LengthAwarePaginator::resolveCurrentPage();
+        $col = new Collection($dataTranDrugArrs);
+
+        // fix test pagination
+        $perPage = 15;
+        $currentPageSearchResults = $col->slice(($currentPage - 1) * $perPage, $perPage)->all();
+        $dataTranDrugs = new LengthAwarePaginator($currentPageSearchResults, count($col), $perPage, $currentPage,[ 'path' => LengthAwarePaginator::resolveCurrentPath()]);
+
 
         $drugs = Drug::orderBy('name', 'asc')->get();
 

@@ -96,6 +96,10 @@ if ( !Auth::check() ) {
                 <?php endforeach; ?>
                 </tbody>
             </table>
+
+            <div class="pag-nav pull-right">
+                {{ $dataTranDrugs->links() }}
+            </div>
         </div>
     </div>
 </div>

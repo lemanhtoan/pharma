@@ -261,20 +261,19 @@
     }
 
     $(".qty-count").change(function(e) {
-        console.log($(this).attr('data-type'), $(this).attr('data-drug'));
+
         onchangeAdd($(this).attr('data-drug'), $(this).attr('data-type'));
     });
     // on change input qty
     function onchangeAdd(fieldName, type) {
         var currentVal = parseInt($('.'+type+'.qty-count-'+fieldName).val());
-//        console.log(currentVal,$('.'+type+'.qty-count-'+fieldName )); return false;
         var qty_post = currentVal ;
         var token = $('input[name="_token"]').val();
         var mind_id = $('input[name="mind_id"]').val();
         var user_id = $('input[name="user_id"]').val();
         var price = $('.price' +fieldName).val();
         var special_price = $('.special_price' +fieldName).val();
-        var  dataType = 'type_discount';//$(this).attr('data-type');
+        var  dataType = type;//$(this).attr('data-type');
         $.ajax({
             url: '{{ url('postProductCart') }}',
             type: 'PUT',
@@ -282,12 +281,12 @@
         })
         .done(function(response) {
             if(response.isRootPrice != '1' && response.isAddRoot == '0') {
-                $('.qty_discount.qty-count-'+fieldName).val(currentVal);
+                $('.qty_discount.qty-count-'+fieldName).val(parseInt($('.type_discount.qty-count-'+fieldName).val()));
                 $('.qty_discount.qty-minus').val("-").removeAttr('style');
                 $('.type_root.qty-'+fieldName).hide();
             } else if (response.isRootPrice == '1' && response.isAddRoot == '0') {
                 // qty > qty max discount
-                $('.qty_discount.qty-count-'+fieldName).val(currentVal);
+                $('.qty_discount.qty-count-'+fieldName).val(parseInt($('.type_discount.qty-count-'+fieldName).val()));
                 $('.qty_discount.qty-minus').val("-").removeAttr('style');
 
                 $('.type_root.qty-'+fieldName).show();

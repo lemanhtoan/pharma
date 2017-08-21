@@ -8,8 +8,8 @@
       {{--<p>--}}
         {{--{!! link_to_route('mind.edit', 'Sửa', [$post->id], ['class' => 'edit-link']) !!}--}}
       {{--</p>--}}
-      <p>Mã phiên giao dịch: <b>{{ $post->code }}</b></p>
-      <p>Tên phiên giao dịch: <b>{{ $post->name }}</b></p>
+      <p><b>Mã phiên giao dịch: {{ $post->code }}</b></p>
+      <p><b>Tên phiên giao dịch: {{ $post->name }}</b></p>
       <p>Bắt đầu: {{ $post->start_time }}</p>
       <p>Kết thúc: {{ $post->end_time }}</p>
       <p>KM tối đa nhóm KH 1: {{ $post->discount_cg1 }}</p>

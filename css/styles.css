@@ -995,6 +995,7 @@ span.span.no-bg {
 #mindModal .close img,
 #detailDrugModal .close  img{
     width: 25px;
+    min-height: inherit !important;
 }
 #mindModal .modal-body {
     padding: 0 15px 15px 15px;
