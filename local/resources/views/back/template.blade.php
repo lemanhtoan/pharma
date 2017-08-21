@@ -65,55 +65,58 @@
                 </li>
                 <?php } ?>
             </ul>
-            <!-- Menu de la barre -->
-            <div class="collapse navbar-collapse navbar-ex1-collapse">
-                <ul class="nav navbar-nav side-nav">
-                    @if(session('statut') == 'admin')
-                    <li {!! classActivePath('admin') !!}>
-                         <a href="{!! route('admin') !!}"><span class="fa fa-fw fa-dashboard"></span> Quản trị</a>
-                    </li>
 
-                    <li {!! classActiveSegment(1, 'mind') !!}>
-                        <a href="{!! route('mind.index') !!}"><span class="fa fa-fw fa-dashboard"></span> Phiên giao dịch</a>
-                    </li>
-
-                    <li {!! classActiveSegment(1, 'transactions') !!}>
-                        <a href="{!! route('transactions.index') !!}"><span class="fa fa-fw fa-dashboard"></span> Giao dịch</a>
-                    </li>
-
-                    <li {!! classActiveSegment(1, 'groupdrug') !!}>
-                        <a href="{!! route('groupdrug.index') !!}"><span class="fa fa-fw fa-dashboard"></span> Nhóm thuốc</a>
-                    </li>
-
-                    <li {!! classActiveSegment(1, 'drug') !!}>
-                        <a href="{!! route('drug.index') !!}"><span class="fa fa-fw fa-dashboard"></span> Thuốc</a>
-                    </li>
-
-                    <li {!! classActiveSegment(1, 'pharmacies') !!}>
-                        <a href="{!! route('pharmacies.index') !!}"><span class="fa fa-fw fa-dashboard"></span> Khách hàng</a>
-                    </li>
-
-                    <li {!! classActiveSegment(1, 'customer') !!}>
-                        <a href="{!! route('customer.index') !!}"><span class="fa fa-fw fa-dashboard"></span> Người dùng</a>
-                    </li>
-
-                    <li {!! classActiveSegment(1, 'discount') !!}>
-                        <a href="{!! route('discount.index') !!}"><span class="fa fa-fw fa-dashboard"></span> Khuyến mãi</a>
-                    </li>
-
-                    <li {!! classActiveSegment(1, 'getsettings') !!}>
-                        <a href="{!! url('getsettings') !!}"><span class="fa fa-fw fa-dashboard"></span> Cấu hình khác</a>
-                    </li>
-
-                    @endif
-                </ul>
-            </div>
             <!-- /.navbar-collapse -->
         </nav>
 
         <div id="page-wrapper">
 
-            <div class="container-fluid">
+            <div class="col-md-2">
+                <div class="">
+                    <ul class="nav nav-back">
+                        @if(session('statut') == 'admin')
+                            <li {!! classActivePath('admin') !!}>
+                                <a href="{!! route('admin') !!}"><span class="fa fa-fw fa-dashboard"></span> Quản trị</a>
+                            </li>
+
+                            <li {!! classActiveSegment(1, 'mind') !!}>
+                                <a href="{!! route('mind.index') !!}"><span class="fa fa-fw fa-dashboard"></span> Phiên giao dịch</a>
+                            </li>
+
+                            <li {!! classActiveSegment(1, 'transactions') !!}>
+                                <a href="{!! route('transactions.index') !!}"><span class="fa fa-fw fa-dashboard"></span> Giao dịch</a>
+                            </li>
+
+                            <li {!! classActiveSegment(1, 'groupdrug') !!}>
+                                <a href="{!! route('groupdrug.index') !!}"><span class="fa fa-fw fa-dashboard"></span> Nhóm thuốc</a>
+                            </li>
+
+                            <li {!! classActiveSegment(1, 'drug') !!}>
+                                <a href="{!! route('drug.index') !!}"><span class="fa fa-fw fa-dashboard"></span> Thuốc</a>
+                            </li>
+
+                            <li {!! classActiveSegment(1, 'pharmacies') !!}>
+                                <a href="{!! route('pharmacies.index') !!}"><span class="fa fa-fw fa-dashboard"></span> Khách hàng</a>
+                            </li>
+
+                            <li {!! classActiveSegment(1, 'customer') !!}>
+                                <a href="{!! route('customer.index') !!}"><span class="fa fa-fw fa-dashboard"></span> Người dùng</a>
+                            </li>
+
+                            <li {!! classActiveSegment(1, 'discount') !!}>
+                                <a href="{!! route('discount.index') !!}"><span class="fa fa-fw fa-dashboard"></span> Khuyến mãi</a>
+                            </li>
+
+                            <li {!! classActiveSegment(1, 'getsettings') !!}>
+                                <a href="{!! url('getsettings') !!}"><span class="fa fa-fw fa-dashboard"></span> Cấu hình khác</a>
+                            </li>
+
+                        @endif
+                    </ul>
+                </div>
+            </div>
+
+            <div class="col-md-10">
 
                 @yield('main')
 

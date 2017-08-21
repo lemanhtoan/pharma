@@ -8,11 +8,6 @@ Route::group(['middleware' => ['web']], function () {
 		'as' => 'home'
 	]);
 
-    Route::get('getsettings', 'HomeController@getsettings');
-    Route::group(['prefix' => 'getsettings'], function() {
-        Route::get('/',['as'       =>'getsettings','uses' => 'HomeController@getsettings']);
-    });
-
     // Auth front-end
     Route::put('postProductCart', 'HomeController@postProductCart');
     Route::get('checkout', 'HomeController@getCheckout');
@@ -65,7 +60,15 @@ Route::group(['middleware' => ['web']], function () {
 		'middleware' => 'admin'
 	]);
 
-	// Group Drug
+
+
+    Route::get('getsettings', 'HomeController@getsettings');
+    Route::group(['prefix' => 'getsettings'], function() {
+        Route::get('/',['as'       =>'getsettings','uses' => 'HomeController@getsettings']);
+    });
+
+
+    // Group Drug
     Route::get('groupdrug/order', ['uses' => 'GroupDrugController@indexOrder', 'as' => 'groupdrug.order']);
     Route::get('groupdrug', 'GroupDrugController@indexFront');
     Route::put('postActgroupdrug/{id}', 'GroupDrugController@postActgroupdrug');
@@ -87,6 +90,9 @@ Route::group(['middleware' => ['web']], function () {
     Route::put('postActmind/{id}', 'MindController@postActmind');
 
     Route::resource('mind', 'MindController');
+
+    Route::get('minds/export', 'MindController@export');
+
 
     // Pharmacies
     Route::get('pharmacies/order', ['uses' => 'PharmaciesController@indexOrder', 'as' => 'pharmacies.order']);
@@ -128,32 +134,32 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('discount', 'DiscountController@indexFront');
     Route::resource('discount', 'DiscountController');
 
-	// Blog
-	Route::get('blog/order', ['uses' => 'BlogController@indexOrder', 'as' => 'blog.order']);
-	Route::get('articles', 'BlogController@indexFront');
-	Route::get('blog/tag', 'BlogController@tag');
-	Route::get('blog/search', 'BlogController@search');
-
-	Route::put('postseen/{id}', 'BlogController@updateSeen');
-	Route::put('postactive/{id}', 'BlogController@updateActive');
-
-
-	Route::resource('blog', 'BlogController');
-
-	// Comment
-	Route::resource('comment', 'CommentController', [
-		'except' => ['create', 'show']
-	]);
-
-	Route::put('commentseen/{id}', 'CommentController@updateSeen');
-	Route::put('uservalid/{id}', 'CommentController@valid');
-
-
-	// Contact
-	Route::resource('contact', 'ContactController', [
-		'except' => ['show', 'edit']
-	]);
-
+//	// Blog
+//	Route::get('blog/order', ['uses' => 'BlogController@indexOrder', 'as' => 'blog.order']);
+//	Route::get('articles', 'BlogController@indexFront');
+//	Route::get('blog/tag', 'BlogController@tag');
+//	Route::get('blog/search', 'BlogController@search');
+//
+//	Route::put('postseen/{id}', 'BlogController@updateSeen');
+//	Route::put('postactive/{id}', 'BlogController@updateActive');
+//
+//
+//	Route::resource('blog', 'BlogController');
+//
+//	// Comment
+//	Route::resource('comment', 'CommentController', [
+//		'except' => ['create', 'show']
+//	]);
+//
+//	Route::put('commentseen/{id}', 'CommentController@updateSeen');
+//	Route::put('uservalid/{id}', 'CommentController@valid');
+//
+//
+//	// Contact
+//	Route::resource('contact', 'ContactController', [
+//		'except' => ['show', 'edit']
+//	]);
+//
 
 	// User
 	Route::get('user/sort/{role}', 'UserController@indexSort');

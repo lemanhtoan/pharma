@@ -1,3 +1,15 @@
+ul.nav-back {
+    background: #f5f5f5;
+    border-radius: 5px;
+}
+ul.nav-back  li.active, ul.nav-back  li.active a {
+    color: #fff;
+    background: #17be9b;
+}
+
+em  {
+    color: red;
+}
 .customer-info-up p b {
     width: 190px;
 }
@@ -8248,9 +8260,7 @@ body {
     line-height: normal
 }
 @media (min-width: 768px) {
-    #wrapper {
-        padding-left: 225px
-    }
+
     #page-wrapper {
         padding: 10px 0
     }

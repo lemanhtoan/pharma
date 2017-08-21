@@ -110,10 +110,8 @@ function getQty($productId, $type)
                 <span class="left-time">Còn lại</span>
                 <div id="timeExpire"></div>
                 <script>
-                    var countDownDate = new Date('<?php echo $valueTime;?>').getTime();
-
-                    var x = setInterval(function () {
-
+                    function timeRender() {
+                        var countDownDate = new Date('<?php echo $valueTime;?>').getTime();
                         // Get todays date and time
                         var now = new Date().getTime();
 
@@ -182,13 +180,9 @@ function getQty($productId, $type)
 
                         // Display the result
                         document.getElementById("timeExpire").innerHTML = str;
+                    }
 
-                        // If the count down is finished, write some text
-                        if (distance < 0) {
-                            clearInterval(x);
-                            document.getElementById("timeExpire").innerHTML = "Không có dữ liệu phiên tiếp theo";
-                        }
-                    }, 1000);
+                    setInterval(timeRender, 1000);
                 </script>
             </div>
 
@@ -345,7 +339,7 @@ function getQty($productId, $type)
         </ul>
 
         <div class="pag-nav">
-            {!! $drugs->appends(Input::except('page'))->render() !!}
+            {{--{!! $drugs->appends(Input::except('page'))->render() !!}--}}
         </div>
 
     </div>

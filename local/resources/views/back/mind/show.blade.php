@@ -4,7 +4,7 @@
   @include('back.partials.entete', ['icone' => 'pencil', 'fil' => 'Giao dịch', 'title' => 'Giao dịch'. link_to_route('mind.index', 'Quay lại', [], ['class' => 'btn btn-info pull-right']) ])
 
   <div class="row col-lg-12">
-    <div class="col-md-4">
+    <div class="col-md-3">
       {{--<p>--}}
         {{--{!! link_to_route('mind.edit', 'Sửa', [$post->id], ['class' => 'edit-link']) !!}--}}
       {{--</p>--}}
@@ -18,7 +18,7 @@
       <p>Trạng thái: <?php if($post->status == '1') {echo 'Hoạt động';}else{echo 'Khóa';}?></p>
     </div>
 
-    <div class="col-md-8">
+    <div class="col-md-9">
       <h4>Danh sách thuốc trong phiên</h4>
       <?php if (count($post->mind_drugs)) { ?>
       <?php $stt=0; ?>

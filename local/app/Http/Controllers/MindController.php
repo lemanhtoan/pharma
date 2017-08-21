@@ -1,5 +1,6 @@
 <?php namespace App\Http\Controllers;
 
+use App\Models\Mind;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Http\Request;
 use App\Http\Requests\MindRequest;
@@ -9,8 +10,35 @@ use App\Models\Drug;
 
 use App\Models\Mind_Drug;
 
+use Excel;
+
 class MindController extends Controller {
 
+    public function export(Request $request) {
+        $mindId = $request->input('mindId');
+        $items = Mind_Drug::where('mind_id', $mindId)->get();
+        $newData = array();
+        $arrItem = array();
+        foreach ($items as $item) {
+            $arrItem['code'] = $this->getDrugById($item->drug_id)['code'];
+            $arrItem['name'] = $this->getDrugById($item->drug_id)['name'];
+            $arrItem['price'] = $item->drug_price;
+            $arrItem['specialprice'] = $item->drug_special_price;
+            $arrItem['maxqtydiscount'] = $item->max_discount_qty;
+            $arrItem['maxqty'] = $item->max_qty;
+            $arrItem['note'] = $item->note;
+            $newData[] = $arrItem;
+        }
+
+        Excel::create('Mind_Id_'.$mindId, function($excel) use($newData) {
+            $excel->sheet('MindExport', function($sheet) use($newData) {
+                //$sheet->fromArray($newData);
+                // Won't auto generate heading columns
+                $sheet->fromArray($newData, null, 'A1', false, true);
+            });
+        })->export('xls'); //xls //csv
+    }
+    
 	protected $mind_gestion;
 
 	protected $nbrPages;
@@ -77,9 +105,62 @@ class MindController extends Controller {
 		return view('back.mind.create', compact('drugs'));
 	}
 
+    public function getDrug($code) {
+        $drug = Drug::where('code', $code)->first();
+        if (count($drug)) {
+            return $drug->id;
+        }
+        return false;
+    }
+
+    public function getDrugById($id) {
+        $drug = Drug::where('id', $id)->first();
+        if (count($drug)) {
+            return $drug;
+        }
+        return false;
+    }
+
 	public function store(MindRequest $request)
 	{
         $post_id = $this->mind_gestion->store($request->all());
+
+        if($request->file('imported-file'))
+        {
+            $path = $request->file('imported-file')->getRealPath();
+            $data = Excel::load($path, function($reader)
+            {
+            })->get();
+
+            if(!empty($data) && $data->count())
+            {
+                foreach ($data->toArray() as $row)
+                {
+                    if(!empty($row))
+                    {
+                        if ($this->getDrug($row['code']) != false) {
+                            $dataArray[] =
+                                [
+                                    'mind_id' => $post_id,
+                                    'drug_id' => $this->getDrug($row['code']),
+                                    'drug_price' => (float)$row['price'],
+                                    'drug_special_price' => (float)$row['specialprice'],
+                                    'max_discount_qty' => (int)$row['maxqtydiscount'],
+                                    'max_qty' => (int)$row['maxqty'],
+                                    'note' => $row['note'],
+                                    'status' => 1
+                                ];
+                        }
+                    }
+                }
+                if(!empty($dataArray))
+                {
+                    //echo "<pre>"; var_dump($dataArray);
+                   Mind_Drug::insert($dataArray);
+                }
+            }
+        }
+        //die;
 
         if ($request->has('drug_id')) {
             $drugs = $request->all()['drug_id'];
@@ -175,97 +256,140 @@ class MindController extends Controller {
         MindRequest $request,
 		$id)
 	{
-	    //echo "<pre>"; var_dump($request->all()); die;
+
         $drugKeepIds = array();
         if ($request->has('drugKeepIds')) { $drugKeepIds = $request->all()['drugKeepIds'];}
         $post = $this->mind_gestion->getById($id);
-		$this->mind_gestion->update($request->all(), $post);
+        $this->mind_gestion->update($request->all(), $post);
         $getAllMindDrug = Mind_Drug::where('mind_id',$id)->get();
 
-		// update mind_drugs
-        $items = array();
-        if ($request->has('drug_id') || (count($drugKeepIds) != count($getAllMindDrug)) ) {
-            if ($request->has('drug_id')) {
-                $drugs = $request->all()['drug_id'];
-                $prices = $request->all()['drugPrice'];
-                $specialPrices = $request->all()['drugSpecialPrice'];
-                $qtyMaxDiscount = $request->all()['drugQtyMaxDiscount'];
-                $qtyMax = $request->all()['drugQtyMax'];
-                $notes = $request->all()['drugNote'];
 
-                if ($drugs) {
-                    $i = 0;
-                    foreach ($drugs as $drug) {
-                        $items[$i]['drug_id'] = $drug;
-                        $i++;
+        if($request->file('imported-file'))
+        {
+            // delete old product
+            Mind_Drug::where('mind_id', $id)->delete();
+
+            $path = $request->file('imported-file')->getRealPath();
+            $data = Excel::load($path, function($reader)
+            {
+            })->get();
+
+            if(!empty($data) && $data->count())
+            {
+                foreach ($data->toArray() as $row)
+                {
+                    if(!empty($row))
+                    {
+                        if ($this->getDrug($row['code']) != false) {
+                            $dataArray[] =
+                                [
+                                    'mind_id' => $id,
+                                    'drug_id' => $this->getDrug($row['code']),
+                                    'drug_price' => (float)$row['price'],
+                                    'drug_special_price' => (float)$row['specialprice'],
+                                    'max_discount_qty' => (int)$row['maxqtydiscount'],
+                                    'max_qty' => (int)$row['maxqty'],
+                                    'note' => $row['note'],
+                                    'status' => 1
+                                ];
+                        }
                     }
                 }
-                if ($prices) {
-                    $i = 0;
-                    foreach ($prices as $drug) {
-                        $items[$i]['drug_price'] = $drug;
-                        $i++;
-                    }
-                }
-                if ($specialPrices) {
-                    $i = 0;
-                    foreach ($specialPrices as $drug) {
-                        $items[$i]['drug_special_price'] = $drug;
-                        $i++;
-                    }
-                }
-                if ($qtyMaxDiscount) {
-                    $i = 0;
-                    foreach ($qtyMaxDiscount as $drug) {
-                        $items[$i]['max_discount_qty'] = $drug;
-                        $i++;
-                    }
-                }
-                if ($qtyMax) {
-                    $i = 0;
-                    foreach ($qtyMax as $drug) {
-                        $items[$i]['max_qty'] = $drug;
-                        $i++;
-                    }
-                }
-                if ($notes) {
-                    $i = 0;
-                    foreach ($notes as $drug) {
-                        $items[$i]['note'] = $drug;
-                        $i++;
-                    }
+                if(!empty($dataArray))
+                {
+                    //echo "<pre>"; var_dump($dataArray);
+                    Mind_Drug::insert($dataArray);
                 }
             }
+        } else {
+            // update mind_drugs
+            $items = array();
+            if ($request->has('drug_id') || (count($drugKeepIds) != count($getAllMindDrug)) ) {
+                if ($request->has('drug_id')) {
+                    $drugs = $request->all()['drug_id'];
+                    $prices = $request->all()['drugPrice'];
+                    $specialPrices = $request->all()['drugSpecialPrice'];
+                    $qtyMaxDiscount = $request->all()['drugQtyMaxDiscount'];
+                    $qtyMax = $request->all()['drugQtyMax'];
+                    $notes = $request->all()['drugNote'];
 
-
-            $detail = Mind_Drug::where('mind_id',$id)->get();
-            foreach ($detail as $row) {
-
-                // not in keep id when edit => delete
-                if (!in_array($row->id, $drugKeepIds)) {
-                    $dt = Mind_Drug::find($row->id);
-                    $dt->delete();
+                    if ($drugs) {
+                        $i = 0;
+                        foreach ($drugs as $drug) {
+                            $items[$i]['drug_id'] = $drug;
+                            $i++;
+                        }
+                    }
+                    if ($prices) {
+                        $i = 0;
+                        foreach ($prices as $drug) {
+                            $items[$i]['drug_price'] = $drug;
+                            $i++;
+                        }
+                    }
+                    if ($specialPrices) {
+                        $i = 0;
+                        foreach ($specialPrices as $drug) {
+                            $items[$i]['drug_special_price'] = $drug;
+                            $i++;
+                        }
+                    }
+                    if ($qtyMaxDiscount) {
+                        $i = 0;
+                        foreach ($qtyMaxDiscount as $drug) {
+                            $items[$i]['max_discount_qty'] = $drug;
+                            $i++;
+                        }
+                    }
+                    if ($qtyMax) {
+                        $i = 0;
+                        foreach ($qtyMax as $drug) {
+                            $items[$i]['max_qty'] = $drug;
+                            $i++;
+                        }
+                    }
+                    if ($notes) {
+                        $i = 0;
+                        foreach ($notes as $drug) {
+                            $items[$i]['note'] = $drug;
+                            $i++;
+                        }
+                    }
                 }
 
-            }
 
-            if ($items) {
-                foreach ($items as $row) {
-                    $mind_drug = new Mind_Drug();
-                    if (isset($row)) {
-                        $mind_drug->mind_id = $id;
-                        $mind_drug->drug_id = $row['drug_id'];
-                        $mind_drug->drug_price = $row['drug_price'] ? $row['drug_price'] : 0;
-                        $mind_drug->drug_special_price = $row['drug_special_price'] ? $row['drug_special_price']: 0;
-                        $mind_drug->max_discount_qty = $row['max_discount_qty'] ? $row['max_discount_qty'] : 0;
-                        $mind_drug->max_qty = $row['max_qty'] ? $row['max_qty'] : 0;
-                        $mind_drug->note = $row['note'] ? $row['note'] : '';
-                        $mind_drug->status = 1;
-                        $mind_drug->save();
+                $detail = Mind_Drug::where('mind_id',$id)->get();
+                foreach ($detail as $row) {
+
+                    // not in keep id when edit => delete
+                    if (!in_array($row->id, $drugKeepIds)) {
+                        $dt = Mind_Drug::find($row->id);
+                        $dt->delete();
+                    }
+
+                }
+
+                if ($items) {
+                    foreach ($items as $row) {
+                        $mind_drug = new Mind_Drug();
+                        if (isset($row)) {
+                            $mind_drug->mind_id = $id;
+                            $mind_drug->drug_id = $row['drug_id'];
+                            $mind_drug->drug_price = $row['drug_price'] ? $row['drug_price'] : 0;
+                            $mind_drug->drug_special_price = $row['drug_special_price'] ? $row['drug_special_price']: 0;
+                            $mind_drug->max_discount_qty = $row['max_discount_qty'] ? $row['max_discount_qty'] : 0;
+                            $mind_drug->max_qty = $row['max_qty'] ? $row['max_qty'] : 0;
+                            $mind_drug->note = $row['note'] ? $row['note'] : '';
+                            $mind_drug->status = 1;
+                            $mind_drug->save();
+                        }
                     }
                 }
             }
         }
+	    //echo "<pre>"; var_dump($request->all()); die;
+
+
 
 		return redirect('mind')->with('ok', trans('back/mind.updated'));
 	}

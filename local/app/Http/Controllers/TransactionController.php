@@ -219,6 +219,8 @@ class TransactionController extends Controller {
         $orders = Transaction::whereIn('id', $arrIds)->get();
         $title = 'Invoice order #';
 		
+		htmlentities($orders, ENT_QUOTES, "UTF-8");
+		
         $pdf = PDF::loadView('pdf.invoice', compact('title', 'orders'));
         $path = base_path() . '/pdf/invoice_'.date('d_m_Y').'.pdf';
         $pdf->save( $path );

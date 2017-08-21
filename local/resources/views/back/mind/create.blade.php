@@ -8,5 +8,6 @@
 			</h1>
 		</div>
 	</div>
-	{!! Form::open(['url' => 'mind', 'method' => 'post', 'class' => 'form-horizontal panel']) !!}
+
+	{!! Form::open(['url' => 'mind', 'method' => 'post', 'class' => 'form-horizontal panel', 'enctype' => 'multipart/form-data']) !!}
 @stop

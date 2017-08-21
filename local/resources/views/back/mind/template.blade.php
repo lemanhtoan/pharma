@@ -69,7 +69,12 @@
 
 		<!-- -->
 		<div class="form-group">
-			<h4>Danh sách thuốc trong phiên</h4>
+            <div class="col-md-6"><h4>Danh sách thuốc trong phiên</h4></div>
+
+            <div class="col-md-6">
+                <b>Nhập từ file:</b> <input type="file" name="imported-file"/>
+            </div>
+
 		</div>
 
 		<div class="form-group">

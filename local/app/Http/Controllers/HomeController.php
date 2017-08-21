@@ -31,6 +31,70 @@ use Illuminate\Support\Collection;
 
 class HomeController extends Controller
 {
+    /**
+     * Display the home page.
+     *
+     * @return Response
+     */
+    public function index()
+    {die('d');
+        $mind = Mind::where('end_time', '>',  date("Y-m-d H:i:s") )
+            ->where('start_time', '<',  date("Y-m-d H:i:s") )
+            ->where('status', '1' )
+            ->orderBy('start_time', 'asc')
+            ->limit(1)
+            ->get(['id']);
+        if (count($mind)) {
+            $drug = Mind::whereId($mind[0]->id)->firstOrFail();
+
+            $drugArr = array();
+            if (count($drug->mind_drugs)) {
+                $drugItem = array();
+                foreach($drug->mind_drugs as $row) {
+                    $drugItem['drug_id'] = $row->drug_id;
+                    $drugItem['drug_price'] = $row->drug_price;
+                    $drugItem['drug_special_price'] = $row->drug_special_price;
+                    $drugItem['max_discount_qty'] = $row->max_discount_qty;
+                    $drugItem['max_qty'] = $row->max_qty;
+                    $drugItem['note'] = $row->note;
+                    $drugItem['status'] = $row->status;
+                    $drugItem['drugInfo'] = $this->getDrugInfo($row->drug_id);
+                    $drugItem['drugImage'] = $this->getDrugImage($row->drug_id);
+                    $drugArr[] = $drugItem;
+                }
+            }
+            //$products =  $query->paginate(15);
+
+            $currentPage = LengthAwarePaginator::resolveCurrentPage();
+            $col = new Collection($drugArr);
+
+            // fix test pagination
+            $perPage = 12;
+            $currentPageSearchResults = $col->slice(($currentPage - 1) * $perPage, $perPage)->all();
+            $drugs = new LengthAwarePaginator($currentPageSearchResults, count($col), $perPage, $currentPage,[ 'path' => LengthAwarePaginator::resolveCurrentPath()]);
+
+
+
+            $nextMind = Mind::where('start_time', '>',  date("Y-m-d H:i:s") )
+                ->where('status', '1' )
+                ->orderBy('start_time', 'asc')
+                ->limit(1)
+                ->get();
+
+            return view( 'front.index', compact('mind', 'drugs', 'nextMind') );
+        } else {
+            $drugs = $mind = array();
+            $nextMind = Mind::where('start_time', '>',  date("Y-m-d H:i:s") )
+                ->where('status', '1' )
+                ->orderBy('start_time', 'asc')
+                ->limit(1)
+                ->get();
+
+            return view( 'front.index', compact('mind', 'drugs', 'nextMind') );
+        }
+
+    }
+
     //settLogo settHotline settMuaho settVanchuyen settQD settHT
     public function settLogo(Request $rq) {
         $check = Settings::where('name', 'dataLogo')->lists( 'content', 'id')->toArray();
@@ -158,10 +222,14 @@ class HomeController extends Controller
         return redirect()->route('getsettings');
     }
 
+
     public function getsettings()
     {
+        die('f');
         return View ('back.settings-list', $this->getDataSetting());
     }
+
+
     public function getDataSetting() {
         $data = Settings::all();
         $dataQD = Settings::where('name', 'dataQD')->get(['content'])->toArray();
@@ -244,7 +312,7 @@ class HomeController extends Controller
             $content =  Customer::where('id', $user)->first();
             return view( 'front.profile', compact('content') );
         }
-        
+
         return view( 'front.profile', compact('content') );
     }
 
@@ -255,93 +323,31 @@ class HomeController extends Controller
             $phone = $request->input('phone');
             $email = $request->input('email');
             $password= $request->input('password');
-            
+
             $userId = $request->input('user_id');
-            
+
             if ($userId  == $user) {
                 if ($password !="") {
                     Customer::where('id', $user)
-                    ->update(['password' => bcrypt($password), 'email' =>  $email,
-                    'phone' => $phone]);
+                        ->update(['password' => bcrypt($password), 'email' =>  $email,
+                            'phone' => $phone]);
                 } else {
                     Customer::where('id', $user)
-                    ->update(['email' =>  $email, 'phone' => $phone]);
+                        ->update(['email' =>  $email, 'phone' => $phone]);
                 }
-                
+
             }
 
             $message =  'Cập nhật thành công';
             return redirect('/profile')->with('content', 'message');
-        }   
+        }
         $content = 'Không được phép truy cập';
-        
+
         return view( 'front.profile', compact('content') );
     }
-    
-
-    /**
-     * Display the home page.
-     *
-     * @return Response
-     */
-    public function index()
-    {
-        $mind = Mind::where('end_time', '>',  date("Y-m-d H:i:s") )
-            ->where('start_time', '<',  date("Y-m-d H:i:s") )
-            ->where('status', '1' )
-            ->orderBy('start_time', 'asc')
-            ->limit(1)
-            ->get(['id']);
-        if (count($mind)) {
-            $drug = Mind::whereId($mind[0]->id)->firstOrFail();
-
-            $drugArr = array();
-            if (count($drug->mind_drugs)) {
-                $drugItem = array();
-                foreach($drug->mind_drugs as $row) {
-                    $drugItem['drug_id'] = $row->drug_id;
-                    $drugItem['drug_price'] = $row->drug_price;
-                    $drugItem['drug_special_price'] = $row->drug_special_price;
-                    $drugItem['max_discount_qty'] = $row->max_discount_qty;
-                    $drugItem['max_qty'] = $row->max_qty;
-                    $drugItem['note'] = $row->note;
-                    $drugItem['status'] = $row->status;
-                    $drugItem['drugInfo'] = $this->getDrugInfo($row->drug_id);
-                    $drugItem['drugImage'] = $this->getDrugImage($row->drug_id);
-                    $drugArr[] = $drugItem;
-                }
-            }
-            //$products =  $query->paginate(15);
-
-            $currentPage = LengthAwarePaginator::resolveCurrentPage();
-            $col = new Collection($drugArr);
-
-            // fix test pagination
-            $perPage = 12   ;
-            $currentPageSearchResults = $col->slice(($currentPage - 1) * $perPage, $perPage)->all();
-            $drugs = new LengthAwarePaginator($currentPageSearchResults, count($col), $perPage, $currentPage,[ 'path' => LengthAwarePaginator::resolveCurrentPath()]);
 
 
 
-            $nextMind = Mind::where('start_time', '>',  date("Y-m-d H:i:s") )
-                ->where('status', '1' )
-                ->orderBy('start_time', 'asc')
-                ->limit(1)
-                ->get();
-
-            return view( 'front.index', compact('mind', 'drugs', 'nextMind') );
-        } else {
-            $drugs = $mind = array();
-            $nextMind = Mind::where('start_time', '>',  date("Y-m-d H:i:s") )
-                ->where('status', '1' )
-                ->orderBy('start_time', 'asc')
-                ->limit(1)
-                ->get();
-
-            return view( 'front.index', compact('mind', 'drugs', 'nextMind') );
-        }
-
-    }
 
     public function getDrugInfo($id) {
         return Drug::whereId($id)->firstOrFail();
@@ -441,13 +447,13 @@ class HomeController extends Controller
             $cartCurrentDiscount = $data['dataPrint']['productDiscount'];
             if (count($cartCurrentDiscount) > 0) {
                 foreach ($cartCurrentDiscount as $productCurrent) {
-                     $arrTemp['product_id'] = $productCurrent['product_id'];
-                     $arrTemp['qty_discount'] = $productCurrent['qty'];
-                     $arrTemp['qty_root'] = 0;
-                     $arrTemp['special_price'] = $productCurrent['special_price'];
-                     $arrTemp['price'] = $productCurrent['price'];
-                     $arrTemp['type'] = 'discount';
-                     $arrayImport[] = $arrTemp;
+                    $arrTemp['product_id'] = $productCurrent['product_id'];
+                    $arrTemp['qty_discount'] = $productCurrent['qty'];
+                    $arrTemp['qty_root'] = 0;
+                    $arrTemp['special_price'] = $productCurrent['special_price'];
+                    $arrTemp['price'] = $productCurrent['price'];
+                    $arrTemp['type'] = 'discount';
+                    $arrayImport[] = $arrTemp;
                 }
             }
         }
@@ -475,7 +481,7 @@ class HomeController extends Controller
         $transction->created_date = new datetime;
         $transction->address = $cAddress;
         $transction->phone = $cPhone;
-        
+
         $transction->owner = $cName;
         $transction->shipping_method = 'Vận chuyển tới khách hàng';
         $transction->status = 'Đợi giao hàng';
@@ -487,7 +493,7 @@ class HomeController extends Controller
 
         $transction->before_total = $data['countRootTotalPrice'];
         $transction->before_pay = $data['countRootTotalPrice'];
-        
+
 
         $transction->end_total = ($data['countRootTotalPrice'] + $phiMuaho + $phiVanchuyen) - ProcessText::getKhuyenMai($data['countRootTotalPrice']);
         $transction->countQty = $data['countQty'];
@@ -529,7 +535,7 @@ class HomeController extends Controller
             }
         }
 
-        // remove session - empty cart  
+        // remove session - empty cart
         \Session::forget('pharma.cartDataJson');
         \Session::forget('pharma.cartData.productDiscount');
         \Session::forget('pharma.cartData.productRoot');
@@ -575,9 +581,9 @@ class HomeController extends Controller
     }
 
     public function postProductCart(Request $request) {
-        
+
         if ($request->input('data_add') == 'delete') {
-             
+
             $productId = (int)$request->input('product_id');
             $mindId = (int)$request->input('mind_id');
             $userId = (int)$request->input('user_id');
@@ -694,8 +700,8 @@ class HomeController extends Controller
                 'cartData' => $dataReturn,
                 'message' => 'Xóa sản phẩm thành công'
             ]);
-            
-        } else { 
+
+        } else {
             $result = array();
             $productId = (int)$request->input('product_id');
 
@@ -939,10 +945,10 @@ class HomeController extends Controller
     public function mindBefore() {
 
         $mind = Mind::where('end_time', '<',  date("Y-m-d H:i:s") )
-        ->where('status', '1' )
-        ->orderBy('end_time', 'desc')
-        ->limit(1)
-        ->get(['id']);
+            ->where('status', '1' )
+            ->orderBy('end_time', 'desc')
+            ->limit(1)
+            ->get(['id']);
         $drug = Mind::whereId($mind[0]->id)->firstOrFail();
         $drugArr = array();
         if (count($drug->mind_drugs)) {
