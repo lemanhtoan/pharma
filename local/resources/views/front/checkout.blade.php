@@ -69,9 +69,15 @@ if ( !Auth::check() ) {
                 $qtyTotal = $data['countQty'];
                 $priceTotal = $data['countRootTotalPrice']; // + $data['countDiscount'];
             }
+
+            if($qtyDiscount > 0) {
+                $typePrice = 'type_discount';
+            } else {
+                $typePrice = 'type_root';
+            }
             ?>
             <?php if ($qtyDiscount>0 || $qtyRoot>0):?>
-            <tr class="tr-row-<?php echo $drug['drug_id'];?>">
+            <tr class="<?php echo $typePrice ?> tr-row-<?php echo $drug['drug_id'];?>">
                 <?php
                 $userId = 0;
                 if (Auth::check()) $userId = Auth::user()->id;

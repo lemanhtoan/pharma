@@ -487,13 +487,30 @@
 
                 $('.total-price-cart').text(formatNumber(response.cartData.countRootTotalPrice));
                 $('.total-qty-cart').text(formatNumber(response.cartData.countQty));
-                jQuery('.tr-row-'+fieldName).remove();//window.location.href = window.location.href;
+
+                // hide root qty box
+                if (dataType == 'type_root') {
+                    jQuery('.'+dataType+'.qty-'+fieldName).remove();
+                    if (jQuery('.type_discount.qty-'+fieldName).is(":visible") == false) {
+                        jQuery('.type_discount.tr-row-'+fieldName).remove();
+                    }
+                }
+
+                if (dataType == 'type_discount') {
+                    jQuery('.'+dataType+'.qty-'+fieldName).remove();
+                    //if ()
+                    if (jQuery('.type_root.qty-'+fieldName).is(":visible") == false) {
+                        jQuery('.'+dataType+'.tr-row-'+fieldName).remove();
+                    }
+                    //jQuery('.'+dataType+'.tr-row-'+fieldName).remove();//window.location.href = window.location.href;
+                }
             });
        
         }
         
     });
 
+    /*
     $(function () {
       $("input.qty-count").keydown(function () {
         // Save old value.
@@ -512,6 +529,7 @@
 
       });
     });
+    */
 
 </script>
 <style type="text/css">
