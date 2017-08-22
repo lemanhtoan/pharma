@@ -7,6 +7,14 @@
     @include('partials/error', ['type' => 'success', 'message' => session('ok')])
 	@endif
 
+  @if(session()->has('message'))
+    @include('partials/error', ['type' => 'danger', 'message' => session('message')])
+  @endif
+
+  @if(session()->has('success'))
+    @include('partials/error', ['type' => 'success', 'message' => session('success')])
+  @endif
+
   <div class="row col-lg-12">
     <div class="search-bar pull-left" style="margin-left: -15px">
       <!--search bar-->
@@ -71,6 +79,7 @@
     {!! Form::close() !!}
     <!--end search bar-->
 
+
     <!-- change status and print invoice -->
     <div class="row box-other">
       <button id="changeStatus" type="button" data-target="#btnChangeStatus">Đổi trạng thái</button>
@@ -113,6 +122,21 @@
       <button id="printOrder">In hóa đơn</button>
     </div>
 
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-6"></div>
+    <div class="col-md-6">
+      <form action="{{url('transactions/export')}}" enctype="multipart/form-data">
+        <button style="margin-bottom: 20px" class="btn btn-success pull-right" type="submit">Xuất danh sách giao dịch</button>
+      </form>
+
+      <form  style="display: inline-flex" action="{{url('transactions/import')}}" class="form-horizontal" method="post" enctype="multipart/form-data">
+        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+        <b>Nhập từ file: </b> <input type="file" name="imported-file"/>
+        <button class="btn btn-primary">Cập nhật</button>
+      </form>
     </div>
   </div>
 

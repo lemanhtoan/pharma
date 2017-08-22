@@ -30,20 +30,32 @@ class MindController extends Controller {
             $newData[] = $arrItem;
         }
 
-        Excel::create('Mind_Id_'.$mindId.'_'.date('d-m-Y)'), function($excel) use($newData) {
+        Excel::create('Danh_sach_thuoc_trong_phien_#'.$mindId.'_'.date('d-m-Y'), function($excel) use($newData) {
             // Set the title and Information fields
-            $excel->sheet('MindExport', function($sheet) use($newData) {
+            $excel->sheet('Danh_sach_thuoc_trong_phien', function($sheet) use($newData) {
                 $sheet->fromArray($newData, null, 'A3', false, true);
 
+                $sheet->setFontFamily('Calibri');
                 $sheet->row(1, ['DANH SÁCH THUỐC TRONG PHIÊN']);
 
-                $sheet->setHeight(1, 60);
+                $sheet->setHeight(1, 50);
                 $sheet->cell('A1', function($cell) {
                     $cell->setAlignment('center');
                     $cell->setFont(array(
-                        'size'       => '16',
+                        'size'       => '11',
                         'bold'       =>  true
                     ));
+                });
+                // set height
+                $sheet->setHeight(3, 25);
+
+                $sheet->row(3, function($cell) {
+                    $cell->setFont(array(
+                        'size'       => '12',
+                        'bold'       =>  false,
+                    ));
+                    $cell->setFontColor('#ffffff');
+                    $cell->setBackground('#001F5F');
                 });
 
                 $sheet->getStyle('A1')->getAlignment()->setWrapText(false);
@@ -164,7 +176,7 @@ class MindController extends Controller {
                                     'drug_special_price' => (float)$row['gia_km'],
                                     'max_discount_qty' => (int)$row['sl_km_toi_da'],
                                     'max_qty' => (int)$row['sl_toi_da_trong_phien'],
-                                    'note' => $row['ghi_chu'],
+                                    'note' => $row['ghi_chu'] ? (string)$row['ghi_chu'] : '',
                                     'status' => 1
                                 ];
                         } else {
@@ -254,7 +266,7 @@ class MindController extends Controller {
                         $mind_drug->drug_special_price = $row['drug_special_price'];
                         $mind_drug->max_discount_qty = $row['max_discount_qty'];
                         $mind_drug->max_qty = $row['max_qty'];
-                        $mind_drug->note = $row['note'];
+                        $mind_drug->note = $row['note'] ? (string)$row['note'] : '';
                         $mind_drug->status = 1;
                         $mind_drug->save();
                     }
@@ -320,7 +332,7 @@ class MindController extends Controller {
                                     'drug_special_price' => (float)$row['gia_km'],
                                     'max_discount_qty' => (int)$row['sl_km_toi_da'],
                                     'max_qty' => (int)$row['sl_toi_da_trong_phien'],
-                                    'note' => $row['ghi_chu'],
+                                    'note' => $row['ghi_chu'] ? (string)$row['ghi_chu'] : '',
                                     'status' => 1
                                 ];
                         } else {

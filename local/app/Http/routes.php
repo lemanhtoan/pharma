@@ -82,7 +82,12 @@ Route::group(['middleware' => ['web']], function () {
 	Route::put('postActdrug/{id}', 'DrugController@postActdrug');
 	Route::get('drug/search', 'DrugController@search');
 
+    Route::resource('drugs/import', 'DrugController@import');
+
 	Route::resource('drug', 'DrugController');
+
+    Route::get('drugs/export', 'DrugController@export');
+
 
     // Mind
     Route::get('mind/order', ['uses' => 'MindController@indexOrder', 'as' => 'mind.order']);
@@ -125,6 +130,11 @@ Route::group(['middleware' => ['web']], function () {
 	Route::post('postChangeProvince', 'TransactionController@postChangeProvince');
 
     Route::get('in-hoa-don', 'TransactionController@in_hoa_don');
+
+
+    Route::resource('transactions/import', 'TransactionController@import');
+
+    Route::get('transactions/export', 'TransactionController@export');
 
 	Route::resource('transactions', 'TransactionController');
 
