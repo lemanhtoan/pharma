@@ -4,6 +4,13 @@
   @include('back.partials.entete', ['icone' => 'pencil', 'fil' => 'Giao dịch', 'title' => 'Giao dịch'. link_to_route('mind.index', 'Quay lại', [], ['class' => 'btn btn-info pull-right']) ])
 
   <div class="row col-lg-12">
+    @if (\Session::has('errors'))
+      <div class="alert alert-danger">
+        {!! \Session::get('errors') !!}
+      </div>
+      {!! link_to_route('mind.edit', 'Sửa', [$post->id], ['class' => 'edit-link']) !!}
+    @endif
+
     <div class="col-md-3">
       {{--<p>--}}
         {{--{!! link_to_route('mind.edit', 'Sửa', [$post->id], ['class' => 'edit-link']) !!}--}}

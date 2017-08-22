@@ -19,6 +19,7 @@
 
     // show - hide qty box
     jQuery('.btn-cart').click(function(){
+        $("div#divLoading").addClass('show');
         var type_price = $(this).attr('data-type');
         if (type_price == 'type_discount') {
             // add to 1 and show input
@@ -72,6 +73,7 @@
 
     // DISCOUNT ADD
     $('.qty_discount.qty-add').click(function(e){
+        $("div#divLoading").addClass('show');
         e.preventDefault();
         discountAdd(jQuery(this).attr('data-drug'), '');
         jQuery('.box-spprice').show();
@@ -106,6 +108,8 @@
 
                 $('.total-price-cart').text(formatNumber(response.cartData.countRootTotalPrice));
                 $('.total-qty-cart').text(formatNumber(response.cartData.countQty));
+
+                setTimeout(function(){$("div#divLoading").removeClass('show');}, 2000);
             });
 
         } else {
@@ -159,6 +163,8 @@
 
                     $('.total-price-cart').text(formatNumber(response.cartData.countRootTotalPrice));
                     $('.total-qty-cart').text(formatNumber(response.cartData.countQty));
+
+                    setTimeout(function(){$("div#divLoading").removeClass('show');}, 2000);
                 });
 
             } else {
@@ -168,6 +174,8 @@
 
                 $('.qty-'+$(this).attr('data-drug')).hide();
                 $('.btn-cart-'+$(this).attr('data-drug')).show();
+
+                setTimeout(function(){$("div#divLoading").removeClass('show');}, 2000);
 
             }
         }
@@ -207,6 +215,8 @@
 
                 $('.total-price-cart').text(formatNumber(response.cartData.countRootTotalPrice));
                 $('.total-qty-cart').text(formatNumber(response.cartData.countQty));
+
+                setTimeout(function(){$("div#divLoading").removeClass('show');}, 2000);
             });
 
         } else {
@@ -228,24 +238,26 @@
                     type: 'PUT',
                     data: "type_add=" + dataType + "&product_id=" + fieldName + "&qty=" + qty_post + "&mind_id=" + mind_id + "&user_id=" + user_id + "&price=" + price + "&special_price=" + special_price + "&_token=" + token
                 })
-                        .done(function(response) {
-                            if(response.isRootPrice == '1') {
-                                $('.qty_root.qty-count-'+fieldName).val(currentVal + 1);
-                                $('.qty_root.qty-minus').val("-").removeAttr('style');
-                            } else if (response.isRootPrice == '2') {
-                                // qty > qty max discount
-                                $('.qty_root.qty-count-'+fieldName).val(currentVal);
-                                $('.qty_root.qty-minus').val("-").removeAttr('style');
-                                if (response.message.errors) {
-                                    alert(response.message.errors);
-                                }
-                            }
-                            $('.current-price').text(formatNumber(response.cartData.countRootTotalPrice));
-                            $('.discount-price').text(formatNumber(response.cartData.countDiscount));
+                .done(function(response) {
+                    if(response.isRootPrice == '1') {
+                        $('.qty_root.qty-count-'+fieldName).val(currentVal + 1);
+                        $('.qty_root.qty-minus').val("-").removeAttr('style');
+                    } else if (response.isRootPrice == '2') {
+                        // qty > qty max discount
+                        $('.qty_root.qty-count-'+fieldName).val(currentVal);
+                        $('.qty_root.qty-minus').val("-").removeAttr('style');
+                        if (response.message.errors) {
+                            alert(response.message.errors);
+                        }
+                    }
+                    $('.current-price').text(formatNumber(response.cartData.countRootTotalPrice));
+                    $('.discount-price').text(formatNumber(response.cartData.countDiscount));
 
-                            $('.total-price-cart').text(formatNumber(response.cartData.countRootTotalPrice));
-                            $('.total-qty-cart').text(formatNumber(response.cartData.countQty));
-                        });
+                    $('.total-price-cart').text(formatNumber(response.cartData.countRootTotalPrice));
+                    $('.total-qty-cart').text(formatNumber(response.cartData.countQty));
+
+                    setTimeout(function(){$("div#divLoading").removeClass('show');}, 2000);
+                });
 
             } else {
                 // Otherwise put a 0 there
@@ -255,13 +267,15 @@
                 $('.qty-'+$(this).attr('data-drug')).hide();
                 $('.btn-cart-'+$(this).attr('data-drug')).show();
 
+                setTimeout(function(){$("div#divLoading").removeClass('show');}, 2000);
+
             }
 
         }
     }
 
     $(".qty-count").change(function(e) {
-
+        $("div#divLoading").addClass('show');
         onchangeAdd($(this).attr('data-drug'), $(this).attr('data-type'));
     });
     // on change input qty
@@ -310,12 +324,15 @@
 
             $('.total-price-cart').text(formatNumber(response.cartData.countRootTotalPrice));
             $('.total-qty-cart').text(formatNumber(response.cartData.countQty));
+
+            setTimeout(function(){$("div#divLoading").removeClass('show');}, 2000);
         });
     }
 
 
     // ROOT ADD
     $('.qty_root.qty-add').click(function(e){
+        $("div#divLoading").addClass('show');
         e.preventDefault();
         rootAdd(jQuery(this).attr('data-drug'), '');
         jQuery('.box-spprice').show();
@@ -324,6 +341,7 @@
 
     // ROOT MINUS
     $(".qty_root.qty-minus").click(function(e) {
+        $("div#divLoading").addClass('show');
         e.preventDefault();
         fieldName = $(this).attr('data-drug');
         var currentVal = parseInt($('.qty_root.qty-count-'+fieldName).val());
@@ -348,6 +366,8 @@
 
                 $('.total-price-cart').text(formatNumber(response.cartData.countRootTotalPrice));
                 $('.total-qty-cart').text(formatNumber(response.cartData.countQty));
+
+                setTimeout(function(){$("div#divLoading").removeClass('show');}, 2000);
             });
 
             $('.qty_root.qty-count-'+fieldName).val(currentVal - 1);
@@ -398,12 +418,15 @@
                 jQuery('.tr-row-'+fieldName).remove();
 
                 jQuery('.box-spprice').hide();
+
+                setTimeout(function(){$("div#divLoading").removeClass('show');}, 2000);
             });
         }
     });
 
     // DISCOUNT MINUS
     $(".qty_discount.qty-minus").click(function(e) {
+        $("div#divLoading").addClass('show');
         e.preventDefault();
         fieldName = $(this).attr('data-drug');
         var currentVal = parseInt($('.qty_discount.qty-count-'+fieldName).val());
@@ -428,6 +451,8 @@
 
                 $('.total-price-cart').text(formatNumber(response.cartData.countRootTotalPrice));
                 $('.total-qty-cart').text(formatNumber(response.cartData.countQty));
+
+                setTimeout(function(){$("div#divLoading").removeClass('show');}, 2000);
             });
 
             $('.qty_discount.qty-count-'+fieldName).val(currentVal - 1);
@@ -459,6 +484,8 @@
                 jQuery('.tr-row-'+fieldName).remove();
 
                 jQuery('.box-spprice').hide();
+
+                setTimeout(function(){$("div#divLoading").removeClass('show');}, 2000);
             });
         }
     });
@@ -466,8 +493,11 @@
 
     // ROOT DELETE
     $(".qty_root.qty-del, .qty_discount.qty-del").click(function(e) {
+
         var result = confirm("Bạn có chắc xóa sản phẩm?");
         if (result) {
+
+            $("div#divLoading").addClass('show');
             e.preventDefault();
             fieldName = $(this).attr('data-drug');
 
@@ -504,6 +534,8 @@
                     }
                     //jQuery('.'+dataType+'.tr-row-'+fieldName).remove();//window.location.href = window.location.href;
                 }
+
+                setTimeout(function(){$("div#divLoading").removeClass('show');}, 2000);
             });
        
         }

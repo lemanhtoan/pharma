@@ -130,6 +130,9 @@ if ( !Auth::check() ) {
             <?php } ?>
             </tbody>
         </table>
+
+        <div id="divLoading"> </div>
+
         <?php else: echo '<p class="empty-cart">Giỏ hàng rỗng.</p>'; endif; ?>
     </div>
 

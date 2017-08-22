@@ -5,7 +5,17 @@
             <h1 class="page-header">
                 Sửa phiên giao dịch
             </h1>
+            @if (\Session::has('errors'))
+                <div class="alert alert-danger">
+                    {!! \Session::get('errors') !!}
+                </div>
+            @endif
 
+            @if (\Session::has('success'))
+                <div class="alert alert-success">
+                    {!! \Session::get('success') !!}
+                </div>
+            @endif
 
             <form action="{{url('minds/export')}}" enctype="multipart/form-data">
                 <input type="hidden" name="mindId" value="<?php echo $post->id;?>">
