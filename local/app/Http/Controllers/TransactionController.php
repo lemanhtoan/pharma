@@ -1,7 +1,9 @@
 <?php namespace App\Http\Controllers;
 
 use App\Models\Customer;
+use App\Models\Drug;
 use App\Models\Mind;
+use App\Models\Mind_Drug;
 use App\Models\Pharmacies;
 use Illuminate\Http\Request;
 use App\Http\Requests\SearchRequest;
@@ -10,6 +12,7 @@ use App\Models\Province;
 use App\Models\District;
 use App\Models\Transaction;
 use App\Models\TransactionSend;
+use App\Models\TransactionDrug;
 
 use PDF;
 use Excel;
@@ -217,16 +220,55 @@ class TransactionController extends Controller {
         return response()->json();
     }
 
+    public function getPharciesName($userId) {
+        $data = \DB::table('customers')->where('customers.id', $userId)->leftJoin('pharmacies', 'customers.pharmacieId', '=', 'pharmacies.id')->get(['pharmacies.name']);
+        $string = '';
+        if (count($data)) $string = $data[0]->name;
+        return $string;
+    }
+
+    public function getDrugInfo($Id) {
+        $data = array();
+        if(count(Drug::where('id', $Id)->first()))  $data = Drug::where('id', $Id)->first();
+        return $data->toArray();
+    }
+
+    public function getDrugTransction($tranId) {
+        $dataTranDrugArrs = TransactionDrug::where('transaction_id', $tranId)->orderBy('drug_id', 'desc')->get();
+        $arrOrder = array();
+        $arrIn = array();
+        if(count($dataTranDrugArrs)){
+            foreach ($dataTranDrugArrs as $drug) {
+                $arrIn['info'] = $drug->toArray();
+                $arrIn['infoDrug'] = $this->getDrugInfo($drug->drug_id);
+                $arrOrder[] = $arrIn;
+            }
+        }
+        return $arrOrder;
+    }
+
     public function in_hoa_don(Request $request) {
 
         $ids = $request->input('dataChoise');
         $arrIds = explode(",", $ids);
-        $orders = Transaction::whereIn('id', $arrIds)->get();
-        $title = 'Hóa đơn / Id #';
+        $ordersGet = Transaction::whereIn('id', $arrIds)->get();
+
+        $orders = array();
+        $arrIn = array();
+
+
+        foreach ($ordersGet as $order) {
+            $arrIn['info'] = $order->toArray();
+            $arrIn['parcies'] = $this->getPharciesName($order->user_id);
+            $arrIn['listDrug'] =  $this->getDrugTransction($order->id);
+            $orders[] = $arrIn;
+        }
+
+//        dd($orders);
+
+//		htmlentities($orders, ENT_QUOTES, "UTF-8");
 		
-		htmlentities($orders, ENT_QUOTES, "UTF-8");
-		
-        $pdf = PDF::loadView('pdf.invoice', compact('title', 'orders'));
+        $pdf = PDF::loadView('pdf.invoice', compact('title', 'orders'))->setPaper('a4', 'portrait')->setWarnings(false);
         $path = base_path() . '/pdf/invoice_'.date('d_m_Y').'.pdf';
         $pdf->save( $path );
 
@@ -350,6 +392,7 @@ class TransactionController extends Controller {
     public function getSendTranData($id) {
         return TransactionSend::where('transaction_id', $id)->orderBy('id', 'desc')->first();
     }
+
     public function export(Request $request) {
         $items = Transaction::all();
         $newData = array();
@@ -415,5 +458,104 @@ class TransactionController extends Controller {
         })->export('xlsx');
     }
 
+    public function getDrugInTracstion($dataDrug) {
 
+        $arrUser = array();
+        $cQtyTran = array();
+	    foreach ($dataDrug as $drug){
+            $arrUser[$drug->user_id][] = $drug->qty;
+            $cQtyTran[] = $drug->transaction_id;
+        }
+        $arrSum = array(); $arrCompare = array();
+        foreach($arrUser as $dataUser) {
+            $arrSum[] = array_sum($dataUser);
+            $arrCompare['min_data'] = min($dataUser);
+            $arrCompare['max_data'] = max($dataUser);
+        }
+        $dataMMS = array(
+            'min' => $arrCompare['min_data'],
+            'max' => $arrCompare['max_data'],
+            'sum' => array_sum($arrSum),
+            'qtyInvoice' => count(array_count_values($cQtyTran))
+        );
+        return $dataMMS;
+    }
+
+    public function getMidDrugPrice($mindId, $drugId) {
+	    $data = '';
+	    $query = Mind_Drug::where('mind_id', $mindId)->where('drug_id', $drugId)->first();
+	    if (count($query)) $data = $query->drug_price;
+	    return $data;
+    }
+
+    public function exportdrugs(Request $request) {
+	    // tu phien id -> lay ra tat ca cac giao dich cua no
+        // tu cac giao dich, lay ra cac thuoc thuoc giao dich do
+        // tim gia tri qty min va max
+        $mindId = 4;
+        $items = \DB::table('transactions')->where('mind_id', $mindId)
+            -> leftJoin('transaction_drug', 'transaction_drug.transaction_id', '=', 'transactions.id')
+            ->get();
+        $arrDrugs = array();
+        foreach ($items as $groupDrug) {
+            $arrDrugs[$groupDrug->drug_id][] = $groupDrug;
+        }
+        $out = array();
+        foreach ($arrDrugs as $drugId=>$dataDrug) {
+            $in['idDrug'] = $this->getDrugInfo($drugId);
+            $in['info'] = $dataDrug;
+            $in['infoMap'] = $this->getDrugInTracstion($dataDrug);
+            $in['infoPrice'] = $this->getMidDrugPrice($mindId, $drugId);
+            $out[] = $in;
+        }
+//        dd($out);
+        $newData = array();
+        $arrItem = array();
+        foreach ($out as $item) {
+            $arrItem['Mã thuốc'] = $item['idDrug']['code'];
+            $arrItem['Tên thuốc'] = $item['idDrug']['name'];
+            $arrItem['Đơn vị buôn'] = $item['idDrug']['donvibuon'];
+            $arrItem['SL đặt'] = $item['infoMap']['sum'];
+            $arrItem['Đơn giá'] = (float)($item['infoPrice']);
+            $arrItem['Thành tiền'] = (float)($item['infoPrice']*$item['infoMap']['sum']);
+            $arrItem['Ghi chú'] = $item['idDrug']['note'];
+            $arrItem['SL đơn'] = $item['infoMap']['qtyInvoice'];
+            $arrItem['SL đặt nhỏ nhất'] = $item['infoMap']['min'];
+            $arrItem['SL đặt lớn nhất'] = $item['infoMap']['max'];
+            $newData[] = $arrItem;
+        }
+
+        Excel::create('Danh_Sach_Thuoc_Giao_Dich'.'_'.date('d-m-Y'), function($excel) use($newData) {
+            // Set the title and Information fields
+            $excel->sheet('Danh_Sach_Thuoc_Giao_Dich', function($sheet) use($newData) {
+                $sheet->fromArray($newData, null, 'A3', false, true);
+                // Set font family
+                $sheet->setFontFamily('Calibri');
+
+                $sheet->row(1, ['DANH SÁCH THUỐC GIAO DỊCH']);
+
+                $sheet->setHeight(1, 50);
+                $sheet->cell('A1', function($cell) {
+                    $cell->setAlignment('center');
+                    $cell->setFont(array(
+                        'size'       => '11',
+                        'bold'       =>  true
+                    ));
+                });
+                // set height
+                $sheet->setHeight(3, 25);
+
+                $sheet->row(3, function($cell) {
+                    $cell->setFont(array(
+                        'size'       => '11',
+                        'bold'       =>  false,
+                    ));
+                    $cell->setFontColor('#ffffff');
+                    $cell->setBackground('#001F5F');
+                });
+
+                $sheet->getStyle('A1')->getAlignment()->setWrapText(false);
+            });
+        })->export('xlsx');
+    }
 }

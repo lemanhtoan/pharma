@@ -135,6 +135,7 @@ Route::group(['middleware' => ['web']], function () {
     Route::resource('transactions/import', 'TransactionController@import');
 
     Route::get('transactions/export', 'TransactionController@export');
+    Route::get('transactions/exportdrugs', 'TransactionController@exportdrugs');
 
 	Route::resource('transactions', 'TransactionController');
 
