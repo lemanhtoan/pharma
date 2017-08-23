@@ -492,7 +492,7 @@ class TransactionController extends Controller {
 	    // tu phien id -> lay ra tat ca cac giao dich cua no
         // tu cac giao dich, lay ra cac thuoc thuoc giao dich do
         // tim gia tri qty min va max
-        $mindId = 4;
+        $mindId = $request->input('mindIdEx');
         $items = \DB::table('transactions')->where('mind_id', $mindId)
             -> leftJoin('transaction_drug', 'transaction_drug.transaction_id', '=', 'transactions.id')
             ->get();
@@ -524,38 +524,53 @@ class TransactionController extends Controller {
             $arrItem['SL đặt lớn nhất'] = $item['infoMap']['max'];
             $newData[] = $arrItem;
         }
+        if (count($newData)) {
+            Excel::create('Danh_Sach_Thuoc_Giao_Dich'.'_'.date('d-m-Y'), function($excel) use($newData) {
+                // Set the title and Information fields
+                $excel->sheet('Danh_Sach_Thuoc_Giao_Dich', function($sheet) use($newData) {
+                    $sheet->fromArray($newData, null, 'A3', false, true);
+                    // Set font family
+                    $sheet->setFontFamily('Calibri');
 
-        Excel::create('Danh_Sach_Thuoc_Giao_Dich'.'_'.date('d-m-Y'), function($excel) use($newData) {
-            // Set the title and Information fields
-            $excel->sheet('Danh_Sach_Thuoc_Giao_Dich', function($sheet) use($newData) {
-                $sheet->fromArray($newData, null, 'A3', false, true);
-                // Set font family
-                $sheet->setFontFamily('Calibri');
+                    $sheet->row(1, ['DANH SÁCH THUỐC GIAO DỊCH']);
 
-                $sheet->row(1, ['DANH SÁCH THUỐC GIAO DỊCH']);
+                    $sheet->setHeight(1, 50);
+                    $sheet->cell('A1', function($cell) {
+                        $cell->setAlignment('center');
+                        $cell->setFont(array(
+                            'size'       => '11',
+                            'bold'       =>  true
+                        ));
+                    });
+                    // set height
+                    $sheet->setHeight(3, 25);
 
-                $sheet->setHeight(1, 50);
-                $sheet->cell('A1', function($cell) {
-                    $cell->setAlignment('center');
-                    $cell->setFont(array(
-                        'size'       => '11',
-                        'bold'       =>  true
-                    ));
+                    $sheet->row(3, function($cell) {
+                        $cell->setFont(array(
+                            'size'       => '11',
+                            'bold'       =>  false,
+                        ));
+                        $cell->setFontColor('#ffffff');
+                        $cell->setBackground('#001F5F');
+                    });
+
+                    $sheet->getStyle('A1')->getAlignment()->setWrapText(false);
                 });
-                // set height
-                $sheet->setHeight(3, 25);
+            })->export('xlsx');
+        } else {
+            Excel::create('Danh_Sach_Thuoc_Giao_Dich'.'_'.date('d-m-Y'), function($excel) use($newData) {
+                // Set the title and Information fields
+                $excel->sheet('Danh_Sach_Thuoc_Giao_Dich', function($sheet) use($newData) {
+                    $sheet->fromArray($newData, null, 'A3', false, true);
+                    // Set font family
+                    $sheet->setFontFamily('Calibri');
 
-                $sheet->row(3, function($cell) {
-                    $cell->setFont(array(
-                        'size'       => '11',
-                        'bold'       =>  false,
-                    ));
-                    $cell->setFontColor('#ffffff');
-                    $cell->setBackground('#001F5F');
+                    $sheet->row(1, ['DANH SÁCH THUỐC GIAO DỊCH']);
+
+                    $sheet->row(2, ['Danh sách thuốc rỗng']);
                 });
+            })->export('xlsx');
+        }
 
-                $sheet->getStyle('A1')->getAlignment()->setWrapText(false);
-            });
-        })->export('xlsx');
     }
 }

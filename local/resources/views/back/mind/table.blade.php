@@ -20,7 +20,15 @@
         </label>
       </div>
       </td>
-    <td class="change_info">{!! link_to_route('mind.edit', 'Sửa', [$post->id], ['class' => 'btn btn-warning btn-block']) !!}
+    <td class="change_info">
+
+      <form action="{{url('transactions/exportdrugs')}}" enctype="multipart/form-data">
+        <input type="hidden" name="mindIdEx" value="<?php echo $post->id;?>">
+        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+        <button class="btn btn-success pull-right" type="submit">Xuất danh sách thuốc</button>
+      </form>
+
+      {!! link_to_route('mind.edit', 'Sửa', [$post->id], ['class' => 'btn btn-warning btn-block']) !!}
     {!! Form::open(['method' => 'DELETE', 'route' => ['mind.destroy', $post->id]]) !!}
       {!! Form::destroy('Xóa', 'Xác nhận xóa?') !!}
     {!! Form::close() !!}

@@ -126,14 +126,10 @@
   </div>
 
   <div class="row">
-    <div class="col-md-2"></div>
-    <div class="col-md-10">
+    <div class="col-md-4"></div>
+    <div class="col-md-8">
       <form action="{{url('transactions/export')}}" enctype="multipart/form-data">
         <button style="margin-bottom: 20px" class="btn btn-success pull-right" type="submit">Xuất danh sách giao dịch</button>
-      </form>
-
-      <form action="{{url('transactions/exportdrugs')}}" enctype="multipart/form-data">
-        <button style="margin-bottom: 20px" class="btn btn-success pull-right" type="submit">Xuất danh sách thuốc</button>
       </form>
 
       <form  style="display: inline-flex" action="{{url('transactions/import')}}" class="form-horizontal" method="post" enctype="multipart/form-data">
