@@ -39,9 +39,15 @@
               </a>
             </th>
             <th>
-              Giá trị %
-              <a href="#" name="config_discount.percent" class="order">
-                <span class="fa fa-fw fa-{{ $order->name == 'config_discount.percent' ? $order->sens : 'unsorted'}}"></span>
+              Giá trị
+              <a href="#" name="config_discount.value" class="order">
+                <span class="fa fa-fw fa-{{ $order->name == 'config_discount.value' ? $order->sens : 'unsorted'}}"></span>
+              </a>
+            </th>
+            <th>
+              Kiểu loại
+              <a href="#" name="config_discount.type" class="order">
+                <span class="fa fa-fw fa-{{ $order->name == 'config_discount.type' ? $order->sens : 'unsorted'}}"></span>
               </a>
             </th>
             <th></th>

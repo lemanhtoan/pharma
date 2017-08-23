@@ -249,6 +249,24 @@ class HomeController extends Controller
         return redirect()->route('getsettings');
     }
 
+    public function settMinDiscount(Request $rq) {
+        $check = Settings::where('name', 'dataDiscount')->lists( 'content', 'id')->toArray();
+        if ($check) {
+            $checkId = key($check);
+            $cat = Settings::find($checkId);
+            $cat->name = 'dataDiscount';
+            $cat->content = $rq->mindiscount;
+            $cat->save();
+
+        } else {
+            $item = new Settings();
+            $item->name = 'dataDiscount';
+            $item->content = $rq->mindiscount;
+            $item->save();
+        }
+
+        return redirect()->route('getsettings');
+    }
     
     public function settQD(Request $rq) {
         $check = Settings::where('name', 'dataQD')->lists( 'content', 'id')->toArray();
@@ -303,6 +321,7 @@ class HomeController extends Controller
         $dataVC = Settings::where('name', 'dataVC')->get(['content'])->toArray();
         $dataKMVC = Settings::where('name', 'dataKMVC')->get(['content'])->toArray();
         $dataHotline = Settings::where('name', 'dataHotline')->get(['content'])->toArray();
+        $dataDiscount = Settings::where('name', 'dataDiscount')->get(['content'])->toArray();
         return ['data'=>$data,
             'dataQD'=> $dataQD,
             'dataHT' => $dataHT,
@@ -310,7 +329,8 @@ class HomeController extends Controller
             'dataKM' => $dataKM,
             'dataVC' => $dataVC,
             'dataHotline' => $dataHotline,
-            'dataKMVC'=> $dataKMVC
+            'dataKMVC'=> $dataKMVC,
+            'dataDiscount'=> $dataDiscount
         ];
     }
 

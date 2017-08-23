@@ -19,7 +19,8 @@ class DiscountRepository extends BaseRepository {
         $post->level = $inputs['level'];
         $post->from = $inputs['from'];
         $post->to = $inputs['to'];
-        $post->percent = $inputs['percent'];
+        $post->value = $inputs['value'];
+        $post->type = $inputs['type'];
         $post->save();
         return $post;
     }

@@ -78,6 +78,17 @@
         </div>
 
         <div class="row">
+            <form action="settMinDiscount" method="POST" role="form">
+                {{ csrf_field() }}
+                <div class="form-group">
+                    <?php $dataDiscount = $dataDiscount[0]['content']; ?>
+                    Chiết khẩu nhỏ nhất : <input type="text" name="mindiscount" class="form-control" value="<?php if ( isset($dataDiscount)) { echo $dataDiscount;} ?>">
+                </div>
+                <input type="submit" name="btnHotline" class="btn btn-primary" value="Lưu Chiết khẩu nhỏ nhất" class="button" />
+            </form>
+        </div>
+
+        <div class="row">
             <form action="settQD" method="POST" role="form" enctype="multipart/form-data">
                 {{ csrf_field() }}
                 <div class="form-group">

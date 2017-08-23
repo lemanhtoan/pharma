@@ -27,18 +27,26 @@
 		</div>
 
 		<div class="form-group">
-			{!! Form::label('KM từ (triệu đồng)') !!}  <em>*</em>
+			{!! Form::label('KM từ') !!}  <em>*</em>
 			{!! Form::text('from', null, array('required', 'class'=>'form-control','placeholder'=>'KM từ (triệu đồng)')) !!}
 		</div>
 
 		<div class="form-group">
-			{!! Form::label('KM đến (triệu đồng)') !!} <em>*</em>
+			{!! Form::label('KM đến') !!} <em>*</em>
 			{!! Form::text('to', null, array('required', 'class'=>'form-control','placeholder'=>'KM đến (triệu đồng)')) !!}
 		</div>
 
 		<div class="form-group">
-			{!! Form::label('Giá trị khuyến mãi (%)') !!} <em>*</em>
-			{!! Form::text('percent', null, array('required', 'class'=>'form-control','placeholder'=>'Giá trị khuyến mãi (%)')) !!}
+			{!! Form::label('Kiểu loại') !!} <em>*</em>
+			<select required class="form-control" name="type" id="type">
+				<option <?php if(isset($post->type) && ($post->type == 'Cố định')) {echo 'selected';}else{echo '';}?> value="Cố định">Cố định</option>
+				<option <?php if(isset($post->type) && ($post->type == 'Phần trăm')) {echo 'selected';}else{echo '';}?> value="Phần trăm">Phần trăm</option>
+			</select>
+		</div>
+
+		<div class="form-group">
+			{!! Form::label('Giá trị khuyến mãi') !!} <em>*</em>
+			{!! Form::text('value', null, array('required', 'class'=>'form-control','placeholder'=>'Giá trị khuyến mãi')) !!}
 		</div>
 
 		<div class="form-group">
