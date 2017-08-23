@@ -189,3 +189,4 @@ Nhớ phần bảng transaction phải set primary key ID
 
 
 
+insert dataKMCV 20000 settings table

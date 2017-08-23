@@ -67,6 +67,17 @@
         </div>
 
         <div class="row">
+            <form action="settKMVC" method="POST" role="form">
+                {{ csrf_field() }}
+                <div class="form-group">
+                    <?php $dataKMVC = $dataKMVC[0]['content']; ?>
+                    Phí KM vận chuyển : <input type="text" name="kmvanchuyen" class="form-control" value="<?php if ( isset($dataKMVC)) { echo $dataKMVC;} ?>">
+                </div>
+                <input type="submit" name="btnHotline" class="btn btn-primary" value="Lưu KM vận chuyển" class="button" />
+            </form>
+        </div>
+
+        <div class="row">
             <form action="settQD" method="POST" role="form" enctype="multipart/form-data">
                 {{ csrf_field() }}
                 <div class="form-group">

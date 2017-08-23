@@ -136,11 +136,12 @@ class TransactionRepository extends BaseRepository {
         // fix phí
         $phiMuaho = ProcessText::getConfig('dataKM');
         $phiVanchuyen =  ProcessText::getConfig('dataVC');
+        $kmvanchuyen =  ProcessText::getConfig('dataKMVC');
 
         // get transction subtotal
         $khuyenMai = ProcessText::getKhuyenMai($post->sub_total);
 
-        return compact('post', 'tran_drugs', 'drugs', 'phiMuaho', 'phiVanchuyen', 'khuyenMai');
+        return compact('post', 'tran_drugs', 'drugs', 'phiMuaho', 'phiVanchuyen', 'khuyenMai', 'kmvanchuyen');
     }
 
     public function edit($post)
@@ -225,9 +226,10 @@ class TransactionRepository extends BaseRepository {
 
         $phiMuaho = ProcessText::getConfig('dataKM');
         $phiVanchuyen =  ProcessText::getConfig('dataVC');
+        $kmphiVanchuyen =  ProcessText::getConfig('dataKMVC');
         
         $khuyenMai = ProcessText::getKhuyenMai($caclSubPrice); //55000;
-        $post->end_total = ($caclSubPrice + $phiMuaho + $phiVanchuyen) - $khuyenMai;
+        $post->end_total = ($caclSubPrice + $phiMuaho + $phiVanchuyen) - $khuyenMai - $kmphiVanchuyen;
 
         $post->address = $inputs['address'];
         $post->phone = $inputs['phone'];

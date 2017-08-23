@@ -161,6 +161,19 @@ class AuthController extends Controller
 		}
 		$auth->login($user);
 
+		
+		// check if admin login
+		if ($user->isRole == 'administrator') {
+            if ($throttles) {
+                $this->clearLoginAttempts($request);
+            }
+            $auth->login($user);
+
+            return redirect('/admin');
+
+            $request->session()->put('user_id', $user->id);
+        } 
+
 		// save log user login
 
 		$userLog = new UserLog();

@@ -142,7 +142,7 @@
                 <p><span><b>Chiết khấu</b></span><label class="normal" for=""><?php echo number_format($item['info']['cost_discount'])?></label></p>
                 <p><span>Phí mua hàng</span><label class="bold" for=""><?php echo number_format($item['info']['buyer_cost'])?></label></p>
                 <p><span>Phí vận chuyển</span><label class="normal" for=""><?php echo number_format($item['info']['shipping_cost'])?></label></p>
-                <p><span>Khuyến mại</span><label class="normal" for=""><?php echo number_format($item['info']['cost_discount'])?></label></p>
+                <p><span>KM vận chuyển</span><label class="normal" for=""><?php echo number_format($item['kmvc'])?></label></p>
                 <p><span><b>Tổng cần thanh toán</b></span><label class="bold bg-yellow" for=""><?php echo number_format($item['info']['end_total'])?></label></p>
             </div>
         </div>

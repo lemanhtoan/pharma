@@ -229,6 +229,27 @@ class HomeController extends Controller
 
         return redirect()->route('getsettings');
     }
+
+    public function settKMVC(Request $rq) {
+        $check = Settings::where('name', 'dataKMVC')->lists( 'content', 'id')->toArray();
+        if ($check) {
+            $checkId = key($check);
+            $cat = Settings::find($checkId);
+            $cat->name = 'dataKMVC';
+            $cat->content = $rq->kmvanchuyen;
+            $cat->save();
+
+        } else {
+            $item = new Settings();
+            $item->name = 'dataKMVC';
+            $item->content = $rq->kmvanchuyen;
+            $item->save();
+        }
+
+        return redirect()->route('getsettings');
+    }
+
+    
     public function settQD(Request $rq) {
         $check = Settings::where('name', 'dataQD')->lists( 'content', 'id')->toArray();
         if ($check) {
@@ -280,6 +301,7 @@ class HomeController extends Controller
         $dataLogo = Settings::where('name', 'dataLogo')->get(['content'])->toArray();
         $dataKM = Settings::where('name', 'dataKM')->get(['content'])->toArray();
         $dataVC = Settings::where('name', 'dataVC')->get(['content'])->toArray();
+        $dataKMVC = Settings::where('name', 'dataKMVC')->get(['content'])->toArray();
         $dataHotline = Settings::where('name', 'dataHotline')->get(['content'])->toArray();
         return ['data'=>$data,
             'dataQD'=> $dataQD,
@@ -287,7 +309,8 @@ class HomeController extends Controller
             'dataLogo' => $dataLogo,
             'dataKM' => $dataKM,
             'dataVC' => $dataVC,
-            'dataHotline' => $dataHotline
+            'dataHotline' => $dataHotline,
+            'dataKMVC'=> $dataKMVC
         ];
     }
 
@@ -473,11 +496,12 @@ class HomeController extends Controller
         $khuyenmai = ProcessText::getKhuyenMai($priceTotal);
         $muaho = ProcessText::getConfig('dataKM');
         $vanchuyen =  ProcessText::getConfig('dataVC');
+        $kmvanchuyen =  ProcessText::getConfig('dataKMVC');
 
         $mindId = $data['mind_id'];
         $mindMessage = Mind::whereId($mindId)->firstOrFail();
 
-        return view( 'front.before-buy', compact('data', 'dataUser', 'khuyenmai', 'mindMessage', 'muaho', 'vanchuyen') );
+        return view( 'front.before-buy', compact('data', 'dataUser', 'khuyenmai', 'mindMessage', 'muaho', 'vanchuyen', 'kmvanchuyen') );
     }
 
     public function postProcessBuy(Request $request) {
@@ -488,6 +512,7 @@ class HomeController extends Controller
         // fix phí
         $phiMuaho = ProcessText::getConfig('dataKM');
         $phiVanchuyen =  ProcessText::getConfig('dataVC');
+        $kmphiVanchuyen =  ProcessText::getConfig('dataKMVC');
         //$khuyenMai = 55000;
 
         $data = \Session::get('pharma.cartDataJson');
@@ -546,7 +571,7 @@ class HomeController extends Controller
         $transction->before_pay = $data['countRootTotalPrice'];
 
 
-        $transction->end_total = ($data['countRootTotalPrice'] + $phiMuaho + $phiVanchuyen) - ProcessText::getKhuyenMai($data['countRootTotalPrice']);
+        $transction->end_total = ($data['countRootTotalPrice'] + $phiMuaho + $phiVanchuyen) - $kmphiVanchuyen - ProcessText::getKhuyenMai($data['countRootTotalPrice']);
         $transction->countQty = $data['countQty'];
         $transction->save();
 

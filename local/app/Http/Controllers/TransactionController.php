@@ -258,13 +258,14 @@ class TransactionController extends Controller {
 
 
         foreach ($ordersGet as $order) {
+            $arrIn['kmvc'] =  ProcessText::getConfig('dataKMVC');
             $arrIn['info'] = $order->toArray();
             $arrIn['parcies'] = $this->getPharciesName($order->user_id);
             $arrIn['listDrug'] =  $this->getDrugTransction($order->id);
             $orders[] = $arrIn;
         }
 
-//        dd($orders);
+       //dd($orders);
 
 //		htmlentities($orders, ENT_QUOTES, "UTF-8");
 		
@@ -340,9 +341,11 @@ class TransactionController extends Controller {
 
                                 $phiVanchuyen =  ProcessText::getConfig('dataVC');
 
+                                $kmphiVanchuyen =  ProcessText::getConfig('dataKMVC');
+
                                 $khuyenMai = ProcessText::getKhuyenMai($idTransaction->sub_total); //55000;
 
-                                $end_total = ($idTransaction->sub_total + $phiMuaho + $phiVanchuyen) - $khuyenMai;
+                                $end_total = ($idTransaction->sub_total + $phiMuaho + $phiVanchuyen) - $kmphiVanchuyen - $khuyenMai;
 
                                 Transaction::where('id', $idTransaction->id)->update(
                                     array(

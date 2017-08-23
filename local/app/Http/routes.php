@@ -35,6 +35,7 @@ Route::group(['middleware' => ['web']], function () {
     Route::post('/settVanchuyen',['as'       =>'settVanchuyen','uses' => 'HomeController@settVanchuyen']);
     Route::post('/settQD',['as'       =>'settQD','uses' => 'HomeController@settQD']);
     Route::post('/settHT',['as'       =>'settHT','uses' => 'HomeController@settHT']);
+    Route::post('/settKMVC',['as'       =>'settKMVC','uses' => 'HomeController@settKMVC']);
 
     // test pdf
     Route::get('doPdf', 'HomeController@doPdf');

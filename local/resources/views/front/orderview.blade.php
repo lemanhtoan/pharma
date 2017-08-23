@@ -41,23 +41,28 @@ if ( !Auth::check() ) {
 
             <div class="box-summary">
                 <h3>Tóm tắt đơn hàng:</h3>
-                <div class="row-even">
+                 <div class="row-even">
                     <div class="row-label">Tổng giá trị hàng hóa</div>
                     <div class="row-value"> <?php echo number_format($dataTransaction->sub_total);?></div>
                 </div>
                 <div class="row-old">
-                    <div class="row-label">Phí mua hộ</div>
-                    <div class="row-value"><?php echo number_format($dataTransaction->buyer_cost);?></div>
-                </div>
-                <div class="row-even">
-                    <div class="row-label">Vận chuyển</div>
-                    <div class="row-value"><?php echo number_format($dataTransaction->shipping_cost);?></div>
-                </div>
-                <div class="row-old">
-                    <div class="row-label">Khuyến mãi</div>
+                    <div class="row-label">Chiết khấu</div>
                     <div class="row-value"><?php echo number_format($dataTransaction->cost_discount);?></div>
                 </div>
                 <div class="row-even">
+                    <div class="row-label">Phí mua hộ</div>
+                    <div class="row-value"><?php echo number_format($dataTransaction->buyer_cost);?></div>
+                </div>
+                <div class="row-old">
+                    <div class="row-label">Vận chuyển</div>
+                    <div class="row-value"><?php echo number_format($dataTransaction->shipping_cost);?></div>
+                </div>
+                <div class="row-even">
+                    <div class="row-label">KM vận chuyển</div>
+                    <?php $dataKMVC = DB::table('settings')->where('name', 'dataKMVC')->select('content')->get()[0]; ?>
+                    <div class="row-value"><?php echo number_format($dataKMVC->content);?></div>
+                </div>
+                <div class="row-old">
                     <div class="row-label"><b class="capt">Tổng</b></div>
                     <div class="row-value"><b class="red"><?php echo number_format($dataTransaction->end_total);?></b></div>
                 </div>
@@ -88,8 +93,8 @@ if ( !Auth::check() ) {
                         ?></td>
                     <td><?php echo $drug->qty ?></td>
                     <td>
-                        <?php if ($drug->type=="discount"):?><p>Giá ưu đãi: <?php echo ($drug->price)/($drug->qty) ?></p><?php endif;?>
-                        <?php if ($drug->type=="root"):?><p>Giá thường: <?php echo ($drug->price)/($drug->qty) ?></p><?php endif;?>
+                        <?php if ($drug->type=="discount"):?><p>Giá ưu đãi: <?php echo number_format(($drug->price)/($drug->qty)) ?></p><?php endif;?>
+                        <?php if ($drug->type=="root"):?><p>Giá thường: <?php echo number_format(($drug->price)/($drug->qty)) ?></p><?php endif;?>
                     </td>
                     <td><?php echo number_format($drug->price) ?></td>
                 </tr>

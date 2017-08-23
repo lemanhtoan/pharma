@@ -599,6 +599,8 @@
     }
     h3.title-product {
         min-height: 35px;
+        max-height: 35px;
+        overflow: hidden;
     }
     h4.modal-title {
         margin-bottom: 10px;

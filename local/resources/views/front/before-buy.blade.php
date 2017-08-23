@@ -40,15 +40,7 @@ if ( !Auth::check() ) {
                         <div class="row-value"> <?php echo number_format($priceTotal);?></div>
                     </div>
                     <div class="row-old">
-                        <div class="row-label">Phí mua hộ</div>
-                        <div class="row-value"><?php echo number_format($muaho);?></div>
-                    </div>
-                    <div class="row-even">
-                        <div class="row-label">Vận chuyển</div>
-                        <div class="row-value"><?php echo number_format($vanchuyen);?></div>
-                    </div>
-                    <div class="row-old">
-                        <div class="row-label">Khuyến mãi</div>
+                        <div class="row-label">Chiết khấu</div>
                         <div class="row-value">
 
                             <?php echo number_format($khuyenmai);?>
@@ -56,8 +48,24 @@ if ( !Auth::check() ) {
                         </div>
                     </div>
                     <div class="row-even">
+                        <div class="row-label">Phí mua hộ</div>
+                        <div class="row-value"><?php echo number_format($muaho);?></div>
+                    </div>
+                    <div class="row-old">
+                        <div class="row-label">Vận chuyển</div>
+                        <div class="row-value"><?php echo number_format($vanchuyen);?></div>
+                    </div>
+                    <div class="row-event">
+                        <div class="row-label">KM vận chuyển</div>
+                        <div class="row-value">
+
+                            <?php echo number_format($kmvanchuyen);?>
+
+                        </div>
+                    </div>
+                    <div class="row-old">
                         <div class="row-label"><b class="capt">Tổng</b></div>
-                        <div class="row-value"><b class="red"><?php echo number_format($priceTotal);?></b></div>
+                        <div class="row-value"><b class="red"><?php echo number_format( ($priceTotal+$muaho+$vanchuyen)-($khuyenmai+$kmvanchuyen) );?></b></div>
                     </div>
                 </div>
                 <div class="col-md-6">
