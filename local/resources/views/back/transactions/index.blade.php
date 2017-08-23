@@ -219,6 +219,10 @@
     <div class="pull-right link">{!! $links !!}</div>
   </div>
 
+
+  <div id="divLoading"> </div>
+
+
   <?php else: ?>
   <h4>Danh sách rỗng</h4>
   <?php endif;?>
@@ -239,6 +243,9 @@
 
         // print
         $('#printOrder').click(function(){
+            
+            $("div#divLoading").addClass('show');
+
             // change status validation
             var checkboxValues = [];
             $('input[name="case[]"]:checked').each(function(index, elem) {
@@ -259,6 +266,7 @@
                     type: 'GET'
                 })
                 .done(function(response) {
+                   $("div#divLoading").removeClass('show');
                     window.open(
                         '<?php echo $urlRedirect; ?>' + "?dataChoise=" + dataChoise,
                         '_blank' // <- This is what makes it open in a new window.
@@ -447,6 +455,25 @@
     }
     .btn-green:hover {
       color: #fff;
+    }
+    #divLoading
+    {
+        display : none;
+    }
+    #divLoading.show
+    {
+        display : block;
+        position : fixed;
+        z-index: 100;
+        background-image : url('http://loadinggif.com/images/image-selection/3.gif');
+        background-color:#666;
+        opacity : 0.4;
+        background-repeat : no-repeat;
+        background-position : center;
+        left : 0;
+        bottom : 0;
+        right : 0;
+        top : 0;
     }
   </style>
 

@@ -164,6 +164,10 @@
     </div>
 
   {!! Form::close() !!}
+
+
+  <div id="divLoading"> </div>
+
 @stop
 
 @section('scripts')
@@ -174,6 +178,9 @@
 
     // print
     $('#btnPrintSend').click(function(){
+
+        $("div#divLoading").addClass('show');
+
           // ajax call
           var token = $('input[name="_token"]').val();
           var dataChoise = $('.idPrint').val();
@@ -182,6 +189,7 @@
               type: 'GET'
           })
           .done(function(response) {
+            $("div#divLoading").removeClass('show');
               window.open(
                   '<?php echo $urlRedirect; ?>' + "?dataChoise=" + dataChoise,
                   '_blank'
@@ -265,6 +273,25 @@
   .btn-green:hover {
     color: #fff;
   }
+  #divLoading
+    {
+        display : none;
+    }
+    #divLoading.show
+    {
+        display : block;
+        position : fixed;
+        z-index: 100;
+        background-image : url('http://loadinggif.com/images/image-selection/3.gif');
+        background-color:#666;
+        opacity : 0.4;
+        background-repeat : no-repeat;
+        background-position : center;
+        left : 0;
+        bottom : 0;
+        right : 0;
+        top : 0;
+    }
 </style>
 
 @stop
