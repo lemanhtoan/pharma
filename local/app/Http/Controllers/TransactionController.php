@@ -369,7 +369,7 @@ class TransactionController extends Controller {
             $dataIdpharmacie = $this->getCustomerData($item->user_id)['pharmacieId'];
             $arrItem['Quận / Huyện'] = $this->getPharmacieData($dataIdpharmacie)['district'];
             $arrItem['Tỉnh / TP'] =  $this->getPharmacieData($dataIdpharmacie)['province'];
-            $arrItem['Nhà vận chuyển'] = $item->shipping_method;
+            $arrItem['Nhà vận chuyển'] = $this->getSendTranData($item->id)['shipping_method'];
             $arrItem['Mã vận đơn'] = $this->getSendTranData($item->id)['code_send'];
             $arrItem['SL thùng'] = $this->getSendTranData($item->id)['qty_box'];
             $arrItem['Tiền thu hộ (COD)'] = (float)$item->buyer_cost;

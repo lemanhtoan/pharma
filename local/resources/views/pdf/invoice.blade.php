@@ -137,7 +137,7 @@
     </div>
 
     <?php endforeach; ?>
-
+<?php die('ok')?>
 </body>
 
 </html>
