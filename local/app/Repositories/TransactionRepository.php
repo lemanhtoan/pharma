@@ -9,7 +9,7 @@ use App\Models\Province;
 use App\Models\District;
 use App\Models\TransactionDrug;
 use App\Models\Mind;
-
+use App\Models\Shipping;
 
 use App\Helpers\ProcessText;
 
@@ -139,9 +139,9 @@ class TransactionRepository extends BaseRepository {
         $kmvanchuyen =  ProcessText::getConfig('dataKMVC');
 
         // get transction subtotal
-        $khuyenMai = ProcessText::getKhuyenMai($post->sub_total);
-
-        return compact('post', 'tran_drugs', 'drugs', 'phiMuaho', 'phiVanchuyen', 'khuyenMai', 'kmvanchuyen');
+        $khuyenMai = ProcessText::getKhuyenMai($post->sub_total, $post->user_id);
+        $shippings = Shipping::orderby('name', 'asc')->get();
+        return compact('post', 'tran_drugs', 'drugs', 'phiMuaho', 'phiVanchuyen', 'khuyenMai', 'kmvanchuyen', 'shippings');
     }
 
     public function edit($post)
@@ -228,7 +228,7 @@ class TransactionRepository extends BaseRepository {
         $phiVanchuyen =  ProcessText::getConfig('dataVC');
         $kmphiVanchuyen =  ProcessText::getConfig('dataKMVC');
         
-        $khuyenMai = ProcessText::getKhuyenMai($caclSubPrice); //55000;
+        $khuyenMai = ProcessText::getKhuyenMai($caclSubPrice, $mindData->user_id); //55000;
         $post->end_total = ($caclSubPrice + $phiMuaho + $phiVanchuyen) - $khuyenMai - $kmphiVanchuyen;
 
         $post->address = $inputs['address'];

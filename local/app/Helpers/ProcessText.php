@@ -1,10 +1,20 @@
 <?php
 namespace App\Helpers;
 use App\Models\Discount;
+use App\Models\Transaction;
 use App\Settings;
+use App\Models\Customer;
 
 class ProcessText {
-
+    static function checkUserAdmin(){
+        $userId = \Auth::user()->id;
+        $dataUser = Customer::where('id', $userId)->first();
+        if(count($dataUser) && $dataUser->isRole == 'administrator') {
+            return true;
+        } else {
+            return false;
+        }
+    }
 	static function getConfig($slug) {
 		$value = '';
 		$query = \DB::table('settings')->where('name', $slug)->select('content')->first();
@@ -14,20 +24,36 @@ class ProcessText {
 		return $value;
 	}
 
-	static function getKhuyenMai($total) {
-		$discountDb  = Discount::where('from','<=', $total)->where('to','>', $total)->orderBy('level', 'desc')->first();
-		if (count($discountDb)) { 
-			if ($discountDb->type == 'Cố định'){
-				$discountValue = $discountDb->value;
-			} else {
-				$discountValue = floor(((int)($total * $discountDb->value) / 100));
-			}
-		} else {
-			$discountValue = Settings::where('name', 'dataDiscount')->get(['content'])->first()->content;
-		}
+	static function getKhuyenMai($total, $userId) {
+	    // check group customer
+        $checkTran = Transaction::where('user_id', $userId)->where('status','=', 'Hoàn thành')->get();
+        if(count($checkTran) && count($checkTran) > 3) { // kh 1
+            $discountValue = 0;
+        } else {
+            $discountDb  = Discount::where('from','<=', $total)->where('to','>', $total)->orderBy('level', 'desc')->first();
+            if (count($discountDb)) {
+                if ($discountDb->type == 'Cố định'){
+                    $discountValue = $discountDb->value;
+                } else {
+                    $discountValue = floor(((int)($total * $discountDb->value) / 100));
+                }
+            } else {
+                $discountValue = Settings::where('name', 'dataDiscount')->get(['content'])->first()->content;
+            }
+        }
 
 		return $discountValue;
 	}
+
+    static function getUserType($userId) {
+        // check group customer
+        $checkTran = Transaction::where('user_id', $userId)->where('status','=', 'Hoàn thành')->get();
+        if(count($checkTran) && count($checkTran) > 3) { // kh 1
+            return 'KH 1';
+        } else {
+            return 'KH 2';
+        }
+    }
 
 
 	function stripUnicode($str){

@@ -10,6 +10,9 @@ use App\Models\Drug;
 
 use App\Models\Mind_Drug;
 
+
+use App\Helpers\ProcessText;
+
 use Excel;
 
 class MindController extends Controller {
@@ -70,11 +73,18 @@ class MindController extends Controller {
 	public function __construct(
 		MindRepository $mind_gestion)
 	{
-		$this->mind_gestion = $mind_gestion;
-		$this->nbrPages = 10;
+        if(ProcessText::checkUserAdmin()) {
 
-		$this->middleware('redac', ['except' => ['indexFront', 'show']]);
-		$this->middleware('ajax', ['only' => ['updateActive']]);
+            $this->mind_gestion = $mind_gestion;
+            $this->nbrPages = 10;
+
+            $this->middleware('redac', ['except' => ['indexFront', 'show']]);
+            $this->middleware('ajax', ['only' => ['updateActive']]);
+            
+        } else {
+            return redirect('auth/login');
+        }
+
 	}	
 
 	public function indexFront()

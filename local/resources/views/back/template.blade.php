@@ -48,7 +48,7 @@
                 @if(session('statut') == 'admin')
                     {!! link_to_route('admin', 'Trang quản trị', [], ['class' => 'navbar-brand']) !!}
                 @else
-                    {!! link_to_route('blog.index', trans('back/admin.redaction'), [], ['class' => 'navbar-brand']) !!}
+                    {!! link_to_route('/', trans('back/admin.redaction'), [], ['class' => 'navbar-brand']) !!}
                 @endif
             </div>
             <!-- Menu  -->
@@ -111,6 +111,9 @@
                                 <a href="{!! url('getsettings') !!}"><span class="fa fa-fw fa-dashboard"></span> Cấu hình khác</a>
                             </li>
 
+                            <li {!! classActiveSegment(1, 'shipping') !!}>
+                                <a href="{!! url('shipping') !!}"><span class="fa fa-fw fa-dashboard"></span> Nhà vận chuyển</a>
+                            </li>
                         @endif
                     </ul>
                 </div>

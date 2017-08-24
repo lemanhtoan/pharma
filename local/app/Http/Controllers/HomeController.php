@@ -513,7 +513,7 @@ class HomeController extends Controller
         $dataUser = Customer::whereId($user)->firstOrFail();
         $priceTotal = $data['countRootTotalPrice'];
 
-        $khuyenmai = ProcessText::getKhuyenMai($priceTotal);
+        $khuyenmai = ProcessText::getKhuyenMai($priceTotal, $user);
         $muaho = ProcessText::getConfig('dataKM');
         $vanchuyen =  ProcessText::getConfig('dataVC');
         $kmvanchuyen =  ProcessText::getConfig('dataKMVC');
@@ -585,13 +585,13 @@ class HomeController extends Controller
         $transction->buyer_cost = $phiMuaho;
         $transction->shipping_cost = $phiVanchuyen;
 
-        $transction->cost_discount = ProcessText::getKhuyenMai($data['countRootTotalPrice']);
+        $transction->cost_discount = ProcessText::getKhuyenMai($data['countRootTotalPrice'], $data['user_id']);
 
         $transction->before_total = $data['countRootTotalPrice'];
         $transction->before_pay = $data['countRootTotalPrice'];
 
 
-        $transction->end_total = ($data['countRootTotalPrice'] + $phiMuaho + $phiVanchuyen) - $kmphiVanchuyen - ProcessText::getKhuyenMai($data['countRootTotalPrice']);
+        $transction->end_total = ($data['countRootTotalPrice'] + $phiMuaho + $phiVanchuyen) - $kmphiVanchuyen - ProcessText::getKhuyenMai($data['countRootTotalPrice'], $data['user_id']);
         $transction->countQty = $data['countQty'];
         $transction->save();
 

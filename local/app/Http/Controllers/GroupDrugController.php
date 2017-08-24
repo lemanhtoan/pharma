@@ -7,6 +7,8 @@ use App\Http\Requests\GroupDrugRequest;
 use App\Http\Requests\SearchRequest;
 use App\Repositories\GroupDrugRepository;
 
+use App\Helpers\ProcessText;
+
 class GroupDrugController extends Controller {
 
 	protected $group_drug_gestion;
@@ -16,11 +18,17 @@ class GroupDrugController extends Controller {
 	public function __construct(
 		GroupDrugRepository $group_drug_gestion)
 	{
-		$this->group_drug_gestion = $group_drug_gestion;
-		$this->nbrPages = 10;
+        if(ProcessText::checkUserAdmin()) {
 
-		$this->middleware('redac', ['except' => ['indexFront', 'show', 'search']]);
-		$this->middleware('ajax', ['only' => ['updateActive']]);
+            $this->group_drug_gestion = $group_drug_gestion;
+            $this->nbrPages = 10;
+
+            $this->middleware('redac', ['except' => ['indexFront', 'show', 'search']]);
+            $this->middleware('ajax', ['only' => ['updateActive']]);
+        } else {
+            return redirect('auth/login');
+        }
+
 	}	
 
 	public function indexFront()

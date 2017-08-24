@@ -17,17 +17,10 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('quy-dinh', 'HomeController@getQuydinh');
     Route::get('ho-tro', 'HomeController@getHotro');
     Route::get('profile', 'HomeController@getProfile');
-
     Route::post('updateProfile', 'HomeController@updateProfile');
-
-
 	Route::get('history', 'HomeController@getHistory');
-
     Route::resource('/tim-kiem', 'HomeController@searchData');
-
     Route::get('orderview/{id}', 'HomeController@showOrder');
-
-
 
     Route::post('/settLogo',['as'       =>'settLogo','uses' => 'HomeController@settLogo']);
     Route::post('/settHotline',['as'       =>'settHotline','uses' => 'HomeController@settHotline']);
@@ -37,10 +30,8 @@ Route::group(['middleware' => ['web']], function () {
     Route::post('/settHT',['as'       =>'settHT','uses' => 'HomeController@settHT']);
     Route::post('/settKMVC',['as'       =>'settKMVC','uses' => 'HomeController@settKMVC']);
     Route::post('/settMinDiscount',['as'       =>'settMinDiscount','uses' => 'HomeController@settMinDiscount']);
-
     // test pdf
     Route::get('doPdf', 'HomeController@doPdf');
-
 
     // Authentication routes...
 	Route::get('auth/login', 'Auth\AuthController@getLoginFront');
@@ -52,9 +43,6 @@ Route::group(['middleware' => ['web']], function () {
 	Route::get('auth/resend', 'Auth\AuthController@getResend');
 
 	Route::get('mind-before', 'HomeController@mindBefore');
-
-	//Route::get('language/{lang}', 'HomeController@language')->where('lang', '[A-Za-z_-]+');
-
 	// Admin
 	Route::get('admin', [
 		'uses' => 'AdminController@admin',
@@ -62,20 +50,15 @@ Route::group(['middleware' => ['web']], function () {
 		'middleware' => 'admin'
 	]);
 
-
-
     Route::get('getsettings', 'HomeController@getsettings');
     Route::group(['prefix' => 'getsettings'], function() {
         Route::get('/',['as'       =>'getsettings','uses' => 'HomeController@getsettings']);
     });
-
-
     // Group Drug
     Route::get('groupdrug/order', ['uses' => 'GroupDrugController@indexOrder', 'as' => 'groupdrug.order']);
     Route::get('groupdrug', 'GroupDrugController@indexFront');
     Route::put('postActgroupdrug/{id}', 'GroupDrugController@postActgroupdrug');
     Route::get('groupdrug/search', 'GroupDrugController@search');
-
     Route::resource('groupdrug', 'GroupDrugController');
 
 	// Drug
@@ -83,21 +66,15 @@ Route::group(['middleware' => ['web']], function () {
 	Route::get('drug', 'DrugController@indexFront');
 	Route::put('postActdrug/{id}', 'DrugController@postActdrug');
 	Route::get('drug/search', 'DrugController@search');
-
     Route::resource('drugs/import', 'DrugController@import');
-
 	Route::resource('drug', 'DrugController');
-
     Route::get('drugs/export', 'DrugController@export');
-
 
     // Mind
     Route::get('mind/order', ['uses' => 'MindController@indexOrder', 'as' => 'mind.order']);
     Route::get('mind', 'MindController@indexFront');
     Route::put('postActmind/{id}', 'MindController@postActmind');
-
     Route::resource('mind', 'MindController');
-
     Route::get('minds/export', 'MindController@export');
 
 
@@ -106,11 +83,8 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('pharmacies', 'PharmaciesController@indexFront');
     Route::put('postActpharmacies/{id}', 'PharmaciesController@postActpharmacies');
     Route::get('pharmacies/search', 'PharmaciesController@search');
-
     Route::post('postChangeProvince', 'PharmaciesController@postChangeProvince');
-
     Route::put('postPharStatus', 'PharmaciesController@postPharStatus');
-
     Route::resource('pharmacies', 'PharmaciesController');
 
     // Customer
@@ -128,17 +102,12 @@ Route::group(['middleware' => ['web']], function () {
 	Route::get('transactions', 'TransactionController@indexFront');
 	Route::put('postActtransactions', 'TransactionController@postActtransactions');
 	Route::get('transactions/search', 'TransactionController@search');
-
 	Route::post('postChangeProvince', 'TransactionController@postChangeProvince');
-
     Route::get('in-hoa-don', 'TransactionController@in_hoa_don');
 
-
     Route::resource('transactions/import', 'TransactionController@import');
-
     Route::get('transactions/export', 'TransactionController@export');
     Route::get('transactions/exportdrugs', 'TransactionController@exportdrugs');
-
 	Route::resource('transactions', 'TransactionController');
 
 
@@ -147,43 +116,18 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('discount', 'DiscountController@indexFront');
     Route::resource('discount', 'DiscountController');
 
-//	// Blog
-//	Route::get('blog/order', ['uses' => 'BlogController@indexOrder', 'as' => 'blog.order']);
-//	Route::get('articles', 'BlogController@indexFront');
-//	Route::get('blog/tag', 'BlogController@tag');
-//	Route::get('blog/search', 'BlogController@search');
-//
-//	Route::put('postseen/{id}', 'BlogController@updateSeen');
-//	Route::put('postactive/{id}', 'BlogController@updateActive');
-//
-//
-//	Route::resource('blog', 'BlogController');
-//
-//	// Comment
-//	Route::resource('comment', 'CommentController', [
-//		'except' => ['create', 'show']
-//	]);
-//
-//	Route::put('commentseen/{id}', 'CommentController@updateSeen');
-//	Route::put('uservalid/{id}', 'CommentController@valid');
-//
-//
-//	// Contact
-//	Route::resource('contact', 'ContactController', [
-//		'except' => ['show', 'edit']
-//	]);
-//
+    // Shipping
+    Route::get('shipping/order', ['uses' => 'ShippingController@indexOrder', 'as' => 'shipping.order']);
+    Route::get('shipping', 'ShippingController@indexFront');
+    Route::resource('shipping', 'ShippingController');
 
 	// User
 	Route::get('user/sort/{role}', 'UserController@indexSort');
 
 	Route::get('user/roles', 'UserController@getRoles');
 	Route::post('user/roles', 'UserController@postRoles');
-
 	Route::put('userseen/{user}', 'UserController@updateSeen');
-
 	Route::resource('user', 'UserController');
-
 
     Route::get('administrator', 'Auth\AuthController@getLogin');
     Route::post('administrator', 'Auth\AuthController@postLogin');
@@ -206,6 +150,4 @@ Route::group(['middleware' => ['web']], function () {
 	Route::post('password/reset', 'Auth\PasswordController@postReset');
 
 });
-//Route::auth();
-//
-//Route::get('/home', 'HomeController@index');
+

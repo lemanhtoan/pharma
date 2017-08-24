@@ -8,6 +8,8 @@ use App\Repositories\DiscountRepository;
 use App\Models\Pharmacies;
 use App\Models\UserLog;
 
+use App\Helpers\ProcessText;
+
 class DiscountController extends Controller {
 
 	protected $discount_gestion;
@@ -17,10 +19,15 @@ class DiscountController extends Controller {
 	public function __construct(
 		DiscountRepository $discount_gestion)
 	{
-		$this->discount_gestion = $discount_gestion;
-		$this->nbrPages = 10;
+        if(ProcessText::checkUserAdmin()) {
+            $this->discount_gestion = $discount_gestion;
+            $this->nbrPages = 10;
 
-		$this->middleware('redac', ['except' => ['indexFront', 'show', 'search']]);
+            $this->middleware('redac', ['except' => ['indexFront', 'show', 'search']]);
+        } else {
+            return redirect('auth/login');
+        }
+
 	}
 
 	public function indexFront()

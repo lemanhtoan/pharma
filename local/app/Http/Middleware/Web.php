@@ -15,7 +15,6 @@ class Web
      */
     public function handle($request, Closure $next)
     {
-
         if (Auth::guard('web')->guest()) {
 
             if ($request->ajax() || $request->wantsJson()) {

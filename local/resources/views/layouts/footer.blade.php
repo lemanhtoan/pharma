@@ -19,7 +19,7 @@
 
     // show - hide qty box
     jQuery('.btn-cart').click(function(){
-        $("div#divLoading").addClass('show');
+        //$("div#divLoading").addClass('show');
         var type_price = $(this).attr('data-type');
         if (type_price == 'type_discount') {
             // add to 1 and show input
@@ -73,7 +73,7 @@
 
     // DISCOUNT ADD
     $('.qty_discount.qty-add').click(function(e){
-        $("div#divLoading").addClass('show');
+        //$("div#divLoading").addClass('show');
         e.preventDefault();
         discountAdd(jQuery(this).attr('data-drug'), '');
         jQuery('.box-spprice').show();
@@ -175,7 +175,7 @@
                 $('.qty-'+$(this).attr('data-drug')).hide();
                 $('.btn-cart-'+$(this).attr('data-drug')).show();
 
-                setTimeout(function(){$("div#divLoading").removeClass('show');}, 2000);
+                //setTimeout(function(){$("div#divLoading").removeClass('show');}, 2000);
 
             }
         }
@@ -275,7 +275,7 @@
     }
 
     $(".qty-count").change(function(e) {
-        $("div#divLoading").addClass('show');
+        //$("div#divLoading").addClass('show');
         onchangeAdd($(this).attr('data-drug'), $(this).attr('data-type'));
     });
     // on change input qty
@@ -332,7 +332,7 @@
 
     // ROOT ADD
     $('.qty_root.qty-add').click(function(e){
-        $("div#divLoading").addClass('show');
+        //$("div#divLoading").addClass('show');
         e.preventDefault();
         rootAdd(jQuery(this).attr('data-drug'), '');
         jQuery('.box-spprice').show();
@@ -341,7 +341,7 @@
 
     // ROOT MINUS
     $(".qty_root.qty-minus").click(function(e) {
-        $("div#divLoading").addClass('show');
+        //$("div#divLoading").addClass('show');
         e.preventDefault();
         fieldName = $(this).attr('data-drug');
         var currentVal = parseInt($('.qty_root.qty-count-'+fieldName).val());
@@ -426,7 +426,7 @@
 
     // DISCOUNT MINUS
     $(".qty_discount.qty-minus").click(function(e) {
-        $("div#divLoading").addClass('show');
+        //$("div#divLoading").addClass('show');
         e.preventDefault();
         fieldName = $(this).attr('data-drug');
         var currentVal = parseInt($('.qty_discount.qty-count-'+fieldName).val());
@@ -497,7 +497,7 @@
         var result = confirm("Bạn có chắc xóa sản phẩm?");
         if (result) {
 
-            $("div#divLoading").addClass('show');
+            //$("div#divLoading").addClass('show');
             e.preventDefault();
             fieldName = $(this).attr('data-drug');
 

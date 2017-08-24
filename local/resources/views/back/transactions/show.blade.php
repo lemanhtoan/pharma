@@ -49,9 +49,8 @@
                       <label for="">Giao hàng bằng: </label>
                       <select class="form-control transaction_method_send" name="transaction_method">
                         <option value="">- Chọn nhà vận chuyển -</option>
-                          <?php $shipping_owners = Config::get('constants.shipping_owners'); ?>
-                          <?php foreach ($shipping_owners as $item) :?>
-                        <option value="<?php echo $item ?>"><?php echo $item ?></option>
+                          <?php foreach ($shippings as $item) :?>
+                        <option value="<?php echo $item->name ?>"><?php echo $item->name ?></option>
                           <?php endforeach; ?>
                       </select>
                     </div>
@@ -152,9 +151,10 @@
         <h4>Tóm tắt đơn hàng</h4>
         <div class="box-table">
           <p><label for="">Tổng giá trị hàng hóa</label><?php echo number_format($post->sub_total)?></p>
+        <p><label for="">Chiết khấu</label><?php echo number_format($khuyenMai)?></p>
           <p><label for="">Phí mua hộ</label><?php echo number_format($phiMuaho)?></p>
           <p><label for="">Phí vận chuyển</label><?php echo number_format($phiVanchuyen)?></p>
-          <p><label for="">Khuyến mãi</label><?php echo number_format($khuyenMai)?></p>
+          <p><label for="">KM vận chuyển</label><?php echo number_format($kmvanchuyen)?></p>
           <p><label for="">TỔNG</label><?php echo number_format($post->end_total)?></p>
           <p></p>
           <p><label for="">Đã thanh toán</label>0</p>

@@ -13,6 +13,8 @@ use File,Input,DB;
 
 use Excel;
 
+use App\Helpers\ProcessText;
+
 class DrugController extends Controller {
 
 	protected $drug_gestion;
@@ -22,11 +24,16 @@ class DrugController extends Controller {
 	public function __construct(
 		DrugRepository $drug_gestion)
 	{
-		$this->drug_gestion = $drug_gestion;
-		$this->nbrPages = 10;
+        if(ProcessText::checkUserAdmin()) {
+            $this->drug_gestion = $drug_gestion;
+            $this->nbrPages = 10;
 
-		$this->middleware('redac', ['except' => ['indexFront', 'show', 'search']]);
-		$this->middleware('ajax', ['only' => ['updateActive']]);
+            $this->middleware('redac', ['except' => ['indexFront', 'show', 'search']]);
+            $this->middleware('ajax', ['only' => ['updateActive']]);
+        } else {
+            return redirect('auth/login');
+        }
+
 	}
 
 	public function getGroupDrug($id) {

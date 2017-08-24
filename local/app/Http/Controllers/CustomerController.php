@@ -8,6 +8,7 @@ use App\Repositories\CustomerRepository;
 use App\Models\Pharmacies;
 use App\Models\UserLog;
 
+use App\Helpers\ProcessText;
 class CustomerController extends Controller {
 
 	protected $customer_gestion;
@@ -17,11 +18,14 @@ class CustomerController extends Controller {
 	public function __construct(
 		CustomerRepository $customer_gestion)
 	{
-		$this->customer_gestion = $customer_gestion;
-		$this->nbrPages = 10;
-
-		$this->middleware('redac', ['except' => ['indexFront', 'show', 'search']]);
-		$this->middleware('ajax', ['only' => ['updateActive']]);
+        if(ProcessText::checkUserAdmin()) { 
+            $this->customer_gestion = $customer_gestion;
+            $this->nbrPages = 10;
+            $this->middleware('redac', ['except' => ['indexFront', 'show', 'search']]);
+            $this->middleware('ajax', ['only' => ['updateActive']]);
+        } else {
+            return redirect('auth/login');
+        }
 	}	
 
 	public function indexFront()
@@ -42,38 +46,42 @@ class CustomerController extends Controller {
 
 	public function indexOrder(Request $request)
 	{
-        $posts = $this->customer_gestion->index(
-			10, 
-			$request->name,
-			$request->sens,
-            $request->search,
-            $request->s_status
-		);
-		
-		$links = $posts->appends([
-				'name' => $request->name, 
-				'sens' => $request->sens,
+        if(ProcessText::checkUserAdmin()) {
+            $posts = $this->customer_gestion->index(
+                10,
+                $request->name,
+                $request->sens,
+                $request->search,
+                $request->s_status
+            );
+
+            $links = $posts->appends([
+                'name' => $request->name,
+                'sens' => $request->sens,
                 'search' => $request->search,
                 's_status' => $request->s_status
-			]);
+            ]);
 
-		if($request->ajax()) {
-			return response()->json([
-				'view' => view('back.customer.table', compact('statut', 'posts'))->render(),
-				'links' => e($links->setPath('order')->render())
-			]);		
-		}
+            if ($request->ajax()) {
+                return response()->json([
+                    'view' => view('back.customer.table', compact('statut', 'posts'))->render(),
+                    'links' => e($links->setPath('order')->render())
+                ]);
+            }
 
-		$links->setPath('')->render();
+            $links->setPath('')->render();
 
-		$order = (object)[
-			'name' => $request->name, 
-			'sens' => 'sort-' . $request->sens			
-		];
+            $order = (object)[
+                'name' => $request->name,
+                'sens' => 'sort-' . $request->sens
+            ];
 
-		$pharmacies = Pharmacies::all();
-		$dataLog = \DB::table('user_logs')->orderBy('id', 'desc')->get();
-		return view('back.customer.index', compact('posts', 'links', 'order', 'pharmacies', 'dataLog'));
+            $pharmacies = Pharmacies::all();
+            $dataLog = \DB::table('user_logs')->orderBy('id', 'desc')->get();
+            return view('back.customer.index', compact('posts', 'links', 'order', 'pharmacies', 'dataLog'));
+        } else {
+
+        }
 	}
 
 	public function create()

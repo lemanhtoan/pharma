@@ -8,6 +8,8 @@ use App\Repositories\PharmaciesRepository;
 use App\Models\Province;
 use App\Models\District;
 
+use App\Helpers\ProcessText;
+
 class PharmaciesController extends Controller {
 
 	protected $pharmacies_gestion;
@@ -17,11 +19,18 @@ class PharmaciesController extends Controller {
 	public function __construct(
 		PharmaciesRepository $pharmacies_gestion)
 	{
-		$this->pharmacies_gestion = $pharmacies_gestion;
-		$this->nbrPages = 10;
+        if(ProcessText::checkUserAdmin()) {
 
-		$this->middleware('redac', ['except' => ['indexFront', 'show', 'search']]);
-		$this->middleware('ajax', ['only' => ['updateActive', 'postChangeProvince']]);
+            $this->pharmacies_gestion = $pharmacies_gestion;
+            $this->nbrPages = 10;
+
+            $this->middleware('redac', ['except' => ['indexFront', 'show', 'search']]);
+            $this->middleware('ajax', ['only' => ['updateActive', 'postChangeProvince']]);
+
+        } else {
+            return redirect('auth/login');
+        }
+
 	}
 
 	public function postPharStatus(Request $request){

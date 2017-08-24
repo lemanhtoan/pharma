@@ -28,11 +28,17 @@ class TransactionController extends Controller {
 	public function __construct(
 		TransactionRepository $transactions_gestion)
 	{
-		$this->transactions_gestion = $transactions_gestion;
-		$this->nbrPages = 10;
+        if(ProcessText::checkUserAdmin()) {
 
-		$this->middleware('redac', ['except' => ['indexFront', 'show', 'search']]);
-		$this->middleware('ajax', ['only' => ['updateActive', 'postChangeProvince']]);
+            $this->transactions_gestion = $transactions_gestion;
+            $this->nbrPages = 10;
+
+            $this->middleware('redac', ['except' => ['indexFront', 'show', 'search']]);
+            $this->middleware('ajax', ['only' => ['updateActive', 'postChangeProvince']]);
+        } else {
+            return redirect('auth/login');
+        }
+
 	}	
 
 	public function indexFront()
@@ -343,7 +349,7 @@ class TransactionController extends Controller {
 
                                 $kmphiVanchuyen =  ProcessText::getConfig('dataKMVC');
 
-                                $khuyenMai = ProcessText::getKhuyenMai($idTransaction->sub_total); //55000;
+                                $khuyenMai = ProcessText::getKhuyenMai($idTransaction->sub_total, $idTransaction->user_id); //55000;
 
                                 $end_total = ($idTransaction->sub_total + $phiMuaho + $phiVanchuyen) - $kmphiVanchuyen - $khuyenMai;
 

@@ -15,7 +15,6 @@ class Admin
      */
     public function handle($request, Closure $next)
     {
-
         if (Auth::guard('admin')->guest()) {
 
             if ($request->ajax() || $request->wantsJson()) {
