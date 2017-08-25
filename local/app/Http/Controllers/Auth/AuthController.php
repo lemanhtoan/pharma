@@ -47,7 +47,7 @@ class AuthController extends Controller
 	{
 		$logValue = $request->input('log');
 
-		$logAccess = filter_var($logValue, FILTER_VALIDATE_EMAIL) ? 'email' : 'phone';
+		$logAccess = 'phone';
 
         $throttles = in_array(
             ThrottlesLogins::class, class_uses_recursive(get_class($this))
@@ -130,18 +130,6 @@ class AuthController extends Controller
 				}
 			}
 		}
-
-		if ($logAccess == 'email') {
-			$data = \DB::table('customers')->where('email', $logValue)->first();
-			if (count ($data)) {
-				if ($data->status == '0') {
-					return redirect('/auth/login')
-						->with('error', 'Tài khoản của bạn sai thông tin hoặc đang bị khóa')
-						->withInput($request->only('log'));
-				}
-			}
-		}
-
 
 		if(!$auth->validate($credentials)) {
 			if ($throttles) {

@@ -293,7 +293,7 @@ function getQty($productId, $type)
             <!-- Modal content-->
             <div class="modal-content">
                 <div class="modal-header">
-                    {{--<button type="button" class="close" data-dismiss="modal"><img src="{!!url('/images/close.png')!!}" alt=""></button>--}}
+                    <button type="button" class="close" data-dismiss="modal"><img src="{!!url('/images/close.png')!!}" alt=""></button>
                     <h4 class="modal-title">Phiên tiếp theo sẽ mở vào:</h4>
                     <p><?php
                         $hour = date("h", strtotime($valueTime));
@@ -422,10 +422,11 @@ function getQty($productId, $type)
     <script type="text/javascript">
         // body load show mind modal
         $(window).on('load', function () {
-            $('#mindModal').modal({
-                backdrop: 'static',
-                keyboard: false
-            });
+            $('#mindModal').modal('show');
+//            $('#mindModal').modal({
+//                backdrop: 'static',
+//                keyboard: false
+//            });
         });
     </script>
 
@@ -437,7 +438,7 @@ function getQty($productId, $type)
             <!-- Modal content-->
             <div class="modal-content">
                 <div class="modal-header">
-                    {{--<button type="button" class="close" data-dismiss="modal"><img src="{!!url('/images/close.png')!!}" alt=""></button>--}}
+                    <button type="button" class="close" data-dismiss="modal"><img src="{!!url('/images/close.png')!!}" alt=""></button>
                     <h4 class="modal-title">Phiên tiếp theo sẽ mở vào:</h4>
                     <div class="modal-body">
                         <div class="modal-box">
@@ -453,10 +454,11 @@ function getQty($productId, $type)
     <script type="text/javascript">
         // body load show mind modal
         $(window).on('load', function () {
-            $('#mindModal').modal({
-                backdrop: 'static',
-                keyboard: false
-            });
+            $('#mindModal').modal('show');
+//            $('#mindModal').modal({
+//                backdrop: 'static',
+//                keyboard: false
+//            });
         });
     </script>
 
