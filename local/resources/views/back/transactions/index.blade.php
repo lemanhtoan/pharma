@@ -34,7 +34,7 @@
           <select class="form-control" name="s_mind_id">
             <option value="">Phiên giao dịch</option>
             <?php foreach($minds as $gd) { ?>
-            <option <?php if(isset($_GET['s_mind_id']) && $_GET['s_mind_id'] == $gd){echo 'selected';}else{echo '';} ?> value="<?php echo $gd['id']?>"><?php echo $gd['name']?></option>
+            <option <?php if(isset($_GET['s_mind_id']) && $_GET['s_mind_id'] == $gd['id']){echo 'selected';}else{echo '';} ?> value="<?php echo $gd['id']?>"><?php echo $gd['name']?></option>
             <?php   }  ?>
           </select>
 
@@ -42,7 +42,7 @@
             <option value="">Trạng thái</option>
               <?php $status = Config::get('constants.transaction_status'); ?>
               <?php foreach ($status as $item) :?>
-            <option <?php if(isset($_GET['s_customerGroup']) && $_GET['s_customerGroup'] == $item) {echo 'selected';} else {echo '';}?> value="<?php echo $item ?>"><?php echo $item ?></option>
+            <option <?php if(isset($_GET['s_status']) && $_GET['s_status'] == $item) {echo 'selected';} else {echo '';}?> value="<?php echo $item ?>"><?php echo $item ?></option>
               <?php endforeach; ?>
           </select>
         </div>
@@ -52,7 +52,7 @@
             <option value="">Nhóm khách hàng</option>
             <?php $customerType= Config::get('constants.customerType');?>
             <?php foreach($customerType as $gd) { ?>
-            <option <?php if(isset($_GET['s_status']) && $_GET['s_status'] == $gd){echo 'selected';}else{echo '';} ?> value="<?php echo $gd?>"><?php echo $gd?></option>
+            <option <?php if(isset($_GET['s_customerGroup']) && $_GET['s_customerGroup'] == $gd){echo 'selected';}else{echo '';} ?> value="<?php echo $gd?>"><?php echo $gd?></option>
             <?php   }  ?>
           </select>
 

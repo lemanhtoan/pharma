@@ -62,30 +62,30 @@ class TransactionRepository extends BaseRepository {
 
     public function search($n,$search, $s_mind_id, $customerGroup, $sStatus, $sProvince, $sDistrict)
     {
-        $query = $this->queryActiveWithUserOrderByDate();
-
+        $query = $this->model->select('*')->latest();//$this->queryActiveWithUserOrderByDate();
+//dd($query);
         $query->where(function($q) use ($search) {
-            $q->where('owner', 'like', "%$search%")
-                ->orWhere('address', 'like', "%$search%")
-                ->orWhere('phone', 'like', "%$search%");
+            $q->where('transactions.owner', 'like', "%$search%")
+                ->orWhere('transactions.address', 'like', "%$search%")
+                ->orWhere('transactions.phone', 'like', "%$search%");
         });
 
-//        $query->join('pharmacies', function($join)
-//        {
-//            $join->on('users.id', '=', 'contacts.user_id')
-//                ->where('contacts.user_id', '>', 5);
-//        });
-
         if($s_mind_id) {
-            $query->where('mind_is', '=', $s_mind_id);
+            $query->where('transactions.mind_id', '=', $s_mind_id);
         }
         if($sStatus =='0'){
-            $query->where('status', '=', "$sStatus");
+            $query->where('transactions.status', '=', "$sStatus");
         }
-        if($sStatus) $query->where('status', '=', "$sStatus");
-//        if($sProvince) $query->where('province', '=', "$sProvince");
+        if($sStatus) $query->where('transactions.status', '=', "$sStatus");
+//        if($sProvince) {
+//            $query->leftJoin('customers', 'customers.id', '=', 'transactions.user_id')->get(array('customers.id', 'customers.name'));
+//
+//            $query->leftJoin('pharmacies','customers.pharmacieId', '=', 'pharmacies.id')->get(array('pharmacies.province', 'pharmacies.code'));
+//
+//            $query->where('pharmacies.province', '=', "$sProvince");
+//        }
 //        if($sDistrict) $query->where('district', '=', "$sDistrict");
-        //echo $query->toSql();die;
+//        echo $query->toSql();die;
 
         return $query->paginate($n);
     }
