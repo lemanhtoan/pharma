@@ -27,7 +27,7 @@ class ProcessText {
 	static function getKhuyenMai($total, $userId) {
 	    // check group customer
         $checkTran = Transaction::where('user_id', $userId)->where('status','=', 'Hoàn thành')->get();
-        if(count($checkTran) && count($checkTran) > 3) { // kh 2
+        if(count($checkTran) && count($checkTran) >= 3) { // kh 2
             $discountValue = 0;
         } else {
             $discountDb  = Discount::where('from','<=', $total)->where('to','>', $total)->orderBy('level', 'desc')->first();
@@ -48,7 +48,7 @@ class ProcessText {
     static function getUserType($userId) {
         // check group customer
         $checkTran = Transaction::where('user_id', $userId)->where('status','=', 'Hoàn thành')->get();
-        if(count($checkTran) && count($checkTran) > 3) { // kh 2
+        if(count($checkTran) && count($checkTran) >= 3) { // kh 2
             return 'KH 2';
         } else {
             return 'KH 1';
