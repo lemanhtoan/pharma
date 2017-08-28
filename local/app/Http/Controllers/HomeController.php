@@ -434,6 +434,15 @@ class HomeController extends Controller
                 ->get();
             $isCheckMind = false;
             return view('front.index', compact('mind', 'drugs', 'nextMind', 'isCheckMind'));
+        } else {
+            $isCheckMind = true;
+            $drugs = array();
+            $nextMind = Mind::where('start_time', '>', date("Y-m-d H:i:s"))
+                ->where('status', '1')
+                ->orderBy('start_time', 'asc')
+                ->limit(1)
+                ->get();
+            return view('front.index', compact('mind', 'drugs', 'nextMind', 'isCheckMind'));
         }
 
     }
