@@ -42,6 +42,7 @@ function getQty($productId, $type)
 @extends('front.template-bar')
 
 @section('sidebar')
+    <?php if(!$isCheckMind):?>
     <div class="box-wd">
         <h4><span class="normal">Phiên giao dịch: </span>Ngày <?php echo date('d/m/Y'); ?></h4>
         <div class="box-content">
@@ -65,6 +66,7 @@ function getQty($productId, $type)
             <a class="btn-buy" href="checkout">Đặt hàng</a>
         </div>
     </div>
+    <?php endif;?>
 
     <?php  if (count($nextMind)) : $valueTime = $nextMind[0]->start_time; ?>
     <div class="box-wd home_list">
@@ -539,7 +541,7 @@ function getQty($productId, $type)
                     <?php else :?>
                     <span class="limit-product">&nbsp;</span>
                     <?php endif;?>
-                    <?php if ($drug['drugInfo']->status == '1') {?>
+                    <?php if ($drug['drugInfo']->status == '1' && $drug['drug_price'] > 0) {?>
 
                     <?php if ($drug['max_discount_qty'] > 0) {
                         $typePrice = 'type_discount';
@@ -563,7 +565,7 @@ function getQty($productId, $type)
                     <div class="qty-box qty-<?php echo $drug['drug_id'];?> type_discount" data-type="type_discount">
                         <span data-drug="<?php echo $drug['drug_id'];?>" data-type="type_discount"
                               class="qty_discount qty-minus qty-minus-<?php echo $drug['drug_id'];?>">-</span>
-                        <input value="<?php echo getQty($drug['drug_id'], 'discount');?>" name="qty_discount"
+                        <input onkeyup="this.value=this.value.replace(/[^\d]/,'')" value="<?php echo getQty($drug['drug_id'], 'discount');?>" name="qty_discount"
                                type="number" min="1" max="<?php echo $drug['max_discount_qty']; ?>"
                                data-drug="<?php echo $drug['drug_id'];?>" data-type="type_discount"
                                class="type_discount no-spinners qty_discount qty-count qty-count-<?php echo $drug['drug_id'];?>"
@@ -576,7 +578,7 @@ function getQty($productId, $type)
                     <div class="qty-box qty-<?php echo $drug['drug_id'];?> type_root" data-type="type_root">
                         <span data-drug="<?php echo $drug['drug_id'];?>" data-type="type_root"
                               class="qty_root qty-minus qty-minus-<?php echo $drug['drug_id'];?>">-</span>
-                        <input max="<?php echo $drug['max_qty']; ?>" value="<?php echo getQty($drug['drug_id'], 'root');?>" name="qty_root" type="number"
+                        <input onkeyup="this.value=this.value.replace(/[^\d]/,'')" max="<?php echo $drug['max_qty']; ?>" value="<?php echo getQty($drug['drug_id'], 'root');?>" name="qty_root" type="number"
                                min="1" data-drug="<?php echo $drug['drug_id'];?>" data-type="type_root"
                                class="type_root no-spinners qty_root qty-count qty-count-<?php echo $drug['drug_id'];?>"
                                data-isload="<?php echo $isLoad?>"/>

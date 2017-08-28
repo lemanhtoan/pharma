@@ -521,17 +521,19 @@ class TransactionController extends Controller {
         $newData = array();
         $arrItem = array();
         foreach ($out as $item) {
-            $arrItem['Mã thuốc'] = $item['idDrug']['code'];
-            $arrItem['Tên thuốc'] = $item['idDrug']['name'];
-            $arrItem['Đơn vị buôn'] = $item['idDrug']['donvibuon'];
-            $arrItem['SL đặt'] = $item['infoMap']['sum'];
-            $arrItem['Đơn giá'] = (float)($item['infoPrice']);
-            $arrItem['Thành tiền'] = (float)($item['infoPrice']*$item['infoMap']['sum']);
-            $arrItem['Ghi chú'] = $item['idDrug']['note'];
-            $arrItem['SL đơn'] = $item['infoMap']['qtyInvoice'];
-            $arrItem['SL đặt nhỏ nhất'] = $item['infoMap']['min'];
-            $arrItem['SL đặt lớn nhất'] = $item['infoMap']['max'];
-            $newData[] = $arrItem;
+            if (($item['infoPrice']>0)) {
+                $arrItem['Mã thuốc'] = $item['idDrug']['code'];
+                $arrItem['Tên thuốc'] = $item['idDrug']['name'];
+                $arrItem['Đơn vị buôn'] = $item['idDrug']['donvibuon'];
+                $arrItem['SL đặt'] = $item['infoMap']['sum'];
+                $arrItem['Đơn giá'] = (float)($item['infoPrice']);
+                $arrItem['Thành tiền'] = (float)($item['infoPrice']*$item['infoMap']['sum']);
+                $arrItem['Ghi chú'] = $item['idDrug']['note'];
+                $arrItem['SL đơn'] = $item['infoMap']['qtyInvoice'];
+                $arrItem['SL đặt nhỏ nhất'] = $item['infoMap']['min'];
+                $arrItem['SL đặt lớn nhất'] = $item['infoMap']['max'];
+                $newData[] = $arrItem;
+            }
         }
         if (count($newData)) {
             Excel::create('Danh_Sach_Thuoc_Giao_Dich'.'_'.date('d-m-Y'), function($excel) use($newData) {
