@@ -298,6 +298,14 @@
             data: "type_add=" + dataType + "&product_id=" + fieldName + "&qty=" + qty_post + "&mind_id=" + mind_id + "&user_id=" + user_id + "&price=" + price + "&special_price=" + special_price + "&_token=" + token
         })
         .done(function(response) {
+            if (response.isRootPrice == '2') {
+                // qty > qty max discount
+                $('.qty_root.qty-count-'+fieldName).val(currentVal);
+                $('.qty_root.qty-minus').val("-").removeAttr('style');
+                if (response.message.errors) {
+                    alert(response.message.errors);
+                }
+            }
             if(response.isRootPrice != '1' && response.isAddRoot == '0') {
                 $('.qty_discount.qty-count-'+fieldName).val(parseInt($('.type_discount.qty-count-'+fieldName).val()));
                 $('.qty_discount.qty-minus').val("-").removeAttr('style');

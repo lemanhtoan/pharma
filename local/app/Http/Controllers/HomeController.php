@@ -1019,6 +1019,15 @@ class HomeController extends Controller
                         );
                     }
                 } else {
+                    $arrayProductRoot = array(
+                        'product_id' =>   $productId,
+                        'qty' =>   $qtyMaxAllow,
+                        'mind_id' =>   $mindId,
+                        'user_id' =>   $userId,
+                        'price' => $qtyMaxAllow * $price,
+                        'special_price' =>   0,
+                        'discount' => 0
+                    );
                     $isRootPrice = 2;
                     $result['errors'] = 'Vượt quá giới hạn sản phẩm được mua trong phiên (giới hạn: ' . $qtyMaxAllow. ' sản phẩm)';
                 }
