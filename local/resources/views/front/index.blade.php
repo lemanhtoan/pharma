@@ -63,7 +63,7 @@ function getQty($productId, $type)
                 </div>
             <p style="min-height: 20px">
             </p>
-            <a class="btn-buy" href="checkout">Đặt hàng</a>
+            <a class="btn-buy" id="btn_checkout" href="checkout">Đặt hàng</a>
         </div>
     </div>
     <?php endif;?>

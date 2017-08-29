@@ -142,7 +142,11 @@ class MindController extends Controller {
     public function getDrug($code) {
         $drug = Drug::where('code', $code)->first();
         if (count($drug)) {
-            return $drug->id;
+            if($drug->id != '0') {
+                return $drug->id;
+            } else {
+                return false;
+            }
         }
         return false;
     }
@@ -368,6 +372,8 @@ class MindController extends Controller {
             }
         } else {
             // update mind_drugs
+            //var_dump(count($drugKeepIds), count($getAllMindDrug));
+            //var_dump($request->all());
             $items = array();
             if ($request->has('drug_id') || (count($drugKeepIds) != count($getAllMindDrug)) ) {
                 if ($request->has('drug_id')) {
@@ -425,11 +431,16 @@ class MindController extends Controller {
 
                 $detail = Mind_Drug::where('mind_id',$id)->get();
                 foreach ($detail as $row) {
+                    //echo "<pre>"; var_dump(!in_array($row->id, $drugKeepIds), $row->id); echo "<hr>";
 
                     // not in keep id when edit => delete
                     if (!in_array($row->id, $drugKeepIds)) {
                         $dt = Mind_Drug::find($row->id);
                         $dt->delete();
+                    } else {
+                        // update when have change it
+                        Mind_Drug::where('id', $row->id)
+                            ->update(['drug_id' => $row->drug_id]);
                     }
 
                 }

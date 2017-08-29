@@ -8,6 +8,7 @@ use App\Models\Mind_Drug;
 use App\Models\Drug;
 use App\Models\Drug_img;
 use App\Models\Customer;
+use App\Models\Pharmacies;
 use App\Models\Transaction;
 use App\Models\TransactionDrug;
 
@@ -83,14 +84,13 @@ class HomeController extends Controller
             $currentPageSearchResults = $col->slice(($currentPage - 1) * $perPage, $perPage)->all();
             $drugs = new LengthAwarePaginator($currentPageSearchResults, count($col), $perPage, $currentPage,[ 'path' => LengthAwarePaginator::resolveCurrentPath()]);
 
-
-
             $nextMind = Mind::where('start_time', '>',  date("Y-m-d H:i:s") )
                 ->where('status', '1' )
                 ->orderBy('start_time', 'asc')
                 ->limit(1)
                 ->get();
             $isCheckMind = false;
+
             return view( 'front.index', compact('mind', 'drugs', 'nextMind', 'isCheckMind') );
         } else {
 
@@ -471,7 +471,8 @@ class HomeController extends Controller
         if (Auth::check()) {
             $user = Auth::user()->id;
             $content =  Customer::where('id', $user)->first();
-            return view( 'front.profile', compact('content') );
+            $dataAdd = Pharmacies::where('id', $content->pharmacieId)->first();
+            return view( 'front.profile', compact('content', 'dataAdd') );
         }
 
         return view( 'front.profile', compact('content') );
@@ -511,7 +512,11 @@ class HomeController extends Controller
 
 
     public function getDrugInfo($id) {
-        return Drug::whereId($id)->firstOrFail();
+        $drug = Drug::whereId($id)->first();
+        if (count($drug)) {
+            return $drug;
+        }
+        return array();
     }
 
     public function checkDrugQty($drugId, $mindId) {
@@ -575,7 +580,10 @@ class HomeController extends Controller
     public function getBeforeBuy() {
         $data = \Session::get('pharma.cartDataJson');
         if (Auth::check()) $user = Auth::user()->id;
-        $dataUser = Customer::whereId($user)->firstOrFail();
+        $dataUser = Customer::whereId($user)->first();
+
+        $dataAdd = Pharmacies::where('id', $dataUser->pharmacieId)->first();
+
         $priceTotal = $data['countRootTotalPrice'];
 
         $khuyenmai = ProcessText::getKhuyenMai($priceTotal, $user);
@@ -586,7 +594,7 @@ class HomeController extends Controller
         $mindId = $data['mind_id'];
         $mindMessage = Mind::whereId($mindId)->firstOrFail();
 
-        return view( 'front.before-buy', compact('data', 'dataUser', 'khuyenmai', 'mindMessage', 'muaho', 'vanchuyen', 'kmvanchuyen') );
+        return view( 'front.before-buy', compact('data', 'dataUser', 'khuyenmai', 'mindMessage', 'muaho', 'vanchuyen', 'kmvanchuyen', 'dataAdd') );
     }
 
     public function postProcessBuy(Request $request) {
@@ -900,7 +908,7 @@ class HomeController extends Controller
             $qtyMaxDiscount = (int)$qtyGetDb->max_discount_qty;
             $qtyMaxAllow = (int)$qtyGetDb->max_qty;
             if ($qtyMaxAllow == 0) {
-                $qtyMaxAllow = 1000000000; // no limit
+                $qtyMaxAllow = 5000; // no limit
             }
             $isRootPrice = 0;
             $isAddRoot = 0;
@@ -1129,8 +1137,11 @@ class HomeController extends Controller
     public function getDrugImage($id) {
         $data = array();
         $detail = Drug_img::where('drug_id',$id)->get();
-        foreach ($detail as $row) {
-            $data[] = $row;
+        if(count($detail)) {
+            foreach ($detail as $row) {
+                $data[] = $row;
+            }
+            return $data;
         }
         return $data;
     }

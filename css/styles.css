@@ -1010,14 +1010,16 @@ span.span.no-bg {
 }
 
 #mindModal .modal-content,
-#detailDrugModal .modal-content {
+#detailDrugModal .modal-content,
+#messageEmpty .modal-content{
     border: 3px solid rgb(23, 190, 155);
     box-shadow: none;
     -webkit-box-shadow: none;
 }
 
 #mindModal .close,
-#detailDrugModal .close {
+#detailDrugModal .close ,
+#messageEmpty .close {
     top: -7px;
     opacity: 1;
     position: absolute;
@@ -1025,11 +1027,13 @@ span.span.no-bg {
     z-index: 1000;
 }
 #mindModal .close img,
+#messageEmpty .close img,
 #detailDrugModal .close  img{
     width: 25px;
     min-height: inherit !important;
 }
-#mindModal .modal-body {
+#mindModal .modal-body,
+#messageEmpty .modal-body{
     padding: 0 15px 15px 15px;
 }
 

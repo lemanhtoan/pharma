@@ -1,3 +1,19 @@
+<!-- modal message product -->
+<div class="modal fade" id="messageEmpty"
+     role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <button type="button" class="close" data-dismiss="modal"><img src="{!!url('/images/close.png')!!}" alt=""></button>
+            <div class="modal-body">
+                <p&nbsp;</p><p>&nbsp;</p>
+                <h4 style="text-align: center">Bạn chưa chọn sản phẩm nào, vui lòng chọn sản phẩm.</h4>
+                <p>&nbsp;</p><p>&nbsp;</p>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end modal message product -->
+
 <footer>
     <div class="container">
         <div class="row">
@@ -16,6 +32,15 @@
     function formatNumber (num) {
         return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")
     }
+
+    // check alert before buy
+    jQuery('#btn_checkout').click(function(){
+       if (jQuery('.current-price').text() == '0') {
+//           alert('Bạn chưa chọn sản phẩm nào, vui lòng chọn sản phẩm.');
+           $('#messageEmpty').modal('show');
+           return false;
+       }
+    });
 
     // show - hide qty box
     jQuery('.btn-cart').click(function(){
@@ -298,6 +323,13 @@
             data: "type_add=" + dataType + "&product_id=" + fieldName + "&qty=" + qty_post + "&mind_id=" + mind_id + "&user_id=" + user_id + "&price=" + price + "&special_price=" + special_price + "&_token=" + token
         })
         .done(function(response) {
+            // hide button continue cart checkout
+            if(response.cartData.countQty == '0') {
+                $('.btn-sumit').hide();
+            }else {
+                $('.btn-sumit').show();
+            }
+
             if (response.isRootPrice == '2') {
                 // qty > qty max discount
                 $('.qty_root.qty-count-'+fieldName).val(currentVal);
@@ -305,11 +337,17 @@
                 if (response.message.errors) {
                     alert(response.message.errors);
                 }
+
             }
             if(response.isRootPrice != '1' && response.isAddRoot == '0') {
-                $('.qty_discount.qty-count-'+fieldName).val(parseInt($('.type_discount.qty-count-'+fieldName).val()));
-                $('.qty_discount.qty-minus').val("-").removeAttr('style');
-                $('.type_root.qty-'+fieldName).hide();
+                if (response.isRootPrice != '2') {
+                    $('.qty_discount.qty-count-' + fieldName).val(parseInt($('.type_discount.qty-count-' + fieldName).val()));
+                    $('.qty_discount.qty-minus').val("-").removeAttr('style');
+                    $('.type_root.qty-' + fieldName).hide();
+                } else {
+                    $('.type_root.qty-count-' + fieldName).val(response.cartData.countQty);
+                }
+
             } else if (response.isRootPrice == '1' && response.isAddRoot == '0') {
                 // qty > qty max discount
                 $('.qty_discount.qty-count-'+fieldName).val(parseInt($('.type_discount.qty-count-'+fieldName).val()));
@@ -373,6 +411,14 @@
                 data: "type_add=" + dataType + "&product_id=" + fieldName + "&qty=" + qty_post + "&mind_id=" + mind_id + "&user_id=" + user_id + "&price=" + price + "&special_price=" + special_price + "&_token=" + token
             })
             .done(function(response) {
+
+                // hide button continue cart checkout
+                if(response.cartData.countQty == '0') {
+                    $('.btn-sumit').hide();
+                }else {
+                    $('.btn-sumit').show();
+                }
+
                 $('.current-price').text(formatNumber(response.cartData.countRootTotalPrice));
                 $('.discount-price').text(formatNumber(response.cartData.countDiscount));
 
@@ -393,6 +439,14 @@
                 data: "type_add=" + dataType + "&product_id=" + fieldName + "&qty=" + qty_post + "&mind_id=" + mind_id + "&user_id=" + user_id + "&price=" + price + "&special_price=" + special_price + "&_token=" + token
             })
             .done(function(response) {
+
+                // hide button continue cart checkout
+                if(response.cartData.countQty == '0') {
+                    $('.btn-sumit').hide();
+                }else {
+                    $('.btn-sumit').show();
+                }
+
                 $('.current-price').text(formatNumber(response.cartData.countRootTotalPrice));
                 $('.discount-price').text(formatNumber(response.cartData.countDiscount));
 
@@ -458,6 +512,14 @@
                 data: "type_add=" + dataType + "&product_id=" + fieldName + "&qty=" + qty_post + "&mind_id=" + mind_id + "&user_id=" + user_id + "&price=" + price + "&special_price=" + special_price + "&_token=" + token
             })
             .done(function(response) {
+
+                // hide button continue cart checkout
+                if(response.cartData.countQty == '0') {
+                    $('.btn-sumit').hide();
+                }else {
+                    $('.btn-sumit').show();
+                }
+
                 $('.current-price').text(formatNumber(response.cartData.countRootTotalPrice));
                 $('.discount-price').text(formatNumber(response.cartData.countDiscount));
 
@@ -478,6 +540,14 @@
                 data: "type_add=" + dataType + "&product_id=" + fieldName + "&qty=" + qty_post + "&mind_id=" + mind_id + "&user_id=" + user_id + "&price=" + price + "&special_price=" + special_price + "&_token=" + token
             })
             .done(function(response) {
+
+                // hide button continue cart checkout
+                if(response.cartData.countQty == '0') {
+                    $('.btn-sumit').hide();
+                }else {
+                    $('.btn-sumit').show();
+                }
+
                 $('.current-price').text(formatNumber(response.cartData.countRootTotalPrice));
                 $('.discount-price').text(formatNumber(response.cartData.countDiscount));
 
@@ -531,21 +601,25 @@
                 $('.total-qty-cart').text(formatNumber(response.cartData.countQty));
 
                 // hide root qty box
-                if (dataType == 'type_root') {
-                    jQuery('.'+dataType+'.qty-'+fieldName).remove();
-                    if (jQuery('.type_discount.qty-'+fieldName).is(":visible") == false) {
-                        jQuery('.type_discount.tr-row-'+fieldName).remove();
-                    }
-                }
+//                if (dataType == 'type_root') {
+//                    jQuery('.'+dataType+'.qty-'+fieldName).remove();
+//                    if (jQuery('.type_discount.qty-'+fieldName).is(":visible") == false) {
+//                        jQuery('.type_discount.tr-row-'+fieldName).remove();
+//                        jQuery('.type_root.tr-row-'+fieldName).remove();
+//                    } else {
+//                        jQuery('.type_root.tr-row-'+fieldName).remove();
+//                    }
+                    window.location.href = window.location.href;
+//                }
 
-                if (dataType == 'type_discount') {
-                    jQuery('.'+dataType+'.qty-'+fieldName).remove();
-                    //if ()
-                    if (jQuery('.type_root.qty-'+fieldName).is(":visible") == false) {
-                        jQuery('.'+dataType+'.tr-row-'+fieldName).remove();
-                    }
-                    //jQuery('.'+dataType+'.tr-row-'+fieldName).remove();//window.location.href = window.location.href;
-                }
+//                if (dataType == 'type_discount') {
+//                    jQuery('.'+dataType+'.qty-'+fieldName).remove();
+//                    //if ()
+//                    if (jQuery('.type_root.qty-'+fieldName).is(":visible") == false) {
+//                        jQuery('.'+dataType+'.tr-row-'+fieldName).remove();
+//                    }
+//                    window.location.href = window.location.href;
+//                }
 
                 //setTimeout(function(){$("div#divLoading").removeClass('show');}, 2000);
             });

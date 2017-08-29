@@ -76,7 +76,7 @@ if ( !Auth::check() ) {
                         <h3>Thông tin giao hàng:</h3>
                         <ul>
                             <li>Người nhận: <span class="value_name"><?php echo $dataUser['name']?></span> </li>
-                            <li>Địa chỉ: <span class="value_address"><?php echo $dataUser['address']?></span></li>
+                            <li>Địa chỉ: <span class="value_address"><?php echo $dataAdd['address']?></span></li>
                             <li>Điện thoại: <span class="value_phone"><?php echo $dataUser['phone']?></span></li>
                         </ul>
                         <button type="button" data-target="#btnEditInfo" class="btn-green" id="btnEditInfo">Thêm/Sửa thông tin nhận hàng</button>
@@ -98,7 +98,7 @@ if ( !Auth::check() ) {
                                         </div>
                                         <div class="row">
                                             Địa chỉ: <br>
-                                            <input type="text"  class="post_address" value="<?php echo $dataUser['address']?>" name="customer_address" placeholder="Địa chỉ người nhận">
+                                            <input type="text"  class="post_address" value="<?php echo $dataAdd['address']?>" name="customer_address" placeholder="Địa chỉ người nhận">
                                         </div>
                                         <div class="row">
                                             Điện thoại: <br>

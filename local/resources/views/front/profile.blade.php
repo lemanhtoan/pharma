@@ -46,7 +46,7 @@ if ( !Auth::check() ) {
 		<div class="item-row">
 			<label for="log" class="control-label">Địa chỉ </label>
 			<input class="form-control" readonly="readonly
-			" placeholder="Địa chỉ" name="address" type="text" id="address" value="<?php if(isset($content)) {echo $content->address;}else{echo '';}?>">
+			" placeholder="Địa chỉ" name="address" type="text" id="address" value="<?php if(isset($dataAdd)) {echo $dataAdd->address;}else{echo '';}?>">
 		</div>
 
 		<div class="item-row">

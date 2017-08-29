@@ -139,7 +139,7 @@ if ( !Auth::check() ) {
     <?php if (isset($qtyTotal) && ($qtyTotal > 0)) :?>
     <div class="row">
         <div class="col-md-8 row-total col-xs-12">Tổng cộng: <b class="total-qty-cart"><?php echo $qtyTotal;?></b> sản phẩm: <b class="total-price-cart"><?php echo number_format($priceTotal);?>đ</b></div>
-        <div class="col-md-4 col-xs-12 button_continue"><a class="btn-continue pull-right" href="{!! url('before-buy') !!}">Tiếp tục</a></div>
+        <div class="col-md-4 col-xs-12 button_continue"><a class="btn-sumit btn-continue pull-right" href="{!! url('before-buy') !!}">Tiếp tục</a></div>
     </div>
     <?php endif; ?>
 
