@@ -181,7 +181,7 @@ class MindController extends Controller {
                 {
                     if(!empty($row))
                     {
-                        if ($this->getDrug($row['ma_thuoc']) != false) {
+                        if ($this->getDrug($row['ma_thuoc']) != false && $this->checkRootPrice($row['gia_goc'])) {
                             $dataArray[] =
                                 [
                                     'mind_id' => $post_id,
@@ -307,6 +307,15 @@ class MindController extends Controller {
 		return view('back.mind.edit',  $this->mind_gestion->edit($post));
 	}
 
+	public function checkRootPrice($price) {
+	    if ($price=="" || $price=="0") {
+	        return false;
+        }
+        if ($price < 0) {
+	        return false;
+        }
+        return true;
+    }
 	public function update(
         MindRequest $request,
 		$id)
@@ -327,7 +336,6 @@ class MindController extends Controller {
             {
                 config(['excel.import.startRow' => 3]);
             })->get();
-            //dd($data);
 
             $countError = 0;
 
@@ -337,7 +345,7 @@ class MindController extends Controller {
                 {
                     if(!empty($row))
                     {
-                        if ($this->getDrug($row['ma_thuoc']) != false) {
+                        if ($this->getDrug($row['ma_thuoc']) != false && $this->checkRootPrice($row['gia_goc'])) {
                             $dataArray[] =
                                 [
                                     'mind_id' => $id,
@@ -373,7 +381,7 @@ class MindController extends Controller {
         } else {
             // update mind_drugs
             //var_dump(count($drugKeepIds), count($getAllMindDrug));
-            //var_dump($request->all());
+            //echo "<pre>";var_dump($request->all()); die;
             $items = array();
             if ($request->has('drug_id') || (count($drugKeepIds) != count($getAllMindDrug)) ) {
                 if ($request->has('drug_id')) {

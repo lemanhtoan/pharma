@@ -274,6 +274,7 @@ function SaveTicket(id)
 	var id = $("#lblID" + id).html();
 	var tcktNo = appendDrug($("#txtTicketNo" + id).val());
 	var keepIdDel = $("#txtTicketNo" + id).val();
+
     var tcktValue = $("#txtTicketNo" + id).val();
 	var drugPrice = $("#drugPrice" + id).val();
 	if(drugPrice == '') {
@@ -349,6 +350,8 @@ function EditTicket(id)
 function UpdateTicket(id)
 {
 	var id = $("#lblID" + id).html();
+	var keepValue = $("#txtTicketNo" + id).val();
+	//console.log($("#txtTicketNo" + id).val(), keepValue);
 	var tcktNo = appendDrug($("#txtTicketNo" + id).val());//$("#txtTicketNo" + id).val();
     var tcktValue = $("#txtTicketNo" + id).val();
     var drugPrice = $("#drugPrice" + id).val();
@@ -362,8 +365,9 @@ function UpdateTicket(id)
     var drugQtyMax = $("#drugQtyMax" + id).val();
     var drugNote = $("#drugNote" + id).val();
 	$("#row" + id).remove();
+    //console.log($("#txtTicketNo" + id).val(), keepValue);
 	var tblRow = '<tr id="row' + id + '"> ' +
-        '<input type="hidden"   name="drug_id[]" value="'  + $("#txtTicketNo" + id).val() + '" />' +
+        '<input type="hidden"   name="drug_id[]" value="'  + keepValue + '" />' +
         '<input type="hidden"  name="drugPrice[]" value="'  + drugPrice + '" />' +
         '<input type="hidden"  name="drugSpecialPrice[]" value="'  + drugSpecialPrice + '" />' +
         '<input type="hidden" name="drugQtyMaxDiscount[]" value="'  + drugQtyMaxDiscount + '"/>' +
