@@ -10,7 +10,17 @@
 
 	@include('back.partials.entete', ['title' => 'Người dùng', 'icone' => 'pencil', 'fil' => link_to('customer', 'Người dùng') . ' / ' . 'Thêm mới'])
 
+
 	<div class="col-sm-12">
+
+		@if(session()->has('message'))
+			@include('partials/error', ['type' => 'danger', 'message' => session('message')])
+		@endif
+
+		@if(session()->has('success'))
+			@include('partials/error', ['type' => 'success', 'message' => session('success')])
+		@endif
+
 		@yield('form')
 		<div class="form-group">
 			{!! Form::label('Tên người dùng') !!} <em>*</em>

@@ -7,6 +7,15 @@
     @include('partials/error', ['type' => 'success', 'message' => session('ok')])
 	@endif
 
+
+  @if(session()->has('message'))
+    @include('partials/error', ['type' => 'danger', 'message' => session('message')])
+  @endif
+
+  @if(session()->has('success'))
+    @include('partials/error', ['type' => 'success', 'message' => session('success')])
+  @endif
+
   <div class="row col-lg-12">
     <div class="search-bar pull-left" style="margin-left: -15px">
       <!--search bar-->

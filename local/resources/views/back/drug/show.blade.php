@@ -5,6 +5,9 @@
 
   <div class="row col-lg-12 thuoc_info">
     <div class="col-md-6 thuoc_info1">
+      <p>
+        {!! link_to_route('drug.edit', 'Sửa', [$post->id], ['class' => 'edit-link']) !!}
+      </p>
       <p><b>Mã thuốc: </b> {{ $post->code }}</p>
       <p><b>Tên thuốc: </b> {{ $post->name }}</p>
       <p><b>Nhóm thuốc: </b>

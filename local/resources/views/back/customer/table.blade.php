@@ -37,6 +37,7 @@ function getLastLog($dataLog, $userID) {
       </div>
     </td>
     <td>
+      {!! link_to_route('customer.edit', 'Sửa', [$post->id], ['class' => 'btn btn-warning btn-block']) !!}
     {!! Form::open(['method' => 'DELETE', 'route' => ['customer.destroy', $post->id]]) !!}
       {!! Form::destroy('Xóa', 'Xác nhận xóa?') !!}
     {!! Form::close() !!}

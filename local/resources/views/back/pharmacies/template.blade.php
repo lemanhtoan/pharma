@@ -11,6 +11,15 @@
 	@include('back.partials.entete', ['title' => 'Khách hàng', 'icone' => 'pencil', 'fil' => link_to('pharmacies', 'Khách hàng') . ' / ' . 'Thêm mới'])
 
 	<div class="col-sm-12">
+
+		@if(session()->has('message'))
+			@include('partials/error', ['type' => 'danger', 'message' => session('message')])
+		@endif
+
+		@if(session()->has('success'))
+			@include('partials/error', ['type' => 'success', 'message' => session('success')])
+		@endif
+
 		@yield('form')
 		<div class="form-group">
 			{!! Form::label('Mã Khách hàng') !!} <em>*</em>

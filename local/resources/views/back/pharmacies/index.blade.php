@@ -65,7 +65,16 @@
 
   <div class="row col-lg-12">
 
-    <?php if(count($posts)): ?>
+      @if(session()->has('message'))
+          @include('partials/error', ['type' => 'danger', 'message' => session('message')])
+      @endif
+
+      @if(session()->has('success'))
+          @include('partials/error', ['type' => 'success', 'message' => session('success')])
+      @endif
+
+
+  <?php if(count($posts)): ?>
     <div class="table-responsive">
       <table class="table">
         <thead>

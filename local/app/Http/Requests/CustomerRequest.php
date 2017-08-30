@@ -7,8 +7,7 @@ class CustomerRequest extends Request {
 	public function rules()
 	{
 		return [
-			'phone' => 'required|max:255|unique:customers',
-			'password' => 'required',
+			'phone' => 'required|max:255|unique:customers'
 		];
 	}
 

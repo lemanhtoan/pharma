@@ -4,6 +4,9 @@
   @include('back.partials.entete', ['icone' => 'pencil', 'fil' => 'Người dùng', 'title' => 'Người dùng '."$post->name". link_to_route('customer.index', 'Quay lại', [], ['class' => 'btn btn-info pull-right'])])
 
   <div class="row col-lg-12 customer-info">
+    <p>
+      {!! link_to_route('customer.edit', 'Sửa', [$post->id], ['class' => 'edit-link']) !!}
+    </p>
     <p><b>Tên người dùng: </b> <b>{{ $post->name }}</b></p>
     <p><b>Số điện thoại: </b><b>{{ $post->phone }}</b></p>
     <p><b>Email: </b>{{ $post->email }}</p>

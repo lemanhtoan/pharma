@@ -38,6 +38,9 @@
        if (jQuery('.current-price').text() == '0') {
 //           alert('Bạn chưa chọn sản phẩm nào, vui lòng chọn sản phẩm.');
            $('#messageEmpty').modal('show');
+           setTimeout(function(){
+               $('#messageEmpty').modal('hide');
+           }, 2000);
            return false;
        }
     });

@@ -22,6 +22,12 @@ class PharmaciesRepository extends BaseRepository {
         $districtId = $inputs['district'];
         $districtData = District::findOrFail($districtId);
 
+        $post->uid = uniqid();
+        $post->username = uniqid();
+        $post->password = uniqid();
+        $post->phamercist = $inputs['owner'];
+        $post->ownerPhone = $inputs['phone'];
+
         $post->name = $inputs['name'];
         $post->code = $inputs['code'];
         $post->phone = $inputs['phone'];

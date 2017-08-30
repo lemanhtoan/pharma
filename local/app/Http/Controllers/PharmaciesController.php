@@ -1,6 +1,7 @@
 <?php namespace App\Http\Controllers;
 
 //use Illuminate\Contracts\Auth\Guard;
+use App\Models\Pharmacies;
 use Illuminate\Http\Request;
 use App\Http\Requests\PharmaciesRequest;
 use App\Http\Requests\SearchRequest;
@@ -109,9 +110,20 @@ class PharmaciesController extends Controller {
 
 	public function store(Request $request)
 	{
+		$codeCheck  = $request->input('code');
+
+		$isCheck = Pharmacies::where('code', $codeCheck)->first();
+
+		if (count($isCheck)) {
+			$post = $request->all();
+			return redirect()->back()->with('post', $post)->with('message', 'Mã khác hàng đã có người sử dụng, vui lòng kiểm tra lại.');
+
+		}
+
+
 		$this->pharmacies_gestion->store($request->all());
 
-		return redirect('pharmacies')->with('ok', 'Cập nhật thành công');
+		return redirect('pharmacies')->with('success', 'Cập nhật thành công');
 	}
 
 	public function show(
@@ -134,11 +146,23 @@ class PharmaciesController extends Controller {
         Request $request,
 		$id)
 	{
+		$codeCheck  = $request->input('code');
+
 		$post = $this->pharmacies_gestion->getById($id);
+
+		$isCheck = Pharmacies::where('code', $codeCheck)->first();
+		if (count($isCheck)) {
+			if ($isCheck->id != $id) {
+				return redirect()->back()->with('message', 'Mã khác hàng đã có người sử dụng, vui lòng kiểm tra lại.');
+			}
+
+		}
+
+
 
 		$this->pharmacies_gestion->update($request->all(), $post);
 
-		return redirect('pharmacies')->with('ok', trans('back/pharmacies.updated'));		
+		return redirect()->back()->with('success', 'Cập nhật thành công');
 	}
 
 	public function postActpharmacies(

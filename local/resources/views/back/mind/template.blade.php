@@ -67,12 +67,17 @@
 		</div>
 
 
+
+
 		<!-- -->
 		<div class="form-group">
             <div class="col-md-6"><h4>Danh sách thuốc trong phiên</h4></div>
 
             <div class="col-md-6">
                 <b>Nhập từ file:</b> <input type="file" name="imported-file"/>
+
+                <div class="link-left" style="margin-top: 15px;">{!! Form::submit('Cập nhật') !!}</div>
+
             </div>
 
 		</div>

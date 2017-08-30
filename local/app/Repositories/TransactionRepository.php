@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+use App\Models\Customer;
 use App\Models\Drug;
 use App\Models\Mind_Drug;
 use App\Models\Transaction;
@@ -62,30 +63,53 @@ class TransactionRepository extends BaseRepository {
 
     public function search($n,$search, $s_mind_id, $customerGroup, $sStatus, $sProvince, $sDistrict)
     {
-        $query = $this->model->select('*')->latest();//$this->queryActiveWithUserOrderByDate();
-//dd($query);
-        $query->where(function($q) use ($search) {
-            $q->where('transactions.owner', 'like', "%$search%")
-                ->orWhere('transactions.address', 'like', "%$search%")
-                ->orWhere('transactions.phone', 'like', "%$search%");
-        });
+        $allCustomer = Customer::all();
+        $arrKH1 = array();
+        $arrKH2 = array();
+        foreach ($allCustomer as $customer) {
+            if(ProcessText::getUserType($customer->id) == 'KH 1') {
+                $arrKH1[] = $customer->id;
+            }
+            if(ProcessText::getUserType($customer->id) == 'KH 2') {
+                $arrKH2[] = $customer->id;
+            }
+        }
+//        var_dump($arrKH2, $arrKH1);
+//        die;
 
+        $query = \DB::table('transactions')
+            ->join('customers', 'customers.id', '=', 'transactions.user_id')
+            ->join('pharmacies','customers.pharmacieId', '=', 'pharmacies.id');
+
+        if ($customerGroup) {
+            if ( $customerGroup == 'KH 1') {
+                //$query->whereRaw('1 = 1');
+                $query->whereIn('customers.id', $arrKH1);
+            }
+            if ( $customerGroup == 'KH 2') {
+                //$query->whereRaw('1 = 0');
+                $query->whereIn('customers.id', $arrKH2);
+            }
+
+        }
+
+        if($search) {
+            $query->where('pharmacies.name','like', "%$search%");
+        }
         if($s_mind_id) {
             $query->where('transactions.mind_id', '=', $s_mind_id);
         }
-        if($sStatus =='0'){
-            $query->where('transactions.status', '=', "$sStatus");
-        }
         if($sStatus) $query->where('transactions.status', '=', "$sStatus");
-//        if($sProvince) {
-//            $query->leftJoin('customers', 'customers.id', '=', 'transactions.user_id')->get(array('customers.id', 'customers.name'));
-//
-//            $query->leftJoin('pharmacies','customers.pharmacieId', '=', 'pharmacies.id')->get(array('pharmacies.province', 'pharmacies.code'));
-//
-//            $query->where('pharmacies.province', '=', "$sProvince");
-//        }
-//        if($sDistrict) $query->where('district', '=', "$sDistrict");
+
+        if($sProvince) {
+            $query->where('pharmacies.province', '=', "$sProvince");
+        }
+        if($sDistrict){
+            $query->where('pharmacies.district', '=', "$sDistrict");
+        }
+//        var_dump($search, $s_mind_id, $customerGroup, $sStatus, $sProvince, $sDistrict);
 //        echo $query->toSql();die;
+        //dd($query);
 
         return $query->paginate($n);
     }
@@ -93,32 +117,54 @@ class TransactionRepository extends BaseRepository {
     public function index($n,  $orderby = 'created_at', $direction = 'desc', $search=null, $s_mind_id=null, $customerGroup=null, $sStatus=null, $sProvince=null, $sDistrict=null)
     {
         if($search || $sStatus || $sStatus =='0' || $s_mind_id || $customerGroup || $sProvince || $sDistrict) {
-            $query = $this->queryActiveWithUserOrderByDate();
+            $allCustomer = Customer::all();
+            $arrKH1 = array();
+            $arrKH2 = array();
+            foreach ($allCustomer as $customer) {
+                if(ProcessText::getUserType($customer->id) == 'KH 1') {
+                    $arrKH1[] = $customer->id;
+                }
+                if(ProcessText::getUserType($customer->id) == 'KH 2') {
+                    $arrKH2[] = $customer->id;
+                }
+            }
+//        var_dump($arrKH2, $arrKH1);
+//        die;
 
-            $query->where(function($q) use ($search) {
-                $q->where('owner', 'like', "%$search%")
-                    ->orWhere('address', 'like', "%$search%")
-                    ->orWhere('phone', 'like', "%$search%");
-            });
+            $query = \DB::table('transactions')
+                ->join('customers', 'customers.id', '=', 'transactions.user_id')
+                ->join('pharmacies','customers.pharmacieId', '=', 'pharmacies.id');
 
-//        $query->join('pharmacies', function($join)
-//        {
-//            $join->on('users.id', '=', 'contacts.user_id')
-//                ->where('contacts.user_id', '>', 5);
-//        });
+            if ($customerGroup) {
+                if ( $customerGroup == 'KH 1') {
+                    //$query->whereRaw('1 = 1');
+                    $query->whereIn('customers.id', $arrKH1);
+                }
+                if ( $customerGroup == 'KH 2') {
+                    //$query->whereRaw('1 = 0');
+                    $query->whereIn('customers.id', $arrKH2);
+                }
 
+            }
+
+            if($search) {
+                $query->where('pharmacies.name','like', "%$search%");
+            }
             if($s_mind_id) {
-                $query->where('mind_is', '=', $s_mind_id);
+                $query->where('transactions.mind_id', '=', $s_mind_id);
             }
-            if($sStatus =='0'){
-                $query->where('status', '=', "$sStatus");
-            }
-            if($sStatus) $query->where('status', '=', "$sStatus");
-//            if($sProvince) $query->where('province', '=', "$sProvince");
-//            if($sDistrict) $query->where('district', '=', "$sDistrict");
+            if($sStatus) $query->where('transactions.status', '=', "$sStatus");
 
-            $query->select('*')
-                ->orderBy($orderby, $direction);
+            if($sProvince) {
+                $query->where('pharmacies.province', '=', "$sProvince");
+            }
+            if($sDistrict){
+                $query->where('pharmacies.district', '=', "$sDistrict");
+            }
+//        var_dump($search, $s_mind_id, $customerGroup, $sStatus, $sProvince, $sDistrict);
+//        echo $query->toSql();die;
+            //dd($query);
+
         }else{
             $query = $this->model
                 ->select('*')
@@ -139,7 +185,12 @@ class TransactionRepository extends BaseRepository {
         $kmvanchuyen =  ProcessText::getConfig('dataKMVC');
 
         // get transction subtotal
-        $khuyenMai = ProcessText::getKhuyenMai($post->sub_total, $post->user_id);
+        if (count($post) && $post->cost_discount) {
+            $khuyenMai = $post->cost_discount;
+        } else {
+            $khuyenMai = ProcessText::getKhuyenMai($post->sub_total, $post->user_id);
+        }
+
         $shippings = Shipping::orderby('name', 'asc')->get();
         return compact('post', 'tran_drugs', 'drugs', 'phiMuaho', 'phiVanchuyen', 'khuyenMai', 'kmvanchuyen', 'shippings');
     }

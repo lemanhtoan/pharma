@@ -23,7 +23,7 @@ class CustomerRepository extends BaseRepository {
         $post->phone = $inputs['phone'];
         $post->email = $inputs['email'];
         $post->pharmacieId = $inputs['pharmacieId'];
-        $post->password = bcrypt($inputs['password']);;
+
         $post->status = $inputs['status'];
         if ($up != 'update') {
             $data = Customer::whereRaw('id = (select max(`id`) from customers)')->first();
@@ -33,7 +33,14 @@ class CustomerRepository extends BaseRepository {
                 $post->code = 'KH01';
             }
 
+            if ($inputs['password']!="") {
+                $post->password = bcrypt($inputs['password']);
+            }
+
+        } else {
+            $post->password = bcrypt($inputs['password']);
         }
+
         $post->save();
 
         return $post;
@@ -104,15 +111,15 @@ class CustomerRepository extends BaseRepository {
 
     public function edit($post)
     {
-        if ($post) {
-            $pharmacieId = Pharmacies::where('id', $post['pharmacieId'])->orderBy('name', 'asc')->get();
-        } else {
-            $pharmacieId = Pharmacies::all();
-        }
+//        if ($post) {
+//            $pharmacieId = Pharmacies::where('id', $post['pharmacieId'])->orderBy('name', 'asc')->get();
+//        } else {
+//            $pharmacieId = Pharmacies::all();
+//        }
 
-        if(count($pharmacieId) == 0){
+//        if(count($pharmacieId) == 0){
             $pharmacieId = Pharmacies::all();
-        }
+//        }
         return compact('post', 'pharmacieId');
     }
 

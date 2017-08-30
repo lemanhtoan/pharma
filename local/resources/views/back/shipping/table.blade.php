@@ -1,9 +1,9 @@
 @foreach ($posts as $post)
   <tr>
-    <td>{{ $post->name }}</td>
+    <td>{!! link_to('shipping/' . $post->id, $post->name ) !!}</td>
     <td>{{ $post->note }}</td>
 
-    <td class="change_info">{!! link_to('shipping/' . $post->id, 'Chi tiết', ['class' => 'btn btn-success btn-block btn']) !!}
+    <td class="change_info">
 
     {!! link_to_route('shipping.edit', 'Sửa', [$post->id], ['class' => 'btn btn-warning btn-block']) !!}
     

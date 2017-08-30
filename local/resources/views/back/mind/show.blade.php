@@ -12,9 +12,9 @@
     @endif
 
     <div class="col-md-3">
-      {{--<p>--}}
-        {{--{!! link_to_route('mind.edit', 'Sửa', [$post->id], ['class' => 'edit-link']) !!}--}}
-      {{--</p>--}}
+      <p>
+        {!! link_to_route('mind.edit', 'Sửa', [$post->id], ['class' => 'edit-link']) !!}
+      </p>
       <p><b>Mã phiên giao dịch: {{ $post->code }}</b></p>
       <p><b>Tên phiên giao dịch: {{ $post->name }}</b></p>
       <p>Bắt đầu: {{ $post->start_time }}</p>

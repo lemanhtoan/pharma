@@ -1,5 +1,6 @@
 <?php namespace App\Http\Controllers;
 
+use App\Models\Customer;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Http\Request;
 use App\Http\Requests\CustomerRequest;
@@ -114,14 +115,24 @@ class CustomerController extends Controller {
 	}
 
 	public function update(
-        CustomerRequest $request,
+        Request $request,
 		$id)
 	{
+		$phoneCheck  = $request->input('phone');
+
 		$post = $this->customer_gestion->getById($id);
+
+		$isCheck = Customer::where('phone', $phoneCheck)->first();
+		if (count($isCheck)) {
+			if ($isCheck->id != $id) {
+				return redirect()->back()->with('message', 'Số điện thoại nhập đã có người sử dụng, vui lòng kiểm tra lại.');
+			}
+
+		}
 
 		$this->customer_gestion->update($request->all(), $post);
 
-		return redirect('customer')->with('ok', trans('back/customer.updated'));		
+		return redirect()->back()->with('success', 'Cập nhật thành công');
 	}
 
 	public function postActcustomer(
