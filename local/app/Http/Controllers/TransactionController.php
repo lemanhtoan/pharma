@@ -535,6 +535,7 @@ class TransactionController extends Controller {
                 $newData[] = $arrItem;
             }
         }
+        //dd($newData);
         if (count($newData)) {
             Excel::create('Danh_Sach_Thuoc_Giao_Dich'.'_'.date('d-m-Y'), function($excel) use($newData) {
                 // Set the title and Information fields

@@ -111,12 +111,12 @@ class PharmaciesController extends Controller {
 	public function store(Request $request)
 	{
 		$codeCheck  = $request->input('code');
-
-		$isCheck = Pharmacies::where('code', $codeCheck)->first();
+        $phoneCheck = $request->input('phone');
+		$isCheck = Pharmacies::where('code', $codeCheck)->orWhere('phone', $phoneCheck)->first();
 
 		if (count($isCheck)) {
 			$post = $request->all();
-			return redirect()->back()->with('post', $post)->with('message', 'Mã khác hàng đã có người sử dụng, vui lòng kiểm tra lại.');
+			return redirect()->back()->with('post', $post)->with('message', 'Khách hàng đã tồn tại, vui lòng kiểm tra lại.');
 
 		}
 
@@ -147,13 +147,14 @@ class PharmaciesController extends Controller {
 		$id)
 	{
 		$codeCheck  = $request->input('code');
+        $phoneCheck = $request->input('phone');
 
 		$post = $this->pharmacies_gestion->getById($id);
 
-		$isCheck = Pharmacies::where('code', $codeCheck)->first();
+		$isCheck = Pharmacies::where('code', $codeCheck)->orWhere('phone', $phoneCheck)->first();
 		if (count($isCheck)) {
 			if ($isCheck->id != $id) {
-				return redirect()->back()->with('message', 'Mã khác hàng đã có người sử dụng, vui lòng kiểm tra lại.');
+				return redirect()->back()->with('message', 'Khách hàng đã tồn tại, vui lòng kiểm tra lại.');
 			}
 
 		}
