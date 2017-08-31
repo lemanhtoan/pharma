@@ -7,13 +7,17 @@ use App\Models\Customer;
 
 class ProcessText {
     static function checkUserAdmin(){
-        $userId = \Auth::user()->id;
-        $dataUser = Customer::where('id', $userId)->first();
-        if(count($dataUser) && $dataUser->isRole == 'administrator') {
-            return true;
-        } else {
-            return false;
-        }
+		if (\Auth::check()) {
+			$userId = \Auth::user()->id;
+			$dataUser = Customer::where('id', $userId)->first();
+			if(count($dataUser) && $dataUser->isRole == 'administrator') {
+				return true;
+			} else {
+				return false;
+			}
+		} else {
+			return false;
+		}
     }
 	static function getConfig($slug) {
 		$value = '';
