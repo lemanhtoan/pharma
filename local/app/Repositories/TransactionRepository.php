@@ -80,6 +80,7 @@ class TransactionRepository extends BaseRepository {
         $query = \DB::table('transactions')
             ->join('customers', 'customers.id', '=', 'transactions.user_id')
             ->join('pharmacies','customers.pharmacieId', '=', 'pharmacies.id');
+        $query->select('transactions.*', 'pharmacies.address');
 
         if ($customerGroup) {
             if ( $customerGroup == 'KH 1') {
@@ -107,8 +108,11 @@ class TransactionRepository extends BaseRepository {
         if($sDistrict){
             $query->where('pharmacies.district', '=', "$sDistrict");
         }
-//        var_dump($search, $s_mind_id, $customerGroup, $sStatus, $sProvince, $sDistrict);
-//        echo $query->toSql();die;
+
+        $query->groupBy('transactions.id');
+
+        //echo "<pre>";var_dump($search, $s_mind_id, $customerGroup, $sStatus, $sProvince, $sDistrict, $arrKH1, $arrKH2);
+        //echo $query->toSql();die;
         //dd($query);
 
         return $query->paginate($n);
