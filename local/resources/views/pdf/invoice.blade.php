@@ -115,8 +115,7 @@
     <div class="main-wrap">
         <div style="float: left !important; width: 660px!important; ">
             <div class="in-logo" style="width: 150px; float: left">
-                <?php $dataLogoPc = DB::table('settings')->where('name', 'dataLogo')->select('content')->get()[0]; ?>
-                <img class="logo" src="{!!url('/uploads/commons/'.$dataLogoPc->content )!!}" align="logo" />
+                <img class="logo" src="images/1503127551_logo.png" align="logo" />
             </div>
             <div class="text-center"  style="width: 510px; float: right">
                 <h2>PHIẾU XUẤT HÀNG</h2>
@@ -125,25 +124,25 @@
         <div class="clear"></div>
         <div >
             <div class="box-left" style="width: 330px; float: left">
-                <p>Nhà thuốc:<label class="bold" for=""><?php echo $item['parcies']?></label></p>
-                <p>Địa chỉ:<label class="normal" for=""><?php echo $item['info']['address']?></label></p>
-                <p>Người liên hệ:<label class="bold" for=""><?php echo $item['info']['owner']?></label></p>
-                <p>SĐT:<label class="normal" for=""><?php echo $item['info']['phone']?></label></p>
+                <p>Nhà thuốc: <label class="bold" for=""><?php echo $item['parcies']?></label></p>
+                <p>Địa chỉ: <label class="normal" for=""><?php echo $item['info']['address']?></label></p>
+                <p>Người liên hệ: <label class="bold" for=""><?php echo $item['info']['owner']?></label></p>
+                <p>SĐT: <label class="normal" for=""><?php echo $item['info']['phone']?></label></p>
             </div>
             <div class="box-right"  style="width: 330px; float: right">
                 <p><b>Mã đơn hàng:</b> #<?php echo $item['info']['id']?> </p>
-                <p><b>Ngày đặt hàng:</b> <?php echo $item['info']['created_date']?></p>
+                <p><b>Ngày đặt hàng: </b> <?php echo $item['info']['created_date']?></p>
             </div>
         </div>
         <div class="clear"></div>
         <div class="row">
             <div class="box-center">
-                <p><span><b>Tổng giá trị thuốc đặt</b></span><label class="bold" for=""><?php echo number_format($item['info']['sub_total'])?></label></p>
-                <p><span><b>Chiết khấu</b></span><label class="normal" for=""><?php echo number_format($item['info']['cost_discount'])?></label></p>
-                <p><span>Phí mua hàng</span><label class="bold" for=""><?php echo number_format($item['info']['buyer_cost'])?></label></p>
-                <p><span>Phí vận chuyển</span><label class="normal" for=""><?php echo number_format($item['info']['shipping_cost'])?></label></p>
-                <p><span>KM vận chuyển</span><label class="normal" for=""><?php echo number_format($item['kmvc'])?></label></p>
-                <p><span><b>Tổng cần thanh toán</b></span><label class="bold bg-yellow" for=""><?php echo number_format($item['info']['end_total'])?></label></p>
+                <p><span><b>Tổng giá trị thuốc đặt </b></span><label class="bold" for=""><?php echo number_format($item['info']['sub_total'])?></label></p>
+                <p><span><b>Chiết khấu </b></span><label class="normal" for=""><?php echo number_format($item['info']['cost_discount'])?></label></p>
+                <p><span>Phí mua hàng </span><label class="bold" for=""><?php echo number_format($item['info']['buyer_cost'])?></label></p>
+                <p><span>Phí vận chuyển </span><label class="normal" for=""><?php echo number_format($item['info']['shipping_cost'])?></label></p>
+                <p><span>KM vận chuyển </span><label class="normal" for=""><?php echo number_format($item['kmvc'])?></label></p>
+                <p><span><b>Tổng cần thanh toán </b></span><label class="bold bg-yellow" for=""><?php echo number_format($item['info']['end_total'])?></label></p>
             </div>
         </div>
 

@@ -43,8 +43,14 @@ function getQty($productId, $type)
 
 @section('sidebar')
     <?php if(!$isCheckMind):?>
+    <?php 
+        $mindTitle="";
+        if(isset($mind[0])) {
+             $mindTitle = $mind[0]->name;   
+        }
+    ?>
     <div class="box-wd">
-        <h4><span class="normal">Phiên giao dịch: </span>Ngày <?php echo date('d/m/Y'); ?></h4>
+        <h4><?php echo $mindTitle; ?></h4>
         <div class="box-content">
             <p style="min-height: 20px">
                 <img class="icon-box" src="images/home_07.png" alt="">
@@ -494,8 +500,13 @@ function getQty($productId, $type)
         });
     </script>
 
-    <?php } else { ?>
-    <h2 class="title-main home_page">Phiên giao dịch: Ngày <?php echo date('d/m/Y'); ?></h2>
+    <?php } else { 
+        $mindTitle="";
+        if(isset($mind[0])) {
+             $mindTitle = $mind[0]->name;   
+        }
+    ?>
+    <h2 class="title-main home_page"><?php echo $mindTitle; ?></h2>
     <?php
     $userId = 0;
     if (Auth::check()) $userId = Auth::user()->id;

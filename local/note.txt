@@ -202,3 +202,10 @@ Nhớ phần bảng transaction phải set primary key ID
 
 
 insert dataKMCV 20000 settings table
+
+
+
+
+SET permission session: 
+sudo chgrp -R www-data storage 
+sudo chmod -R ug+rwx storage 

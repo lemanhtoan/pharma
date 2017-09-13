@@ -44,7 +44,7 @@ class HomeController extends Controller
             ->where('status', '1' )
             ->orderBy('start_time', 'asc')
             ->limit(1)
-            ->get(['id']);
+            ->get();
         if (count($mind)) {
             $drug = Mind::whereId($mind[0]->id)->firstOrFail();
 
@@ -98,7 +98,7 @@ class HomeController extends Controller
                 ->where('status', '1' )
                 ->orderBy('end_time', 'desc')
                 ->limit(1)
-                ->get(['id']);
+                ->get();
             if (count($mind)) {
                 $drug = Mind::whereId($mind[0]->id)->firstOrFail();
                 $drugArr = array();

@@ -16,6 +16,9 @@ use App\Models\TransactionDrug;
 
 use PDF;
 use Excel;
+use Dompdf\Adapter\CPDF;      
+use Dompdf\Dompdf;
+use Dompdf\Exception;
 
 use App\Helpers\ProcessText;
 
@@ -274,10 +277,14 @@ class TransactionController extends Controller {
        //dd($orders);
 
 //		htmlentities($orders, ENT_QUOTES, "UTF-8");
+		$pdf = new Dompdf();
+		$pdf->set_option("isPhpEnabled", true);
+		$pdf->set_option("isRemoteEnabled", true);
 		
         $pdf = PDF::loadView('pdf.invoice', compact('title', 'orders'))->setPaper('a4', 'portrait')->setWarnings(false);
-        $path = base_path() . '/pdf/invoice_'.date('d_m_Y').'.pdf';
-        $pdf->save( $path );
+        
+		/*$path = base_path() . '/pdf/invoice_'.date('d_m_Y').'.pdf';
+        $pdf->save( $path );*/
 
         return $pdf->stream();
     }
