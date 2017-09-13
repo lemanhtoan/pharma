@@ -190,6 +190,9 @@ db:   192.168.10.10
     5p_prod, 5p_dev
 u:/p:   5pharma/ftp5pharmavn
 
+mysql -u5pharma -p -h 192.168.10.10 5p_prod < myaawjcz_pharma.sql
+
+
 
 update transaction table structure
 ALTER TABLE `transactions` ADD PRIMARY KEY(`id`);

@@ -33,8 +33,9 @@ class CustomerController extends Controller {
 	{
 		$data = $this->customer_gestion->indexFront($this->nbrPages);
 		$links = $data->render();
+		$pharmacies = Pharmacies::all();
 
-		return view('front.customer.index', compact('data', 'links'));
+		return view('front.customer.index', compact('data', 'links', 'pharmacies'));
 	}
 
 	public function index()
@@ -47,6 +48,7 @@ class CustomerController extends Controller {
 
 	public function indexOrder(Request $request)
 	{
+
         if(ProcessText::checkUserAdmin()) {
             $posts = $this->customer_gestion->index(
                 10,
@@ -62,10 +64,12 @@ class CustomerController extends Controller {
                 'search' => $request->search,
                 's_status' => $request->s_status
             ]);
+            $pharmacies = Pharmacies::all();
+             $dataLog = \DB::table('user_logs')->orderBy('id', 'desc')->get();
 
             if ($request->ajax()) {
                 return response()->json([
-                    'view' => view('back.customer.table', compact('statut', 'posts'))->render(),
+                    'view' => view('back.customer.table', compact('statut', 'posts', 'pharmacies', 'dataLog'))->render(),
                     'links' => e($links->setPath('order')->render())
                 ]);
             }
@@ -77,8 +81,9 @@ class CustomerController extends Controller {
                 'sens' => 'sort-' . $request->sens
             ];
 
-            $pharmacies = Pharmacies::all();
-            $dataLog = \DB::table('user_logs')->orderBy('id', 'desc')->get();
+            
+           
+            //dd($pharmacies);
             return view('back.customer.index', compact('posts', 'links', 'order', 'pharmacies', 'dataLog'));
         } else {
 
