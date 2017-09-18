@@ -182,6 +182,7 @@ class MindController extends Controller {
                     if(!empty($row))
                     {
                         if ($this->getDrug($row['ma_thuoc']) != false && $this->checkRootPrice($row['gia_goc'])) {
+
                             $dataArray[] =
                                 [
                                     'mind_id' => $post_id,
@@ -205,7 +206,9 @@ class MindController extends Controller {
                         // delete old product
                         Mind_Drug::where('mind_id', $post_id)->delete();
 
-                        Mind_Drug::insert($dataArray);
+                        $dataArrayImport = $this->unique_multidim_array($dataArray,'drug_id');
+
+                        Mind_Drug::insert($dataArrayImport);
 
 //                        return redirect()->back()->with('success', 'Nhập dữ liệu từ file thành công');
                     } else {
@@ -316,6 +319,22 @@ class MindController extends Controller {
         }
         return true;
     }
+
+    public function unique_multidim_array($array, $key) { 
+        $temp_array = array(); 
+        $i = 0; 
+        $key_array = array(); 
+        
+        foreach($array as $val) { 
+            if (!in_array($val[$key], $key_array)) { 
+                $key_array[$i] = $val[$key]; 
+                $temp_array[$i] = $val; 
+            } 
+            $i++; 
+        } 
+        return $temp_array; 
+    } 
+
 	public function update(
         MindRequest $request,
 		$id)
@@ -369,7 +388,9 @@ class MindController extends Controller {
                         // delete old product
                         Mind_Drug::where('mind_id', $id)->delete();
 
-                        Mind_Drug::insert($dataArray);
+                        $dataArrayImport = $this->unique_multidim_array($dataArray,'drug_id');
+
+                        Mind_Drug::insert($dataArrayImport);
 
                         return redirect()->back()->with('success', 'Nhập dữ liệu từ file thành công');
                     } else {

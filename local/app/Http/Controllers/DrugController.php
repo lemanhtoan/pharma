@@ -215,7 +215,7 @@ class DrugController extends Controller {
             $newData[] = $arrItem;
         }
 
-        Excel::create('Danh_sach_thuoc'.'_'.date('d-m-Y)'), function($excel) use($newData) {
+        Excel::create('Danh_sach_thuoc'.'_'.date('d-m-Y'), function($excel) use($newData) {
             // Set the title and Information fields
             $excel->sheet('Danh_Sach_Thuoc', function($sheet) use($newData) {
                 $sheet->fromArray($newData, null, 'A3', false, true);
